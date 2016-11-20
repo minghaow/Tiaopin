@@ -1,0 +1,96 @@
+@media only screen and (max-width: 40em) {
+    section.q {
+        background: white;
+        padding: .9rem 1rem;
+        box-shadow: 0 3px 3px rgba(0,0,0,0.1);
+    }
+    .q .q-title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    .q .q-description {
+        font-size: .8rem;
+        color: #666;
+    }
+    .a-list {
+        margin-top: .7rem;
+    }
+    .a-list-item {
+        margin: .7rem 0;
+        padding: .5rem 1rem;
+        background: white;
+        box-shadow: 0 3px 3px rgba(0,0,0,0.1);
+    }
+    .list-item-user {
+        font-size: .9rem;
+        color: #444;
+        margin: 0 0 .4rem 0;
+    }
+    .list-item-user img {
+        height: 1.6rem;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+    }
+    .item-type-tag {
+        background: #f79c9c;
+        color: white;
+        padding: .1rem .2rem;
+        font-size: .9rem;
+        border-radius: .2rem;
+    }
+    .list-item-preview {
+        font-size: .85rem;
+        color: #333;
+        margin: .3rem 0 .5rem;
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .list-item-share {
+        float: right;
+        color: #999;
+    }
+    .list-item-sub {
+        font-size: .7rem;
+        color: #999;
+    }
+    .list-item-img {
+        border: 1px solid #ccc;
+        padding: .1rem;
+        margin: .2rem 0;
+    }
+    .home-list-item a {
+        color: inherit;
+    }
+    .ipaiban {
+        background: white;
+    }
+    #body p {
+        margin-bottom: 0;
+    }
+    .q-function {
+        font-size: .7rem;
+        color: #999;
+        margin-top: .6rem;
+    }
+    .q-share,
+    .q-ask,
+    .q-report {
+        cursor: pointer;
+    }
+    .q-report {
+        float: right;
+    }
+}
+@media only screen and (min-width: 40.063em) {
+
+}
+.a-function {
+    font-size: .9rem;
+    color: #999;
+    margin-top: .6rem;
+}

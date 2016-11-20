@@ -110,15 +110,15 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     }
 
     private void updateSkuInfoList() {
-        offlineSkuItemList = skuItemDao.getAll(PublicationStatus.OFFLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
-        onlineSkuItemList = skuItemDao.getAll(PublicationStatus.ONLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
+//        offlineSkuItemList = skuItemDao.getAll(PublicationStatus.OFFLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
+//        onlineSkuItemList = skuItemDao.getAll(PublicationStatus.ONLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
     }
 
     private void updateStatusCntMap(Date startDate) {
-        statusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE));
-        statusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE));
-        newStatusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE, startDate));
-        newStatusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE, startDate));
+//        statusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE));
+//        statusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE));
+//        newStatusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE, startDate));
+//        newStatusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE, startDate));
     }
 
     @Override

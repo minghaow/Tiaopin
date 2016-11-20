@@ -96,6 +96,11 @@
 .footer .footer-links a:last-child::after {
     content: "";
     padding: 0 0.4rem 0 0.8rem; }
+@media only screen and (max-width: 40em) {
+    .social img {
+        width: 60%;
+    }
+}
 @media only screen and (min-width: 40.063em) {
     .footer p {
         text-align: left; }

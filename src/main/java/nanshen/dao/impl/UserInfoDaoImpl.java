@@ -23,14 +23,12 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 
     @Override
     public UserInfo getBuyerInfoByUsername(String username) {
-        UserInfo info = dao.fetch(UserInfo.class, Cnd.where("username", "=", username));
-        return dao.fetchLinks(info, "authoritiesInDb");
+        return dao.fetch(UserInfo.class, Cnd.where("username", "=", username));
     }
 
     @Override
     public UserInfo getUserInfo(long id) {
-        UserInfo info =  dao.fetch(UserInfo.class, id);
-        return dao.fetchLinks(info, "authoritiesInDb");
+        return dao.fetch(UserInfo.class, id);
     }
 
     @Override
@@ -49,14 +47,12 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 
     @Override
     public UserInfo getBuyerInfoByEmail(String email) {
-        UserInfo info = dao.fetch(UserInfo.class, Cnd.where("email", "=", email));
-        return dao.fetchLinks(info, "authoritiesInDb");
+        return dao.fetch(UserInfo.class, Cnd.where("email", "=", email));
     }
 
     @Override
     public UserInfo getUserInfoByPhone(String phone) {
-        UserInfo info = dao.fetch(UserInfo.class, Cnd.where("phone", "=", phone));
-        return dao.fetchLinks(info, "authoritiesInDb");
+        return dao.fetch(UserInfo.class, Cnd.where("phone", "=", phone));
     }
 
     @Override

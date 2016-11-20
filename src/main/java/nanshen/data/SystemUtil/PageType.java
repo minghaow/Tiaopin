@@ -13,6 +13,10 @@ public enum PageType {
 
     ITEM_LIST("列表页", true),
 
+    QUESTION("问题页", true),
+
+    ANSWER("回答页", true),
+
     LOGIN_PAGE("登陆页", false),
 
     ITEM_DETAIL("详情页", false),

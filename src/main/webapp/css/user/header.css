@@ -2,25 +2,26 @@
  *  user/header.css
  *  @author: WANG Minghao
 */
-header {
-    background: url("/images/banner.png") #074e68;
-    background-size: cover;
-    padding: 22px 0;
-}
-.logo-wrapper {
-    text-align: left;
-}
-.bottom-line {
-    height: 2px;
-    background-color: rgba(167, 134, 106, 0.2);
-    z-index: 100;
-}
-.bottom-line-down {
-    height: 3rem;
-    background-color: #111;
-    z-index: 100;
-    box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);
-}
+@import url('http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+/*header {*/
+    /*background: url("/images/banner.png") #074e68;*/
+    /*background-size: cover;*/
+    /*padding: 22px 0;*/
+/*}*/
+/*.logo-wrapper {*/
+    /*text-align: left;*/
+/*}*/
+/*.bottom-line {*/
+    /*height: 2px;*/
+    /*background-color: rgba(167, 134, 106, 0.2);*/
+    /*z-index: 100;*/
+/*}*/
+/*.bottom-line-down {*/
+    /*height: 3rem;*/
+    /*background-color: #111;*/
+    /*z-index: 100;*/
+    /*box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);*/
+/*}*/
 /* top-nav */
 .navbar.scrolled{
     box-shadow: 0 3px 3px rgba(0,0,0,0.1);
@@ -210,13 +211,10 @@ header {
          display: none;
     }
     #body .title-bar {
-        background: #111;
+        background: #cd3939;
         box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);
         color: #fefefe;
         padding: .5rem;
-    }
-    #body .off-canvas-wrapper {
-        background: #222;
     }
     #body .off-canvas {
         background: transparent;
@@ -225,15 +223,15 @@ header {
         display: block;
         padding: 0.7rem 1rem;
         line-height: 1;
-        color: #2199e8;
+        color: #cd3939;
         font-size: 1rem;
-        background: #333;
+        background: #ddd;
     }
     #body .menu > li > a {
         display: block;
         padding: 0.7rem 1rem;
         line-height: 1;
-        color: #e6e6e6;
+        color: black;
     }
 }
 /* Card */

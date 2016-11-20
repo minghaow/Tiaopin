@@ -1,0 +1,58 @@
+#* @vtlvariable name="URLDecoder" type="java.net.URLDecoder" *#
+#* @vtlvariable name="StringEscapeUtils" type="org.apache.commons.lang.StringEscapeUtils" *#
+#* @vtlvariable name="complexQuestion" type="nanshen.data.Question.ComplexQuestion" *#
+#* @velocityproperties path="/WEB-INF/velocity" *#
+#* @vtlvariable name="pageType" type="nanshen.data.SystemUtil.PageType" *#
+
+#parse("user/header.vm")
+<link rel="stylesheet" href="$!{cssUrlPrefix}/css/user/question.css"/>
+
+<!-- some hidden infos -->
+<div class="page-info">
+    <div id="this-tag">$!{pageType}</div>
+</div>
+
+<section class="q">
+    <div class="q-title">
+        $!{complexQuestion.question.title}
+    </div>
+    <div class="q-description">
+        $!{complexQuestion.question.description}
+    </div>
+    <div class="q-function">
+        <span class="q-share unsupported-section"><i class="fa fa-share" aria-hidden="true"></i> 分享</span>
+        &nbsp ∙ &nbsp
+        <span class="q-ask unsupported-section"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> 邀请回答</span>
+        <span class="q-report unsupported-section"><i class="fa fa-flag" aria-hidden="true"></i> 举报</span>
+    </div>
+</section>
+
+<section class="a-list">
+
+    #foreach ($answer in $!{complexQuestion.answerList})
+    <div class="a-list-item">
+        <div class="list-item-share">
+            <i class="fi-share"></i>
+        </div>
+        <div class="list-item-user">
+            <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
+            <span class="item-user-name">$!{answer.userName}</span>
+        </div>
+        <div class="list-item-content">
+            $!{answer.content}
+        </div>
+        <div class="a-function">
+            <span class="a-info">最后编辑于$!{answer.showUpdateTime}</span>
+            &nbsp ∙ &nbsp
+            <span class="a-comment unsupported-section"><i class="fa fa-commenting-o" aria-hidden="true"></i> $!{answer.commentCnt}评论</span>
+            &nbsp ∙ &nbsp
+            <span class="a-thanks unsupported-section"><i class="fa fa-heart-o" aria-hidden="true"></i> 举报</span>
+        </div>
+    </div>
+    #end
+
+</section>
+<!-- end of this page contents -->
+
+<!-- start of footer-->
+#parse("user/footer.vm")
