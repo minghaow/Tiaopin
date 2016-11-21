@@ -27,6 +27,12 @@
         color: #444;
         margin: 0 0 .4rem 0;
     }
+    .item-user-name {
+        font-weight: 700;
+    }
+    .item-user-desc {
+        color: #777;
+    }
     .list-item-user img {
         height: 1.6rem;
         border: 1px solid #ccc;

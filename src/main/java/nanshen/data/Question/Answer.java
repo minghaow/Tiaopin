@@ -31,6 +31,7 @@ public class Answer {
     @Column
     private long userId = 0;
     private String userName = "";
+    private String userDesc = "";
 
     /** content */
     @Column
@@ -173,6 +174,14 @@ public class Answer {
 
     public void setViewCnt(long viewCnt) {
         this.viewCnt = viewCnt;
+    }
+
+    public String getUserDesc() {
+        return userDesc;
+    }
+
+    public void setUserDesc(String userDesc) {
+        this.userDesc = userDesc;
     }
 
     public String getUserName() {

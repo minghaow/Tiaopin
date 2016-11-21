@@ -37,6 +37,9 @@
         <div class="list-item-user">
             <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
             <span class="item-user-name">$!{answer.userName}</span>
+            #if ("$!{answer.userDesc}" != "")
+            <span class="item-user-desc">，$!{answer.userDesc}</span>
+            #end
         </div>
         <div class="list-item-content">
             $!{answer.content}

@@ -29,6 +29,10 @@ public class UserInfo {
     @Column
     private String email;
 
+    /** user userDesc */
+    @Column
+    private String userDesc = "";
+
     /** hashed password */
     @Column
     @ColDefine(width = 150)
@@ -173,5 +177,13 @@ public class UserInfo {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public String getUserDesc() {
+        return userDesc;
+    }
+
+    public void setUserDesc(String userDesc) {
+        this.userDesc = userDesc;
     }
 }

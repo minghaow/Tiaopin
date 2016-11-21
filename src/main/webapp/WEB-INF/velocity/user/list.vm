@@ -113,6 +113,9 @@
             <div class="list-item-user">
                 <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
                 <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
+                #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
+                <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>
+                #end
             </div>
             <div class="list-item-title">
                 <a href="/q?qid=$!{questionList.get($id).showId}">
@@ -166,6 +169,9 @@
             <div class="list-item-user">
                 <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
                 <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
+                #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
+                    <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>
+                #end
             </div>
             <div class="list-item-title">
                 <a href="/q?qid=$!{questionList.get($id).showId}">

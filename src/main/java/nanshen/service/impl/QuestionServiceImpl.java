@@ -68,7 +68,11 @@ public class QuestionServiceImpl implements QuestionService {
         }
         List<Answer> answerList = answerDao.getByQuestionId(question.getId());
         for (Answer answer : answerList) {
-            answer.setUserName(accountService.getUserInfo(answer.getUserId()).getUsername());
+            UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
+            if (userInfo != null) {
+                answer.setUserName(userInfo.getUsername());
+                answer.setUserDesc(userInfo.getUserDesc());
+            }
         }
         UserInfo userInfo = accountService.getUserInfo(question.getUserId());
         return new ComplexQuestion(qShowId, question.getShowId(), question, userInfo, answerList);

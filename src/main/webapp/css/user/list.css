@@ -55,6 +55,12 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
+    .item-user-name {
+        font-weight: 900;
+    }
+    .item-user-desc {
+        color: #777;
+    }
     .list-item-share {
         float: right;
         color: #999;
