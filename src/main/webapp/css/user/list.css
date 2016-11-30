@@ -23,7 +23,7 @@
     }
     .home-list-item {
         margin: .7rem 0;
-        padding: .5rem 1rem;
+        padding: .55rem 1rem .45rem;
         background: white;
         box-shadow: 0 3px 3px rgba(0,0,0,0.1);
     }
@@ -36,6 +36,8 @@
         height: 1.2rem;
         border: 1px solid #ccc;
         border-radius: 50%;
+        position: relative;
+        top: -.05rem;
     }
     .item-type-tag {
         background: #f79c9c;

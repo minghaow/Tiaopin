@@ -1,3 +1,4 @@
+#* @vtlvariable name="aidSkuListMap" type="java.util.Map<java.lang.Long, java.util.List<nanshen.data.Sku.Sku>>" *#
 #* @vtlvariable name="URLDecoder" type="java.net.URLDecoder" *#
 #* @vtlvariable name="StringEscapeUtils" type="org.apache.commons.lang.StringEscapeUtils" *#
 #* @vtlvariable name="complexQuestion" type="nanshen.data.Question.ComplexQuestion" *#
@@ -30,11 +31,18 @@
 <section class="a-list">
 
     #foreach ($answer in $!{complexQuestion.answerList})
+    #set ($skuList = $!{aidSkuListMap.get($answer.getId())})
+    #foreach ($sku in $skuList)
+        <div class="sku-info hide" id="sku-info-$sku.id" data-title="$sku.title"
+                data-subtitle="$sku.subTitle" data-url="$sku.url" data-price="$sku.price" data-showid="$sku.showId">
+        </div>
+    #end
+
     <div class="a-list-item">
         <div class="list-item-share">
             <i class="fi-share"></i>
         </div>
-        <div class="list-item-user">
+        <div class="list-item-user" id="list-item-user-$velocityCount" data-answer-id="$velocityCount">
             <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
             <span class="item-user-name">$!{answer.userName}</span>
             #if ("$!{answer.userDesc}" != "")
@@ -42,6 +50,24 @@
             #end
         </div>
         <div class="list-item-content">
+##            #set ($skuList = $!{aidSkuListMap.get($answer.getId())})
+##            #foreach ($sku in $skuList)
+##                <div class="sku" id="sku-$sku.id" data-id="$sku.id">
+##                    <a href="$sku.url">
+##                        <div class="sku-img">
+##                            <img src="http://image-cdn.zaitaoyuan.com/images/tiaopin/answer/30/5.png">
+##                        </div>
+##                        <div class="sku-detail">
+##                            <div class="sku-title">$sku.title</div>
+##                            <div class="sku-subtitle">$sku.subTitle</div>
+##                            <div class="sku-price">￥$sku.price</div>
+##                        </div>
+##                        <div class="sku-function">
+##                            <i class="fa fa-heart-o" aria-hidden="true"></i> 12
+##                        </div>
+##                    </a>
+##                </div>
+##            #end
             $!{answer.content}
         </div>
         <div class="a-function">
@@ -49,13 +75,26 @@
             &nbsp ∙ &nbsp
             <span class="a-comment unsupported-section"><i class="fa fa-commenting-o" aria-hidden="true"></i> $!{answer.commentCnt}评论</span>
             &nbsp ∙ &nbsp
-            <span class="a-thanks unsupported-section"><i class="fa fa-heart-o" aria-hidden="true"></i> 举报</span>
+            <span class="a-thanks unsupported-section">举报</span>
         </div>
     </div>
     #end
+
+    <div class="navbot">
+        <div class="answer-up">
+            <i class="fa fa-sort-asc" aria-hidden="true"> </i>
+        </div>
+        <div class="answer-down">
+            <i class="fa fa-sort-desc" aria-hidden="true"> </i>
+        </div>
+        <div class="check-skus">
+            查看商品
+        </div>
+    </div>
 
 </section>
 <!-- end of this page contents -->
 
 <!-- start of footer-->
+<script type="text/javascript" src="$!{cssUrlPrefix}/script/user/question.js"></script>
 #parse("user/footer.vm")

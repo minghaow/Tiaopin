@@ -29,11 +29,6 @@
                     <img class="hide-before-js-ready" src="$!{imageUrlPrefix}/images/slider/slider3.jpg" alt="">
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <img class="hide-before-js-ready" src="$!{imageUrlPrefix}/images/slider/slider4.jpg" alt="">
-                </a>
-            </li>
         </ul>
     </div>
 
@@ -111,7 +106,7 @@
                 <i class="fi-share"></i>
             </div>
             <div class="list-item-user">
-                <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
+                <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
                 <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
                 #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
                 <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>
@@ -167,7 +162,7 @@
                 <i class="fi-share"></i>
             </div>
             <div class="list-item-user">
-                <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
+                <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
                 <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
                 #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
                     <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>

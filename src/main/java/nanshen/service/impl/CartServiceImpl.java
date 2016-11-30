@@ -10,8 +10,6 @@ import nanshen.dao.OrderDao;
 import nanshen.dao.OrderGoodsDao;
 import nanshen.data.Cart.Cart;
 import nanshen.data.Cart.CartGoods;
-import nanshen.data.Sku.SkuDetail;
-import nanshen.data.Sku.SkuItem;
 import nanshen.data.SystemUtil.ExecResult;
 import nanshen.service.CartService;
 import nanshen.service.SkuService;
@@ -81,23 +79,24 @@ public class CartServiceImpl extends ScheduledService implements CartService {
     @Override
     @Transactional
     public ExecResult<Long> addSku(long userId, long skuId, long count) {
-        Cart cart = getCartByUserId(userId);
-        ExecResult<Long> execResult = skuAlreadyHaveThenAdd(cart, skuId, count);
-        if (!execResult.isSucc()) {
-            SkuDetail skuDetail = skuService.getSkuDetail(skuId);
-            SkuItem skuItem = skuService.getSkuItemInfo(skuDetail.getItemId());
-            if (null != cartGoodsDao.insert(new CartGoods(cart.getId(), count, null, 0, skuDetail.getOriginPrice(),
-                    skuDetail.getPrice(), null, skuItem.getSubTitle(), skuItem.getTitle(), userId, skuDetail.getId(),
-                    skuDetail.getItemId(), skuDetail.getOption1(), skuDetail.getOption2(), skuDetail.getOptionId()))) {
-                cart.setGoodsCount(cart.getGoodsCount() + count);
-                cart.setTotalPrice(cart.getTotalPrice() + count * skuDetail.getPrice());
-                cartDao.update(cart);
-                userCache.invalidate(userId);
-                return ExecResult.succ(cart.getGoodsCount());
-            }
-            return ExecResult.fail("添加商品失败");
-        }
-        return execResult;
+//        Cart cart = getCartByUserId(userId);
+//        ExecResult<Long> execResult = skuAlreadyHaveThenAdd(cart, skuId, count);
+//        if (!execResult.isSucc()) {
+//            SkuDetail skuDetail = skuService.getSkuDetail(skuId);
+//            SkuItem skuItem = skuService.getSkuItemInfo(skuDetail.getItemId());
+//            if (null != cartGoodsDao.insert(new CartGoods(cart.getId(), count, null, 0, skuDetail.getOriginPrice(),
+//                    skuDetail.getPrice(), null, skuItem.getSubTitle(), skuItem.getTitle(), userId, skuDetail.getId(),
+//                    skuDetail.getItemId(), skuDetail.getOption1(), skuDetail.getOption2(), skuDetail.getOptionId()))) {
+//                cart.setGoodsCount(cart.getGoodsCount() + count);
+//                cart.setTotalPrice(cart.getTotalPrice() + count * skuDetail.getPrice());
+//                cartDao.update(cart);
+//                userCache.invalidate(userId);
+//                return ExecResult.succ(cart.getGoodsCount());
+//            }
+//            return ExecResult.fail("添加商品失败");
+//        }
+//        return execResult;
+        return ExecResult.fail("");
     }
 
     @Override

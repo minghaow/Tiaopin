@@ -63,7 +63,11 @@
 <div class="title-bar hide-for-medium">
     <div class="title-bar-left">
         <button class="menu-icon" type="button" data-open="offCanvas"></button>
-        <span class="title-bar-title"><i class="icon-search"> </i>挑品购物问答</span>
+        <span class="title-bar-title">
+##            <img src="/images/logo/logo4.png" alt="挑品购物问答"/>
+            <img src="/images/logo/logo3.png" alt="挑品购物问答"/>
+            <span class="title-bar-title-content">购物问答</span>
+        </span>
     </div>
     <div class="title-bar-right">
         <i class="fa fa-fw fa-search"></i>

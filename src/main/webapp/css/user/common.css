@@ -40,7 +40,7 @@
     background: #333333 !important;
 }
 #body a:hover {
-    color: #e5a992 !important;
+    color: #e5a992;
 }
 @media only screen and (min-width: 40.063em) {
     .page-content {
@@ -116,9 +116,6 @@ input.labelauty + label {
 }
 #body .button.brandColor {
     background: #d2917b;
-}
-#body .tabs {
-    border-top: solid 2px #d2917b;
 }
 #contact-tabs {
     border-bottom: none;

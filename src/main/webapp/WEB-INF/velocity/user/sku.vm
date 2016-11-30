@@ -1,0 +1,153 @@
+#* @vtlvariable name="answerList" type="java.util.List<nanshen.data.Question.ComplexAnswer>" *#
+#* @vtlvariable name="sku" type="nanshen.data.Sku.Sku" *#
+#* @vtlvariable name="aidSkuListMap" type="java.util.Map<java.lang.Long, java.util.List<nanshen.data.Sku.Sku>>" *#
+#* @vtlvariable name="URLDecoder" type="java.net.URLDecoder" *#
+#* @vtlvariable name="StringEscapeUtils" type="org.apache.commons.lang.StringEscapeUtils" *#
+#* @vtlvariable name="complexQuestion" type="nanshen.data.Question.ComplexQuestion" *#
+#* @velocityproperties path="/WEB-INF/velocity" *#
+#* @vtlvariable name="pageType" type="nanshen.data.SystemUtil.PageType" *#
+
+#parse("user/header.vm")
+<link rel="stylesheet" href="$!{cssUrlPrefix}/css/user/sku.css"/>
+
+<!-- some hidden infos -->
+<div class="page-info">
+    <div id="this-tag">$!{pageType}</div>
+</div>
+
+<div class="panel first-panel">
+    <div class="row item-slider-wrapper">
+        <div class="item-slider">
+            <ul id="lightSlider-s">
+                <li>
+                    <img src="http://image-cdn.zaitaoyuan.com/images/tiaopin/answer/30/5.png" alt="$dbItem.getTitle()"/>
+                </li>
+                <li class="hide-before-js-ready">
+                    <img src="http://image-cdn.zaitaoyuan.com/images/tiaopin/answer/30/5.png" alt="$dbItem.getTitle()"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row item-info-wrapper">
+        <div class="item-title">
+            #if ($sku.status == "OFFLINE")
+                <span class="item-status">已下架</span>
+            #end
+            $sku.title
+        </div>
+
+        #if ("$sku.getSubTitle()" != "")
+            <div class="item-subTitle">$!sku.subTitle</div>
+        #end
+
+        <div class="item-price">
+            <span class="item-price-unit">￥</span>$sku.price
+        </div>
+
+        <a class="item-link" href="$sku.url">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            <div class="item-link-title">
+                商品详情
+            </div>
+        </a>
+    </div>
+
+    <div class="detail-description">
+        <ul class="tabs" data-tabs="gmrwk6-tabs" id="detail-tabs">
+            <li class="tabs-title detail-tab middle-tab is-active" role="presentation">
+                <a href="#comments" class="" role="tab" aria-controls="comments" aria-selected="false" id="comments-label">
+                    <i class="fi-star"></i>
+                    <div class="hide-for-small-only">用户 <span class="redText">1</span> 点评</div>
+                    <div class="hide-for-medium">用户点评</div>
+                </a>
+            </li>
+            <li class="tabs-title detail-tab" role="presentation">
+                <a href="#notes" class="" role="tab" aria-controls="notes" aria-selected="false" id="notes-label">
+                    <i class="fi-lightbulb"></i>
+                    <div>相关文章</div>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tabs-content" data-tabs-content="detail-tabs">
+
+            <div class="tabs-panel row is-active margin-bottom" id="comments">
+                <div class="small-12 column center">
+                    <div class="detail-title">综合评分</div>
+                    <div class="rating rating-4-half">
+                        <i class="star-1">★</i>
+                        <i class="star-2">★</i>
+                        <i class="star-3">★</i>
+                        <i class="star-4">★</i>
+                        <i class="star-5">★</i>
+                        <span class="user-">4.5</span>
+                    </div>
+                </div>
+
+                <div class="margin-top">
+                    <div class="item-user-review">
+                        <div class="review-img">
+                            <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
+                        </div>
+                        <div class="review-content">
+                            <span class="review-user-name">没睡醒的猪</span>：颜值爆表，有颜即胜。也很好用，看起来质感很棒。
+                        </div>
+                    </div>
+                    <div class="item-user-review">
+                        <div class="review-img">
+                            <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
+                        </div>
+                        <div class="review-content">
+                            <span class="review-user-name">孙奈何</span>：跟irobot的随机扫法不一样，这个能在app里绘制一个家里的户型图。然后分溜边和内部顺序扫。这样感觉效率很高。
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tabs-panel row" id="notes">
+                #foreach ($answer in $answerList)
+                <div class="answer-list-item">
+                    <div class="home-list-item">
+                        <div class="list-item-share">
+                            <i class="fi-share"></i>
+                        </div>
+                        <div class="list-item-user">
+                            <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
+                            <span class="item-user-name">$answer.userInfo.username</span>
+                            #if ("$answer.userInfo.userDesc" != "")
+                                <span class="item-user-desc">，$answer.userInfo.userDesc</span>
+                            #end
+                        </div>
+                        <div class="list-item-title">
+                            <a href="/q?qid=$!{answer.question.showId}">
+                                <span class="item-type-tag">问答</span>
+                                $answer.question.title
+                            </a>
+                        </div>
+                        <div class="list-item-preview">
+                            <a href="/q?qid=$!{answer.question.showId}">
+                                $!{answer.answer.description}
+                            </a>
+                        </div>
+                        <div class="list-item-sub">
+                            <span class="item-view-cnt">$!{answer.answer.commentCnt}评论</span>
+                            &nbsp ∙ &nbsp
+                            <span class="item-up-cnt">$!{answer.answer.upCnt}认同</span>
+                        </div>
+                    </div>
+                </div>
+                #end
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</section>
+<!-- end of this page contents -->
+
+<!-- start of footer-->
+<script type="text/javascript" src="$!{cssUrlPrefix}/script/user/question.js"></script>
+#parse("user/footer.vm")

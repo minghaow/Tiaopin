@@ -2,6 +2,8 @@ package nanshen.web.controller.user;
 
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
+import nanshen.dao.SkuDao;
+import nanshen.dao.SkuSourceDao;
 import nanshen.dao.UserInfoDao;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.QuestionType;
@@ -36,6 +38,12 @@ public class IndexCtrl extends BaseCtrl {
 	private UserInfoDao userInfoDao;
 
 	@Autowired
+	private SkuDao skuDao;
+
+	@Autowired
+	private SkuSourceDao skuSourceDao;
+
+	@Autowired
 	private SkuService skuService;
 
 	@Autowired
@@ -53,6 +61,8 @@ public class IndexCtrl extends BaseCtrl {
 //				QuestionStatus.ONLINE, QuestionType.SMART_HOME, 1));
 //		userInfoDao.addNewUser(new UserInfo("13811448892", EncryptUtils.encodePassword("1")));
 //		answerDao.insert(new Answer(1, "", AnswerStatus.ONLINE, 1));
+//		Sku sku = skuDao.insert(new Sku("小米扫地机器人", "米家智能家居新款上市", 1999, "智能家居", "https://detail.tmall.com/item.htm?spm=a230r.1.14.6.5fSC72&id=538932602256&cm_id=140105335569ed55e27b&abbucket=4&skuId=3220665053591"));
+//		skuSourceDao.insert(new SkuSource(30, 1, sku.getId()));
 		if (type != null) {
 			typeList = Collections.singletonList(type);
 		}

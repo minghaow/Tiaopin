@@ -6,33 +6,28 @@ import com.google.common.cache.LoadingCache;
 import nanshen.constant.SystemConstants;
 import nanshen.constant.TimeConstants;
 import nanshen.dao.SalesInfoDao;
-import nanshen.dao.SkuDetailDao;
-import nanshen.dao.SkuItemDao;
+import nanshen.dao.SkuDao;
 import nanshen.dao.SkuItemDescriptionDao;
-import nanshen.data.AdminUserInfo;
-import nanshen.data.CustomerReview.CustomerReview;
-import nanshen.data.PublicationStatus;
-import nanshen.data.Sku.*;
-import nanshen.data.StyleTag;
+import nanshen.dao.SkuSourceDao;
+import nanshen.data.Question.ComplexAnswer;
+import nanshen.data.Sku.Sku;
+import nanshen.data.Sku.SkuItem;
+import nanshen.data.Sku.SkuSource;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
-import nanshen.data.SystemUtil.PageInfo;
-import nanshen.service.CustomerReviewService;
+import nanshen.service.AnswerService;
+import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
 import nanshen.service.common.ScheduledService;
-import nanshen.utils.LogUtils;
-import nanshen.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +39,10 @@ import java.util.concurrent.TimeUnit;
 public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Autowired
-    private SkuItemDao skuItemDao;
+    private SkuDao skuDao;
 
     @Autowired
-    private SkuDetailDao skuDetailDao;
+    private SkuSourceDao skuSourceDao;
 
     @Autowired
     private SalesInfoDao salesInfoDao;
@@ -59,12 +54,10 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     private OssFormalApi ossFormalApi;
 
     @Autowired
-    private CustomerReviewService customerReviewService;
+    private QuestionService questionService;
 
-    private Map<PublicationStatus, Long> statusCntMap = new HashMap<PublicationStatus, Long>();
-    private Map<PublicationStatus, Long> newStatusCntMap = new HashMap<PublicationStatus, Long>();
-    private List<SkuItem> offlineSkuItemList = new ArrayList<SkuItem>();
-    private List<SkuItem> onlineSkuItemList = new ArrayList<SkuItem>();
+    @Autowired
+    private AnswerService answerService;
 
     /** skuId到skuItem信息的缓存 */
     private final LoadingCache<Long, SkuItem> skuItemCache = CacheBuilder.newBuilder()
@@ -74,25 +67,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
                     new CacheLoader<Long, SkuItem>() {
                         @Override
                         public SkuItem load(Long skuItemId) throws Exception {
-                            List<SkuDetail> skuDetailList = getSkuDetailByItemId(skuItemId);
-                            List<CustomerReview> customerReviewList = customerReviewService.getByItemId(skuItemId, new PageInfo(1));
-                            List<SalesInfo> salesInfoList = salesInfoDao.getBySkuItemId(skuItemId);
-                            SkuItemDescription skuItemDescription = skuItemDescriptionDao.get(skuItemId);
-                            SkuItem skuItem = skuItemDao.get(skuItemId);
-                            if (skuItem != null) {
-                                skuItem.setSkuDetailList(skuDetailList);
-                                skuItem.setCustomerReviewList(customerReviewList);
-                                long totalSalesInfo = 0;
-                                long monthlySalesInfo = 0;
-                                for (SalesInfo salesInfo : salesInfoList) {
-                                    totalSalesInfo += salesInfo.getTotalAmount();
-                                    monthlySalesInfo += salesInfo.getMonthlyAmount();
-                                }
-                                skuItem.setTotalSalesInfo(totalSalesInfo);
-                                skuItem.setMonthlySalesInfo(monthlySalesInfo);
-                                skuItem.setSkuItemDescription(skuItemDescription);
-                            }
-                            return skuItem;
+                            return null;
                         }
                     });
 
@@ -102,23 +77,9 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
         long startTime = System.currentTimeMillis();
 
         Date startDate = new Date(startTime - 7 * TimeConstants.DAY_IN_MILLISECONDS);
-        updateStatusCntMap(startDate);
-        updateSkuInfoList();
 
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.println("[SkuService] Update in " + totalTime + "ms");
-    }
-
-    private void updateSkuInfoList() {
-//        offlineSkuItemList = skuItemDao.getAll(PublicationStatus.OFFLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
-//        onlineSkuItemList = skuItemDao.getAll(PublicationStatus.ONLINE, new PageInfo(1, SystemConstants.DEFAULT_CACHED_SKU_SIZE));
-    }
-
-    private void updateStatusCntMap(Date startDate) {
-//        statusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE));
-//        statusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE));
-//        newStatusCntMap.put(PublicationStatus.ONLINE, skuItemDao.getCnt(PublicationStatus.ONLINE, startDate));
-//        newStatusCntMap.put(PublicationStatus.OFFLINE, skuItemDao.getCnt(PublicationStatus.OFFLINE, startDate));
     }
 
     @Override
@@ -127,169 +88,87 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     }
 
     @Override
-    public boolean update(SkuItem skuItem) {
-        return skuItemDao.update(skuItem);
+    public List<Sku> getByAnswerId(long aid) {
+        List<SkuSource> skuSourceList = skuSourceDao.getByAnswerId(aid);
+        return getSkuListBySkuSourceList(skuSourceList);
     }
 
     @Override
-    public ExecInfo update(long itemId, String title, String subTitle, String url, SkuDetailType category, String desc, long operatorId) {
-        SkuItem skuItem = skuItemDao.get(itemId);
-        skuItem.setStatus(PublicationStatus.OFFLINE);
-        skuItem.setTitle(title);
-        skuItem.setSubTitle(subTitle);
-        skuItem.setUrl(url);
-        skuItem.setDescription(desc);
-        skuItem.setUploadUserId(operatorId);
-        skuItem.setCreateTime(new Date());
-        if (update(skuItem)) {
-            update();
-            return ExecInfo.succ();
+    public List<Sku> getByQuestionId(long qid) {
+        List<SkuSource> skuSourceList = skuSourceDao.getByQuestionId(qid);
+        return getSkuListBySkuSourceList(skuSourceList);
+    }
+
+    @Override
+    public Map<Long, List<Sku>> getMapByQuestionId(long qid) {
+        List<SkuSource> skuSourceList = skuSourceDao.getByQuestionId(qid);
+        Map<Long, List<SkuSource>> answerSkuSourceListMap = new HashMap<Long, List<SkuSource>>();
+        Map<Long, List<Sku>> answerSkuListMap = new HashMap<Long, List<Sku>>();
+        for (SkuSource skuSource : skuSourceList) {
+            List<SkuSource> tempSkuSourceList = answerSkuSourceListMap.get(skuSource.getAid());
+            if (tempSkuSourceList == null || tempSkuSourceList.size() <= 0) {
+                answerSkuSourceListMap.put(skuSource.getAid(), Collections.singletonList(skuSource));
+            } else {
+                List<SkuSource> newTempSkuSourceList = new ArrayList<SkuSource>();
+                newTempSkuSourceList.addAll(tempSkuSourceList);
+                newTempSkuSourceList.add(skuSource);
+                answerSkuSourceListMap.put(skuSource.getAid(), newTempSkuSourceList);
+            }
         }
-        return ExecInfo.fail("更新失败");
+        for (long aid : answerSkuSourceListMap.keySet()) {
+            List<SkuSource> tempSkuSourceList = answerSkuSourceListMap.get(aid);
+            answerSkuListMap.put(aid, getSkuListBySkuSourceList(tempSkuSourceList));
+        }
+        return answerSkuListMap;
+    }
+
+    private List<Sku> getSkuListBySkuSourceList(List<SkuSource> skuSourceList) {
+        List<Sku> skuList = new ArrayList<Sku>();
+        for (SkuSource skuSource : skuSourceList) {
+            Sku sku = skuDao.get(skuSource.getSid());
+            if (sku != null) {
+                skuList.add(sku);
+            }
+        }
+        return skuList;
     }
 
     @Override
     public boolean remove(long itemId) {
-        updateSkuInfoList();
-        return skuItemDao.remove(itemId);
+//        updateSkuInfoList();
+//        return skuItemDao.remove(itemId);
+        return false;
     }
 
-    @Override
-    public ExecInfo remove(long skuId, AdminUserInfo adminUserInfo) {
-        boolean isSucc = skuItemDao.remove(skuId, adminUserInfo.getId());
-        if (isSucc) {
-            updateSkuInfoList();
-            return ExecInfo.succ();
-        }
-        return ExecInfo.fail("非上传人，禁止删除");
-    }
 
-    @Override
-    public SkuItem getSkuItemInfo(long itemId) {
-        try {
-            return skuItemCache.get(itemId);
-        } catch (ExecutionException e) {
-            LogUtils.warning("[SkuServiceImpl] Fail to get sku item from skuItemCache!");
-        }
-        return null;
-    }
-
-    @Override
-    public SkuDetail getSkuDetail(long skuId) {
-        return skuDetailDao.get(skuId);
-    }
-
-    @Override
-    public List<SkuDetail> getSkuDetailByItemId(long itemId) {
-        return skuDetailDao.getByItemId(itemId);
-    }
-
-    @Override
-    public SkuItem getOrCreateSkuInfo(long itemId, long operatorId) {
-//        if (skuId == 0) {
-//            return skuInfoDao.insert(new SkuInfo(operatorId));
-//        } else {
-            return skuItemDao.get(itemId);
-//        }
-    }
 
     @Override
     public ExecResult<SkuItem> uploadImage(long itemId, long operatorId, MultipartFile file) throws IOException {
         InputStream is = file.getInputStream();
-        SkuItem skuItem = getOrCreateSkuInfo(itemId, operatorId);
+        SkuItem skuItem = null;
         ExecInfo execInfo = uploadImageToOss(file, is, skuItem);
 
         if (execInfo.isSucc()) {
             skuItem.setImgCount(skuItem.getImgCount() + 1);
-            update(skuItem);
             return ExecResult.succ(skuItem);
         }
         return ExecResult.fail(execInfo.getMsg());
     }
 
     @Override
-    public List<SkuItem> getAll(PublicationStatus status, PageInfo pageInfo) {
-        if (pageInfo != null && pageInfo.getPage() <= 1) {
-            if (status == PublicationStatus.ONLINE) {
-                return onlineSkuItemList;
-            } else {
-                return offlineSkuItemList;
-            }
+    public Sku getByShowSid(long sid) {
+        return skuDao.getByShowId(sid);
+    }
+
+    @Override
+    public List<ComplexAnswer> getAnswersBySid(long sid) {
+        List<SkuSource> skuSourceList = skuSourceDao.getBySkuId(sid);
+        List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
+        for (SkuSource skuSource : skuSourceList) {
+            ComplexAnswer complexAnswer = answerService.getComplexAnswerByAidAndQid(skuSource.getAid(), skuSource.getQid());
+            complexAnswerList.add(complexAnswer);
         }
-        return skuItemDao.getAll(status, pageInfo);
-    }
-
-    @Override
-    public List<StyleTag> getAllTag() {
-        return null;
-    }
-
-    @Override
-    public long getCnt(PublicationStatus status) {
-        return statusCntMap.get(status);
-    }
-
-    @Override
-    public long getThisWeekCnt(PublicationStatus status) {
-        return newStatusCntMap.get(status);
-    }
-
-    @Override
-    public List<SkuItem> getByLookId(long lookId) {
-        return skuItemDao.getByLookId(lookId);
-    }
-
-    @Override
-    public boolean changeStatus(long itemId, PublicationStatus publicationStatus) {
-        SkuItem skuItem = skuItemDao.get(itemId);
-        skuItem.setStatus(publicationStatus);
-        if (update(skuItem)) {
-            update();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    @Transactional
-    public ExecInfo addRelatedSku(long lookId, String skuIdList) {
-        String[] skuIdArray = StringUtils.getStringListFromString(skuIdList, ",");
-        List<SkuItem> resultSkuItemList = new ArrayList<SkuItem>();
-
-        for (String skuId : skuIdArray) {
-            Long skuIdLong = Long.parseLong(skuId);
-            SkuItem skuItem = getSkuItemInfo(skuIdLong);
-            if (skuItem == null) {
-                return ExecInfo.fail("抱歉，根据所提供的ID: " + skuId + "，未找到该单品");
-            }
-            resultSkuItemList.add(skuItem);
-        }
-
-        clearSkuLookInfo(lookId);
-        updateSkuLookInfo(lookId, resultSkuItemList);
-        return ExecInfo.succ();
-    }
-
-    @Override
-    public List<SkuDetail> getSkuDetailList(List<Long> skuIdList) {
-        return skuDetailDao.get(skuIdList);
-    }
-
-    private void updateSkuLookInfo(long lookId, List<SkuItem> resultSkuItemList) {
-//        for (SkuInfo skuInfo : resultSkuInfoList) {
-//            if (skuInfo.getLookId() == 0 || skuInfo.getLookId() == lookId) {
-//                skuInfo.setLookId(lookId);
-//                update(skuInfo);
-//            }
-//        }
-    }
-
-    private void clearSkuLookInfo(long lookId) {
-//        List<SkuInfo> skuInfoList = getByLookId(lookId);
-//        for (SkuInfo skuInfo : skuInfoList) {
-//            skuInfo.setLookId(0);
-//            update(skuInfo);
-//        }
+        return complexAnswerList;
     }
 
     private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, SkuItem skuItem) {

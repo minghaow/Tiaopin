@@ -65,4 +65,12 @@ public class AnswerServiceImpl implements AnswerService {
         UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
         return new ComplexAnswer(answer.getId(), answer, aShowId, question.getId(), question.getShowId(), question, userInfo);
     }
+
+    @Override
+    public ComplexAnswer getComplexAnswerByAidAndQid(long aid, long qid) {
+        Answer answer = answerDao.get(aid);
+        Question question = questionDao.get(qid);
+        UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
+        return new ComplexAnswer(aid, answer, answer.getShowId(), qid, question.getShowId(), question, userInfo);
+    }
 }

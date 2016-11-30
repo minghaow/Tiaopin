@@ -43,7 +43,7 @@
         <div class="small-12 medium-12 large-3 columns">
             <ul class="inline-list social">
                 <p class="about subheader">微信公众号，关注我们：</p>
-                <img src="$!{imageUrlPrefix}/images/user/qrcode-gongzhonghao.jpg" alt="挑品公众号">
+                <img src="$!{imageUrlPrefix}/images/user/qrcode.jpg" alt="挑品公众号">
             </ul>
         </div>
     </div>
@@ -63,23 +63,6 @@
 <script>
     $(document).foundation();
     jQuery(document).ready(function($) {
-        var nav = $('.navbar'),
-                doc = $(document),
-                win = $(window);
-
-        win.scroll(function() {
-            if (doc.scrollTop() > 20) {
-                nav.addClass('navbar-fixed-top');
-                nav.addClass('scrolled');
-            } else {
-                nav.removeClass('navbar-fixed-top');
-                nav.removeClass('scrolled');
-            }
-        });
-
-        // Trigger the scroll listener on page load
-
-        win.scroll();
 
         $('#banner-slider').lightSlider({
             adaptiveHeight:true,
@@ -102,58 +85,18 @@
             ]
         });
         $('#lightSlider-s').lightSlider({
-            gallery: true,
-            vThumbWidth:80,
-            item: 1,
-            loop: true,
-            slideMargin: 0,
-            thumbItem:6,
+            item:1,
+            loop:true,
+            slideMove:1,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed:600,
             enableDrag: true,
-            controls: true,
-            auto: false,
-            adaptiveHeight:false,
-            onBeforeSlide: function (el) {
-                var detailImage = $(".detail-image-wrapper.active .detail-image");
-                var detailImageBig = $(".detail-image-wrapper.active .detail-image-big");
-                detailImage.attr("src", detailImage.data("url"));
-                detailImageBig.attr("src", detailImageBig.data("url"));
-            },
-            responsive : [
-                {
-                    breakpoint:500,
-                    settings: {
-                        controls: false
-                    }
-                }
-            ]
-//            addClass: "show-for-small-only"
+            controls: false,
+            auto:false
         });
 
-        $("#lightSlider-s .detail-image-wrapper .detail-image").show();
         $(".hide-before-js-ready").show();
 
-        var detailImageWrapper = $(".lSSlideWrapper");
-        var detailImageHeight = detailImageWrapper.height();
-        var detailImageWidth = detailImageWrapper.width();
-        var detailImageTop = detailImageWrapper.prop("offsetTop");
-        var detailImageLeft = detailImageWrapper.prop("offsetLeft");
-
-        $(".detail-image-cover").mouseenter(function(e) {
-            var id = $(this).data("id");
-            $("#detail-image-big-" + id).show();
-        }).mouseleave(function() {
-            var id = $(this).data("id");
-            $("#detail-image-big-" + id).hide();
-        }).mousemove(function(e) {
-            var id = $(this).data("id");
-            var relativeTop = e.pageY - detailImageTop;
-            var relativeLeft = e.pageX - detailImageLeft;
-            var bigImgHeight = $("#detail-image-big-" + id).height();
-            var bigImgWidth = $("#detail-image-big-" + id).width();
-            var absoluteTop = (detailImageHeight - bigImgHeight / bigImgWidth * 1000) * relativeTop / detailImageHeight;
-            var absoluteLeft = (detailImageWidth - 1000) * relativeLeft / detailImageWidth;
-            $("#detail-image-big-" + id).css({top: absoluteTop, left: absoluteLeft});
-        });
     });
     (function(){
         var bp = document.createElement('script');

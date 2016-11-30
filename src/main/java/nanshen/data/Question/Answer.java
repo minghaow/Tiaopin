@@ -33,6 +33,10 @@ public class Answer {
     private String userName = "";
     private String userDesc = "";
 
+    /** description */
+    @Column
+    private String description;
+
     /** content */
     @Column
     private String content;
@@ -68,9 +72,10 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(long questionId, String content, AnswerStatus status, long userId) {
+    public Answer(long questionId, String description, String content, AnswerStatus status, long userId) {
         this.questionId = questionId;
         this.content = content;
+        this.description = description;
         this.showId = generateShowId(System.currentTimeMillis(), userId);
         this.status = status;
         this.userId = userId;
@@ -190,6 +195,14 @@ public class Answer {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long generateShowId(long timeMillis, long userId) {

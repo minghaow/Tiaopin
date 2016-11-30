@@ -19,4 +19,5 @@ public interface AnswerService {
 
     ComplexAnswer getComplexAnswerByShowId(long questionId);
 
+    ComplexAnswer getComplexAnswerByAidAndQid(long aid, long qid);
 }

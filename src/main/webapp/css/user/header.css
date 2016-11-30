@@ -211,10 +211,19 @@
          display: none;
     }
     #body .title-bar {
-        background: #cd3939;
+        background: #BA1123;
         box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);
         color: #fefefe;
         padding: .5rem;
+    }
+    .title-bar-title img {
+        max-width: 3.5rem;
+    }
+    .title-bar-title-content {
+        vertical-align: sub;
+    }
+    .fa-fw {
+        vertical-align: middle;
     }
     #body .off-canvas {
         background: transparent;
@@ -223,15 +232,16 @@
         display: block;
         padding: 0.7rem 1rem;
         line-height: 1;
-        color: #cd3939;
+        color: #BA1123;
         font-size: 1rem;
         background: #ddd;
     }
     #body .menu > li > a {
         display: block;
-        padding: 0.7rem 1rem;
+        padding: 0.5rem 1rem;
         line-height: 1;
-        color: black;
+        color: #444;
+        font-size: .87rem;
     }
 }
 /* Card */

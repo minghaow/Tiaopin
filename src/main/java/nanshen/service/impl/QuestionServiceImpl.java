@@ -75,7 +75,7 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
         UserInfo userInfo = accountService.getUserInfo(question.getUserId());
-        return new ComplexQuestion(qShowId, question.getShowId(), question, userInfo, answerList);
+        return new ComplexQuestion(question.getId(), question.getShowId(), question, userInfo, answerList);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
         Answer answer = answerDao.getByShowId(aShowId);
         UserInfo userInfo = accountService.getUserInfo(question.getUserId());
-        return new ComplexQuestion(qShowId, question.getShowId(), question, userInfo, Collections.singletonList(answer));
+        return new ComplexQuestion(question.getId(), question.getShowId(), question, userInfo, Collections.singletonList(answer));
     }
 
 }

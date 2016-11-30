@@ -1,18 +1,14 @@
 package nanshen.service;
 
-import nanshen.data.AdminUserInfo;
-import nanshen.data.PublicationStatus;
-import nanshen.data.Sku.SkuDetail;
-import nanshen.data.Sku.SkuDetailType;
+import nanshen.data.Question.ComplexAnswer;
+import nanshen.data.Sku.Sku;
 import nanshen.data.Sku.SkuItem;
-import nanshen.data.StyleTag;
-import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
-import nanshen.data.SystemUtil.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Sku related services
@@ -22,28 +18,28 @@ import java.util.List;
 public interface SkuService {
 
     /**
-     * Update sku info
+     * get sku by answer id
      *
-     * @param skuItem the target sku info
-     * @return boolean
+     * @param aid answer id
+     * @return list of sku
      */
-    boolean update(SkuItem skuItem);
+    List<Sku> getByAnswerId(long aid);
 
     /**
-     * Update sku info
-     * <strong>NOTE:</strong> The function will also change status to
-     * {@link nanshen.data.PublicationStatus#OFFLINE}
+     * get sku by question id
      *
-     * @param itemId itemId
-     * @param title the sku title
-     * @param subTitle the sku subtitle
-     * @param url the sku link
-     * @param desc the sku description
-     * @param category the sku category {@link SkuDetailType}
-     * @param operatorId the uploader
-     * @return ExecInfo
+     * @param qid question id
+     * @return list of sku
      */
-    ExecInfo update(long itemId, String title, String subTitle, String url, SkuDetailType category, String desc, long operatorId);
+    List<Sku> getByQuestionId(long qid);
+
+    /**
+     * get (answer-answer sku list) map by question id
+     *
+     * @param qid question id
+     * @return list of sku
+     */
+    Map<Long, List<Sku>> getMapByQuestionId(long qid);
 
     /**
      * Remove sku according to skuId
@@ -52,47 +48,6 @@ public interface SkuService {
      * @return
      */
     boolean remove(long itemId);
-
-    /**
-     * Remove sku according to skuId and admin user
-     *
-     * @param itemId itemId
-     * @return
-     */
-    ExecInfo remove(long itemId, AdminUserInfo adminUserInfo);
-
-    /**
-     * Get sku item info by itemId
-     *
-     * @param itemId itemId
-     * @return
-     */
-    SkuItem getSkuItemInfo(long itemId);
-
-    /**
-     * Get sku info by skuId
-     *
-     * @param skuId skuId
-     * @return
-     */
-    SkuDetail getSkuDetail(long skuId);
-
-    /**
-     * Get sku details by skuId
-     *
-     * @param itemId itemId
-     * @return
-     */
-    List<SkuDetail> getSkuDetailByItemId(long itemId);
-
-    /**
-     * Get sku info by skuId. Create one if find nothing.
-     *
-     * @param itemId itemId
-     * @param operatorId uploader
-     * @return
-     */
-    SkuItem getOrCreateSkuInfo(long itemId, long operatorId);
 
     /**
      * Upload the sku images
@@ -105,70 +60,18 @@ public interface SkuService {
     ExecResult<SkuItem> uploadImage(long itemId, long operatorId, MultipartFile file) throws IOException;
 
     /**
-     * Get all of the skus for specified publication status
+     * Get sku by sku id
      *
-     * <strong>Note:<strong/> already paged.
-     *
-     * @param status publication status
-     * @param pageInfo page number
-     * @return List<LookInfo>
-     */
-    List<SkuItem> getAll(PublicationStatus status, PageInfo pageInfo);
-
-    /**
-     * Get the all of the tags in a list
-     * {@code nanshen.data.LookTag}
-     *
-     * @return List<LookTag>
-     */
-    List<StyleTag> getAllTag();
-
-    /**
-     * Get the count of looks for the specified publication status
-     *
-     * @param publicationStatus publication status
-     * @return long
-     */
-    long getCnt(PublicationStatus publicationStatus);
-
-    /**
-     * Get the count of this week new looks for the specified publication status
-     *
-     * @param publicationStatus publication status
-     * @return long
-     */
-    long getThisWeekCnt(PublicationStatus publicationStatus);
-
-    /**
-     * Get all of the sku info by lookId
-     * @param itemId look id
+     * @param sid
      * @return
      */
-    List<SkuItem> getByLookId(long itemId);
+    Sku getByShowSid(long sid);
 
     /**
-     * Change the publication status of a sku item
+     * get complex answer by sku id
      *
-     * @param itemId the id of item
-     * @param publicationStatus publication status
+     * @param sid
      * @return
      */
-    boolean changeStatus(long itemId, PublicationStatus publicationStatus);
-
-    /**
-     * Add look id for each sku
-     *
-     * @param itemId itemId
-     * @param skuIdList sku id list, split by ','
-     * @return ExecInfo
-     */
-    ExecInfo addRelatedSku(long itemId, String skuIdList);
-
-    /**
-     * Get sku detail list by sku id list
-     *
-     * @param skuIdList sku id list
-     * @return List<SkuDetail>
-     */
-    List<SkuDetail> getSkuDetailList(List<Long> skuIdList);
+    List<ComplexAnswer> getAnswersBySid(long sid);
 }
