@@ -41,7 +41,7 @@
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?0046db19a6dddc653c19626e40dcc59b";
+            hm.src = "https://hm.baidu.com/hm.js?7945b32af148375b64fdc6a5c64cfe25";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
@@ -60,7 +60,7 @@
     <img src="$!{imageUrlPrefix}/images/search.jpg" alt="世界蕾丝时尚" class="seo-content"/>
 #end
 
-<div class="title-bar hide-for-medium">
+<div class="title-bar">
     <div class="title-bar-left">
         <button class="menu-icon" type="button" data-open="offCanvas"></button>
         <span class="title-bar-title">
@@ -159,56 +159,56 @@
 ##                </div>
 ##            </div>
 ##        </div>
-
-        <nav class="navbar navbar-default noBorder scrolled hide-for-small-only" role="navigation">
-            <div class="container">
-                <div class="logo-wrapper">
-                    <a href="/">
-                        <img src="$!{imageUrlPrefix}/images/logo/logo.png" alt="IT'LACE"/>
-                    </a>
-                </div>
-                <div class="navbar-right menustyle hide-for-small-only">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" class="unsupported-section"><i class="fi-shopping-cart"> </i>Shopping Cart (0)</a></li>
-                        <li><a href="#" class="unsupported-section"><i class="fi-heart"> </i>My Wishlist</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <nav class="bottom-line-down hide-for-small-only">
-
-            <div class="menu-wrapper">
-                <a href="/">
-                    首页
-                </a>
-                <a href="/" class="unsupported-section">
-                    商店
-                </a>
-                <a href="/" class="unsupported-section">
-                    杂志
-                </a>
-                <a href="/contact">
-                    关于我们
-                </a>
-                <a href="/contact">
-                    联系我们
-                </a>
-            </div>
-
-            <div class="menu-wrapper-left">
-                #if ($!{en})
-                    <a href="?l=ch">
-                        中文
-                    </a>
-                #else
-                    <a href="?l=en">
-                        English
-                    </a>
-                #end
-            </div>
-        </nav>
-
+##
+##        <nav class="navbar navbar-default noBorder scrolled hide-for-small-only" role="navigation">
+##            <div class="container">
+##                <div class="logo-wrapper">
+##                    <a href="/">
+##                        <img src="$!{imageUrlPrefix}/images/logo/logo.png" alt="IT'LACE"/>
+##                    </a>
+##                </div>
+##                <div class="navbar-right menustyle hide-for-small-only">
+##                    <ul class="nav navbar-nav">
+##                        <li><a href="#" class="unsupported-section"><i class="fi-shopping-cart"> </i>Shopping Cart (0)</a></li>
+##                        <li><a href="#" class="unsupported-section"><i class="fi-heart"> </i>My Wishlist</a></li>
+##                    </ul>
+##                </div>
+##            </div>
+##        </nav>
+##
+##        <nav class="bottom-line-down hide-for-small-only">
+##
+##            <div class="menu-wrapper">
+##                <a href="/">
+##                    首页
+##                </a>
+##                <a href="/" class="unsupported-section">
+##                    商店
+##                </a>
+##                <a href="/" class="unsupported-section">
+##                    杂志
+##                </a>
+##                <a href="/contact">
+##                    关于我们
+##                </a>
+##                <a href="/contact">
+##                    联系我们
+##                </a>
+##            </div>
+##
+##            <div class="menu-wrapper-left">
+##                #if ($!{en})
+##                    <a href="?l=ch">
+##                        中文
+##                    </a>
+##                #else
+##                    <a href="?l=en">
+##                        English
+##                    </a>
+##                #end
+##            </div>
+##        </nav>
+##
 ##        <div id="animatedModal1" class="reveal" data-reveal data-animation-out="fade-out" >
 ##            <div class="row">
 ##                <div class="small-12 medium-6 large-6 columns auth-plain right-border">

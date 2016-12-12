@@ -87,6 +87,9 @@
         <div class="answer-down">
             <i class="fa fa-sort-desc" aria-hidden="true"> </i>
         </div>
+        <div class="wrap-up">
+            收起
+        </div>
         <div class="check-skus">
             查看商品
         </div>

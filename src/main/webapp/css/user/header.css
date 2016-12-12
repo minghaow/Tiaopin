@@ -23,6 +23,13 @@
     /*box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);*/
 /*}*/
 /* top-nav */
+html {
+    height: initial !important;
+    max-width: 40em;
+    margin: auto;
+    background: #555;
+    box-shadow: black 0px -1px 13px 1px;
+}
 .navbar.scrolled{
     box-shadow: 0 3px 3px rgba(0,0,0,0.1);
     padding: 0 0 0 0;
@@ -118,80 +125,129 @@
 }
 @media only screen and (min-width: 40.063em) {
     .navbar{
-        padding: 45px 0 10px 0;
+        padding: 0;
         background-color:#fff;
         transition:padding 0.4s;
     }
     .logo-wrapper {
         padding-left: 5%;
-        width: 40%;
+        width: 90%;
         display: inline-block;
     }
     .logo-wrapper img {
-        height: 90px;
-        margin: 0;
-    }
-    .superHeader .top-bar,
-    .superHeader .top-bar ul {
-        background: none;
-    }
-    .top-bar#top-bar {
-        width: 90%;
-        max-width: 1500px;
-        margin: auto;
-        padding: .2rem;
-    }
-    .top-bar#top-bar ul .menu-text {
-        font-family:STXingkai,"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
-        font-size: 1rem;
-        padding: .2rem 1rem;
-        font-weight: 300;
-        color: #856f5e;
-    }
-    .top-bar#top-bar ul li a {
-        padding: .2rem 0.7rem;
-        font-weight: 300;
-        font-size: 0.8rem;
-        color: #856f5e;
-    }
-    .top-bar-right .dropdown.menu .has-submenu.is-down-arrow>a::after {
-        display: none;
+        margin: .5rem;
     }
     .sticky-bottom {
-        position: fixed;
-        bottom: 5%;
-        right: 1%;
-        z-index: 100;
+        display: none;
     }
-    .sticky-bottom a {
-        display: block;
+    #body .title-bar {
+        background: #BA1123;
+        box-shadow: 0 2px 3px 1px rgba(167, 134, 106, 0.42);
+        color: #fefefe;
+        padding: .5rem;
     }
-    .sticky-bottom-btn {
-        width: 55px;
-        height: 55px;
-        cursor: pointer;
-        text-align: center;
-        border-radius: 5px;
-        background-color: rgba(58, 58, 58, 0.45);
-        margin-bottom: 5px;
-        -webkit-transition: 0.2s ease;
-        transition: 1s ease;
+    .title-bar-title img {
+        max-width: 3.5rem;
     }
-    .sticky-bottom-btn:hover {
-        background-color: rgba(0, 0, 0, 0.75);
+    .title-bar-title-content {
+        vertical-align: sub;
     }
-    .sticky-bottom .sticky-bottom-content {
+    .fa-fw {
         vertical-align: middle;
-        line-height: 55px;
-        color: white;
-        font-size: 2rem;
     }
-    .sticky-bottom .badge {
-        cursor: pointer;
-        position: absolute;
-        right: -10px;
-        top: -10px;
+    #body .off-canvas {
+        background: transparent;
     }
+    #body .menu > li > label {
+        display: block;
+        padding: 0.7rem 1rem;
+        line-height: 1;
+        color: #BA1123;
+        font-size: 1rem;
+        background: #ddd;
+    }
+    #body .menu > li > a {
+        display: block;
+        padding: 0.5rem 1rem;
+        line-height: 1;
+        color: #444;
+        font-size: .87rem;
+    }
+    /*.navbar{*/
+        /*padding: 45px 0 10px 0;*/
+        /*background-color:#fff;*/
+        /*transition:padding 0.4s;*/
+    /*}*/
+    /*.logo-wrapper {*/
+        /*padding-left: 5%;*/
+        /*width: 40%;*/
+        /*display: inline-block;*/
+    /*}*/
+    /*.logo-wrapper img {*/
+        /*height: 90px;*/
+        /*margin: 0;*/
+    /*}*/
+    /*.superHeader .top-bar,*/
+    /*.superHeader .top-bar ul {*/
+        /*background: none;*/
+    /*}*/
+    /*.top-bar#top-bar {*/
+        /*width: 90%;*/
+        /*max-width: 1500px;*/
+        /*margin: auto;*/
+        /*padding: .2rem;*/
+    /*}*/
+    /*.top-bar#top-bar ul .menu-text {*/
+        /*font-family:STXingkai,"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;*/
+        /*font-size: 1rem;*/
+        /*padding: .2rem 1rem;*/
+        /*font-weight: 300;*/
+        /*color: #856f5e;*/
+    /*}*/
+    /*.top-bar#top-bar ul li a {*/
+        /*padding: .2rem 0.7rem;*/
+        /*font-weight: 300;*/
+        /*font-size: 0.8rem;*/
+        /*color: #856f5e;*/
+    /*}*/
+    /*.top-bar-right .dropdown.menu .has-submenu.is-down-arrow>a::after {*/
+        /*display: none;*/
+    /*}*/
+    /*.sticky-bottom {*/
+        /*position: fixed;*/
+        /*bottom: 5%;*/
+        /*right: 1%;*/
+        /*z-index: 100;*/
+    /*}*/
+    /*.sticky-bottom a {*/
+        /*display: block;*/
+    /*}*/
+    /*.sticky-bottom-btn {*/
+        /*width: 55px;*/
+        /*height: 55px;*/
+        /*cursor: pointer;*/
+        /*text-align: center;*/
+        /*border-radius: 5px;*/
+        /*background-color: rgba(58, 58, 58, 0.45);*/
+        /*margin-bottom: 5px;*/
+        /*-webkit-transition: 0.2s ease;*/
+        /*transition: 1s ease;*/
+    /*}*/
+    /*.sticky-bottom-btn:hover {*/
+        /*background-color: rgba(0, 0, 0, 0.75);*/
+    /*}*/
+    /*.sticky-bottom .sticky-bottom-content {*/
+        /*vertical-align: middle;*/
+        /*line-height: 55px;*/
+        /*color: white;*/
+        /*font-size: 2rem;*/
+    /*}*/
+    /*.sticky-bottom .badge {*/
+        /*cursor: pointer;*/
+        /*position: absolute;*/
+        /*right: -10px;*/
+        /*top: -10px;*/
+    /*}*/
 }
 @media only screen and (max-width: 40em) {
     .navbar{

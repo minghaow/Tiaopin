@@ -17,16 +17,6 @@
     padding: 1.5rem 0;
     box-shadow: 0px 2px 10px #febba4;
 }
-@media only screen and (max-width: 40em) {
-    .features .columns {
-        margin-bottom: 5rem; }
-    #body .footer {
-        padding: 1rem;
-    }
-    #body .footer .row div {
-        padding-top: 2rem;
-    }
-}
 .hero {
     background: url("http://www.banksy-wallpaper.com/wallpapers/800x600/10-i-am-father.jpg") no-repeat center center;
     background-size: cover;
@@ -100,20 +90,40 @@
     .social img {
         width: 60%;
     }
+    .features .columns {
+        margin-bottom: 5rem; }
+    #body .footer {
+        padding: 1rem;
+    }
+    #body .footer .row div {
+        padding-top: 2rem;
+    }
 }
 @media only screen and (min-width: 40.063em) {
-    .footer p {
-        text-align: left; }
-    .footer .social {
-        text-align: left;
-        padding-left: 4rem;
-        margin: 0; }
-    .footer .social img {
-        max-height: 9rem;}
-    .footer .contact {
-        text-align: left; }
-    .footer .contact > i {
-        margin-right: 1rem; } }
+    /*.footer p {*/
+        /*text-align: left; }*/
+    /*.footer .social {*/
+        /*text-align: left;*/
+        /*padding-left: 4rem;*/
+        /*margin: 0; }*/
+    /*.footer .social img {*/
+        /*max-height: 9rem;}*/
+    /*.footer .contact {*/
+        /*text-align: left; }*/
+    /*.footer .contact > i {*/
+        /*margin-right: 1rem; }*/
+    .social img {
+        width: 60%;
+    }
+    .features .columns {
+        margin-bottom: 5rem; }
+    #body .footer {
+        padding: 1rem;
+    }
+    #body .footer .row div {
+        padding-top: 2rem;
+    }
+}
 
 .logo {
     color: #fff;
