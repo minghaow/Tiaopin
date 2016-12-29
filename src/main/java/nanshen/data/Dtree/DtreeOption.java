@@ -24,6 +24,10 @@ public class DtreeOption {
     @Column
     private long qid = 0;
 
+    /** question level */
+    @Column
+    private long level = 0;
+
     /** nextQid */
     @Column
     private long nextQid = 0;
@@ -93,5 +97,13 @@ public class DtreeOption {
 
     public void setNextQid(long nextQid) {
         this.nextQid = nextQid;
+    }
+
+    public long getLevel() {
+        return level;
+    }
+
+    public void setLevel(long level) {
+        this.level = level;
     }
 }

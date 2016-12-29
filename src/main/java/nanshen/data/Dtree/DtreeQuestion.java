@@ -32,6 +32,10 @@ public class DtreeQuestion {
     @Column
     private long userId = 0;
 
+    /** question level */
+    @Column
+    private long level = 0;
+
     /** title, attractive information */
     @Column
     private String title;
@@ -181,6 +185,14 @@ public class DtreeQuestion {
 
     public void setTopicId(long topicId) {
         this.topicId = topicId;
+    }
+
+    public long getLevel() {
+        return level;
+    }
+
+    public void setLevel(long level) {
+        this.level = level;
     }
 
     public long generateShowId(long timeMillis, long userId) {

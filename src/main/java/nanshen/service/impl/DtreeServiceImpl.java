@@ -7,6 +7,7 @@ import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.UserInfoDao;
 import nanshen.data.Dtree.DtreeOption;
 import nanshen.data.Dtree.DtreeQuestion;
+import nanshen.data.Dtree.DtreeQuestionType;
 import nanshen.service.AccountService;
 import nanshen.service.DtreeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,12 @@ public class DtreeServiceImpl implements DtreeService {
     @Override
     public DtreeQuestion getNextDtreeQuestion(long topicId, long qid) {
         DtreeQuestion dtreeQuestion = dtreeQuestionDao.get(topicId, qid);
-        List<DtreeOption> dtreeOptionList = dtreeOptionDao.get(topicId, qid);
-        dtreeQuestion.setOptionList(dtreeOptionList);
+        if (dtreeQuestion.getType() == DtreeQuestionType.QF) {
+
+        } else {
+            List<DtreeOption> dtreeOptionList = dtreeOptionDao.get(topicId, qid);
+            dtreeQuestion.setOptionList(dtreeOptionList);
+        }
         return dtreeQuestion;
     }
 
