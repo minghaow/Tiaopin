@@ -58,8 +58,8 @@ public class DtreeServiceImpl implements DtreeService {
 
     @Override
     public List<Sku> getResult(List<DtreeTrack> dtreeTrackList) {
-        Sku sku1 = skuService.getByShowSid(1);
-        Sku sku2 = skuService.getByShowSid(2);
+        Sku sku1 = skuService.getByShowSid(5813319331918L);
+        Sku sku2 = skuService.getByShowSid(5813311331918L);
         List<Sku> skuList = new ArrayList<Sku>();
         skuList.add(sku1);
         skuList.add(sku2);
