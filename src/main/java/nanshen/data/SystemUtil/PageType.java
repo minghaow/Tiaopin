@@ -41,6 +41,8 @@ public enum PageType {
 
     CONTACT("联系", true),
 
+    DTREE("决策树", false),
+
     WOYANG_HOME("首页", false),
 
     WOYANG_SEARCH("搜索页", false),
