@@ -57,10 +57,12 @@ public class SkuCtrl extends BaseCtrl {
 			json.put("success", false);
 			json.put("msg", "错误的商品ID");
 		} else {
-			Sku sku = skuService.getByShowSid(sid);
-			List<ComplexAnswer> answerList = skuService.getAnswersBySid(sku.getId());
+			Sku sku = skuService.getBySid(sid);
 			json.put("sku", sku);
-			json.put("answerList", answerList);
+			if (sku != null) {
+				List<ComplexAnswer> answerList = skuService.getAnswersBySid(sku.getId());
+				json.put("answerList", answerList);
+			}
 		}
 		responseJson(response, json);
 	}
