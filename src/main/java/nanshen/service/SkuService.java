@@ -66,6 +66,13 @@ public interface SkuService {
      * @return
      */
     Sku getByShowSid(long sid);
+    /**
+     * Get sku by sku id
+     *
+     * @param sid
+     * @return
+     */
+    Sku getBySid(long sid);
 
     /**
      * get complex answer by sku id

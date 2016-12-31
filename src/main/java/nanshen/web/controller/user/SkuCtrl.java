@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/s")
@@ -44,4 +48,20 @@ public class SkuCtrl extends BaseCtrl {
 		return new ModelAndView("user/sku");
 	}
 
+	@RequestMapping(value = "/json", method = RequestMethod.GET)
+	public void skuJson(HttpServletResponse response,
+							   @RequestParam(defaultValue = "0", required = true) long sid) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		if (sid <= 0) {
+			json.put("sku", null);
+			json.put("success", false);
+			json.put("msg", "错误的商品ID");
+		} else {
+			Sku sku = skuService.getByShowSid(sid);
+			List<ComplexAnswer> answerList = skuService.getAnswersBySid(sku.getId());
+			json.put("sku", sku);
+			json.put("answerList", answerList);
+		}
+		responseJson(response, json);
+	}
 }

@@ -161,6 +161,11 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     }
 
     @Override
+    public Sku getBySid(long sid) {
+        return skuDao.get(sid);
+    }
+
+    @Override
     public List<ComplexAnswer> getAnswersBySid(long sid) {
         List<SkuSource> skuSourceList = skuSourceDao.getBySkuId(sid);
         List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
