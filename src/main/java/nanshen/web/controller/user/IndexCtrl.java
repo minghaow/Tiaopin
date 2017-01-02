@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +73,20 @@ public class IndexCtrl extends BaseCtrl {
 		prepareHeaderModel(model, PageType.ITEM_LIST);
 		model.addAttribute("questionList", questionList);
 		return new ModelAndView("user/list");
+	}
+
+	@RequestMapping(value = "/l/json", method = RequestMethod.GET)
+	public void questionJson(ModelMap model, HttpServletResponse response,
+							 @RequestParam(defaultValue = "", required = true) QuestionType type,
+							 @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
+		List<QuestionType> typeList = Arrays.asList(QuestionType.values());
+		if (type != null) {
+			typeList = Collections.singletonList(type);
+		}
+		List<ComplexQuestion> questionList = questionService.getHotQuestions(typeList, new PageInfo(page));
+		prepareHeaderModel(model, PageType.ITEM_LIST);
+		model.addAttribute("qlist", questionList);
+		responseJson(response, model);
 	}
 
 }
