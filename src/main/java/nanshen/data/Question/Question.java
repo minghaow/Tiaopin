@@ -1,5 +1,6 @@
 package nanshen.data.Question;
 
+import nanshen.constant.SystemConstants;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
@@ -166,7 +167,7 @@ public class Question {
         char[] c = String.valueOf(showId).toCharArray();
         for(int i = 0; i < c.length; i++) {
             int number = c[i] - '0';
-            number = (number + 3) % 10;
+            number = (number + SystemConstants.SHOWID_QUESTION) % 10;
             c[i] = (char) ('0' + number);
         }
         String showIdStr = new String(c);

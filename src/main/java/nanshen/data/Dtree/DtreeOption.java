@@ -36,6 +36,10 @@ public class DtreeOption {
     @Column
     private String content;
 
+    /** skuType */
+    @Column
+    private String skuType;
+
     /** isImg */
     @Column
     private DtreeOptionType type = DtreeOptionType.UNKNOWN;
@@ -105,5 +109,13 @@ public class DtreeOption {
 
     public void setLevel(long level) {
         this.level = level;
+    }
+
+    public String getSkuType() {
+        return skuType;
+    }
+
+    public void setSkuType(String skuType) {
+        this.skuType = skuType;
     }
 }

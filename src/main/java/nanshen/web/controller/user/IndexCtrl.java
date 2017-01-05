@@ -84,7 +84,6 @@ public class IndexCtrl extends BaseCtrl {
 			typeList = Collections.singletonList(type);
 		}
 		List<ComplexQuestion> questionList = questionService.getHotQuestions(typeList, new PageInfo(page));
-		prepareHeaderModel(model, PageType.ITEM_LIST);
 		model.addAttribute("qlist", questionList);
 		responseJson(response, model);
 	}

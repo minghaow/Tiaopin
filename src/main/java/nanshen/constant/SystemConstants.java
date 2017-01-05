@@ -36,4 +36,10 @@ public class SystemConstants {
     public static String HELLO_MSG_AFTERNOON = "下午好";
     public static String HELLO_MSG_EVENING = "晚上好";
 
+    /** ShowId Offset */
+    public static final int SHOWID_ANSWER = 2;
+    public static final int SHOWID_QUESTION = 3;
+    public static final int SHOWID_TOPIC = 4;
+    public static final int SHOWID_USER = 5;
+
 }
