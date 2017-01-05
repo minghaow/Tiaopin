@@ -41,6 +41,11 @@ public class TopicServiceImpl extends ScheduledService implements TopicService {
     }
 
     @Override
+    public boolean runPreUpdate() {
+        return true;
+    }
+
+    @Override
     public List<Topic> getHotTopic() {
         return hotTopicList;
     }

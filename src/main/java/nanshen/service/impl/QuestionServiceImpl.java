@@ -2,15 +2,18 @@ package nanshen.service.impl;
 
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
+import nanshen.dao.TopicDao;
 import nanshen.dao.UserInfoDao;
 import nanshen.data.Question.Answer;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.Question;
 import nanshen.data.Question.QuestionType;
 import nanshen.data.SystemUtil.PageInfo;
+import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 import nanshen.service.AccountService;
 import nanshen.service.QuestionService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private AnswerDao answerDao;
+
+    @Autowired
+    private TopicDao topicDao;
 
     @Autowired
     private AccountService accountService;
@@ -66,6 +72,7 @@ public class QuestionServiceImpl implements QuestionService {
         if (question == null) {
             return null;
         }
+        fillQuestionTopicList(question);
         List<Answer> answerList = answerDao.getByQuestionId(question.getId());
         for (Answer answer : answerList) {
             UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
@@ -76,6 +83,17 @@ public class QuestionServiceImpl implements QuestionService {
         }
         UserInfo userInfo = accountService.getUserInfo(question.getUserId());
         return new ComplexQuestion(question.getId(), question.getShowId(), question, userInfo, answerList);
+    }
+
+    private void fillQuestionTopicList(Question question) {
+        if (StringUtils.isNotBlank(question.getTopicIdList())) {
+            List<Topic> topicList = new ArrayList<Topic>();
+            for (String topicIdString : question.getTopicIdList().split(",")) {
+                Topic topic = topicDao.get(Long.parseLong(topicIdString));
+                topicList.add(topic);
+            }
+            question.setTopicList(topicList);
+        }
     }
 
     @Override

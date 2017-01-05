@@ -1,11 +1,13 @@
 package nanshen.data.Question;
 
 import nanshen.constant.SystemConstants;
+import nanshen.data.Topic.Topic;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Question
@@ -34,6 +36,13 @@ public class Question {
     /** question description, explain the title */
     @Column
     private String description;
+
+    /** question topic list */
+    private List<Topic> topicList;
+
+    /** question topic id list */
+    @Column
+    private String topicIdList;
 
     /** total view about the question */
     @Column
@@ -157,6 +166,22 @@ public class Question {
 
     public void setType(QuestionType type) {
         this.type = type;
+    }
+
+    public String getTopicIdList() {
+        return topicIdList;
+    }
+
+    public void setTopicIdList(String topicIdList) {
+        this.topicIdList = topicIdList;
+    }
+
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 
     public long generateShowId(long timeMillis, long userId) {
