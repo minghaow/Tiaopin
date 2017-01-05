@@ -6,7 +6,9 @@ import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Answer
@@ -41,6 +43,12 @@ public class Answer {
     /** content */
     @Column
     private String content;
+
+    /** content without html */
+    @Column
+    private String cleanContent;
+
+    private List<AnswerCleanContent> cleanContentList = new ArrayList<AnswerCleanContent>();
 
     /** total view about the question */
     @Column
@@ -204,6 +212,22 @@ public class Answer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCleanContent() {
+        return cleanContent;
+    }
+
+    public void setCleanContent(String cleanContent) {
+        this.cleanContent = cleanContent;
+    }
+
+    public List<AnswerCleanContent> getCleanContentList() {
+        return cleanContentList;
+    }
+
+    public void setCleanContentList(List<AnswerCleanContent> cleanContentList) {
+        this.cleanContentList = cleanContentList;
     }
 
     public long generateShowId(long timeMillis, long userId) {

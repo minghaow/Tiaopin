@@ -1,5 +1,6 @@
 package nanshen.service;
 
+import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.Question;
 import nanshen.data.Question.QuestionType;
@@ -23,4 +24,6 @@ public interface QuestionService {
     ComplexQuestion getComplexQuestionByShowId(long qShowId);
 
     ComplexQuestion getQuestionAndAnswerByShowId(long qShowId, long aShowId);
+
+    ComplexAnswer getComplexAnswerByShowId(long aShowId);
 }
