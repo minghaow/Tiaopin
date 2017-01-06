@@ -20,4 +20,6 @@ public interface SkuDao {
     boolean remove(long skuId);
 
     List<Sku> get(List<Long> skuIdList);
+
+    List<Sku> getLatestSkuList(long count);
 }

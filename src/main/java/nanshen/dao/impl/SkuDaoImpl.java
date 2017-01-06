@@ -2,6 +2,7 @@ package nanshen.dao.impl;
 
 import nanshen.dao.SkuDao;
 import nanshen.dao.common.BaseDao;
+import nanshen.data.PublicationStatus;
 import nanshen.data.Sku.Sku;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
@@ -46,6 +47,12 @@ public class SkuDaoImpl extends BaseDao implements SkuDao {
     @Override
     public List<Sku> get(List<Long> skuIdList) {
         Condition cnd = Cnd.where("id", "in", skuIdList).asc("id");
+        return dao.query(Sku.class, cnd);
+    }
+
+    @Override
+    public List<Sku> getLatestSkuList(long count) {
+        Condition cnd = Cnd.where("status", "=", PublicationStatus.ONLINE).limit((int) count).desc("id");
         return dao.query(Sku.class, cnd);
     }
 

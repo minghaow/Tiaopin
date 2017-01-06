@@ -23,4 +23,9 @@ public class DtreeOptionDaoImpl extends BaseDao implements DtreeOptionDao {
         return dao.query(DtreeOption.class, cnd);
     }
 
+    @Override
+    public DtreeOption get(long optionId) {
+        return dao.fetch(DtreeOption.class, optionId);
+    }
+
 }

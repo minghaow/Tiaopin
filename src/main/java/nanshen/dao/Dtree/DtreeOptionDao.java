@@ -11,4 +11,6 @@ public interface DtreeOptionDao {
 
     List<DtreeOption> get(long topicId, long qid);
 
+    DtreeOption get(long optionId);
+
 }

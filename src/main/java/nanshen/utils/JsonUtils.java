@@ -6,6 +6,7 @@
  */
 package nanshen.utils;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.*;
@@ -33,6 +34,7 @@ public class JsonUtils {
         ObjectMapper mapper = new ObjectMapper();
         // 当json字符串中含有未知的属性时不会抛出异常
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         return mapper;
     }
 

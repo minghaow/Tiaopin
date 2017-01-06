@@ -10,6 +10,7 @@ import nanshen.data.Dtree.DtreeQuestion;
 import nanshen.data.Dtree.DtreeQuestionType;
 import nanshen.data.Dtree.DtreeTrack;
 import nanshen.data.Sku.Sku;
+import nanshen.data.Sku.SkuAttri.*;
 import nanshen.service.DtreeService;
 import nanshen.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +59,56 @@ public class DtreeServiceImpl implements DtreeService {
 
     @Override
     public List<Sku> getResult(List<DtreeTrack> dtreeTrackList) {
-        Sku sku1 = skuService.getByShowSid(5813319331918L);
-        Sku sku2 = skuService.getByShowSid(5813311331918L);
-        List<Sku> skuList = new ArrayList<Sku>();
-        skuList.add(sku1);
-        skuList.add(sku2);
-        return skuList;
+        List<SkuCategoryOneType> categoryOneTypeList = new ArrayList<SkuCategoryOneType>();
+        List<SkuCategoryTwoType> categoryTwoTypeList = new ArrayList<SkuCategoryTwoType>();
+        List<SkuColorType> colorTypeList = new ArrayList<SkuColorType>();
+        List<SkuMaterialType> materialTypeList = new ArrayList<SkuMaterialType>();
+        List<SkuSpecialType> specialTypeList = new ArrayList<SkuSpecialType>();
+        List<SkuStyleType> styleTypeList = new ArrayList<SkuStyleType>();
+        List<SkuUserType> userTypeList = new ArrayList<SkuUserType>();
+        Long lowerPriceRange = Long.MAX_VALUE;
+        Long higherPriceRange = 0L;
+        for (DtreeTrack track : dtreeTrackList) {
+            Long optionId = track.getOption();
+            DtreeOption dtreeOption = dtreeOptionDao.get(optionId);
+            if (dtreeOption != null) {
+                if (dtreeOption.getCategoryOneType() != null) {
+                    categoryOneTypeList.add(dtreeOption.getCategoryOneType());
+                }
+                if (dtreeOption.getCategoryTwoType() != null) {
+                    categoryTwoTypeList.add(dtreeOption.getCategoryTwoType());
+                }
+                if (dtreeOption.getColorType() != null) {
+                    colorTypeList.add(dtreeOption.getColorType());
+                }
+                if (dtreeOption.getMaterialType() != null) {
+                    materialTypeList.add(dtreeOption.getMaterialType());
+                }
+                if (dtreeOption.getSpecialType() != null) {
+                    specialTypeList.add(dtreeOption.getSpecialType());
+                }
+                if (dtreeOption.getStyleType() != null) {
+                    styleTypeList.add(dtreeOption.getStyleType());
+                }
+                if (dtreeOption.getUserType() != null) {
+                    userTypeList.add(dtreeOption.getUserType());
+                }
+                if (dtreeOption.getLowerPriceRange() != null && dtreeOption.getLowerPriceRange() < lowerPriceRange) {
+                    lowerPriceRange = dtreeOption.getLowerPriceRange();
+                }
+                if (dtreeOption.getHigherPriceRange() != null && dtreeOption.getHigherPriceRange() > higherPriceRange) {
+                    higherPriceRange = dtreeOption.getHigherPriceRange();
+                }
+            }
+        }
+        if (lowerPriceRange == Long.MAX_VALUE) {
+            lowerPriceRange = null;
+        }
+        if (higherPriceRange == 0L) {
+            higherPriceRange = null;
+        }
+        return skuService.getBySkuAttributes(categoryOneTypeList, categoryTwoTypeList, colorTypeList,
+                materialTypeList, specialTypeList, styleTypeList, userTypeList, lowerPriceRange, higherPriceRange);
     }
 
 

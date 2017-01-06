@@ -1,5 +1,6 @@
 package nanshen.data.Dtree;
 
+import nanshen.data.Sku.SkuAttri.*;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
@@ -43,6 +44,36 @@ public class DtreeOption {
     /** isImg */
     @Column
     private DtreeOptionType type = DtreeOptionType.UNKNOWN;
+
+    @Column
+    private SkuCategoryOneType categoryOneType = null;
+
+    @Column
+    private SkuCategoryTwoType categoryTwoType = null;
+
+    @Column
+    private SkuColorType colorType = null;
+
+    @Column
+    private SkuMaterialType materialType = null;
+
+    @Column
+    private SkuSituationType situationType = null;
+
+    @Column
+    private SkuSpecialType specialType = null;
+
+    @Column
+    private SkuStyleType styleType = null;
+
+    @Column
+    private SkuUserType userType = null;
+
+    @Column
+    private Long lowerPriceRange = null;
+
+    @Column
+    private Long higherPriceRange = null;
 
     public DtreeOption() {
     }
@@ -117,5 +148,85 @@ public class DtreeOption {
 
     public void setSkuType(String skuType) {
         this.skuType = skuType;
+    }
+
+    public SkuCategoryOneType getCategoryOneType() {
+        return categoryOneType;
+    }
+
+    public void setCategoryOneType(SkuCategoryOneType categoryOneType) {
+        this.categoryOneType = categoryOneType;
+    }
+
+    public SkuCategoryTwoType getCategoryTwoType() {
+        return categoryTwoType;
+    }
+
+    public void setCategoryTwoType(SkuCategoryTwoType categoryTwoType) {
+        this.categoryTwoType = categoryTwoType;
+    }
+
+    public SkuColorType getColorType() {
+        return colorType;
+    }
+
+    public void setColorType(SkuColorType colorType) {
+        this.colorType = colorType;
+    }
+
+    public SkuMaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public void setMaterialType(SkuMaterialType materialType) {
+        this.materialType = materialType;
+    }
+
+    public SkuSituationType getSituationType() {
+        return situationType;
+    }
+
+    public void setSituationType(SkuSituationType situationType) {
+        this.situationType = situationType;
+    }
+
+    public SkuSpecialType getSpecialType() {
+        return specialType;
+    }
+
+    public void setSpecialType(SkuSpecialType specialType) {
+        this.specialType = specialType;
+    }
+
+    public SkuStyleType getStyleType() {
+        return styleType;
+    }
+
+    public void setStyleType(SkuStyleType styleType) {
+        this.styleType = styleType;
+    }
+
+    public SkuUserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(SkuUserType userType) {
+        this.userType = userType;
+    }
+
+    public Long getHigherPriceRange() {
+        return higherPriceRange;
+    }
+
+    public void setHigherPriceRange(Long higherPriceRange) {
+        this.higherPriceRange = higherPriceRange;
+    }
+
+    public Long getLowerPriceRange() {
+        return lowerPriceRange;
+    }
+
+    public void setLowerPriceRange(Long lowerPriceRange) {
+        this.lowerPriceRange = lowerPriceRange;
     }
 }

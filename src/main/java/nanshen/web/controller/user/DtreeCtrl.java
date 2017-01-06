@@ -1,9 +1,11 @@
 package nanshen.web.controller.user;
 
 import nanshen.data.Dtree.DtreeQuestion;
+import nanshen.data.Dtree.DtreeTrack;
 import nanshen.data.Sku.Sku;
 import nanshen.service.DtreeService;
 import nanshen.service.SkuService;
+import nanshen.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,10 +59,11 @@ public class DtreeCtrl extends BaseCtrl {
 	 */
 	@RequestMapping(value = "/r", method = RequestMethod.GET)
 	public void questionResult(HttpServletResponse response,
-									 @RequestParam(defaultValue = "", required = true) String rs) throws IOException {
+							   		@RequestParam(defaultValue = "", required = true) String path) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
-//		LogUtils.info(JsonUtils.toJson(rs));
-		List<Sku> skuList = dtreeService.getResult(null);
+		path = path.replaceAll("&quot;", "");
+		DtreeTrack[] dtreeTracks = JsonUtils.fromJson(path, DtreeTrack[].class);
+		List<Sku> skuList = dtreeService.getResult(Arrays.asList(dtreeTracks != null ? dtreeTracks : new DtreeTrack[0]));
 		json.put("skuList", skuList);
 		responseJson(response, json);
 	}

@@ -2,6 +2,7 @@ package nanshen.service;
 
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Sku.Sku;
+import nanshen.data.Sku.SkuAttri.*;
 import nanshen.data.Sku.SkuItem;
 import nanshen.data.SystemUtil.ExecResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,4 +82,9 @@ public interface SkuService {
      * @return
      */
     List<ComplexAnswer> getAnswersBySid(long sid);
+
+    List<Sku> getBySkuAttributes(List<SkuCategoryOneType> categoryOneTypeList, List<SkuCategoryTwoType> categoryTwoTypeList,
+                                 List<SkuColorType> colorTypeList, List<SkuMaterialType> materialTypeList,
+                                 List<SkuSpecialType> specialTypeList, List<SkuStyleType> styleTypeList,
+                                 List<SkuUserType> userTypeList, Long lowerPriceRange, Long higherPriceRange);
 }

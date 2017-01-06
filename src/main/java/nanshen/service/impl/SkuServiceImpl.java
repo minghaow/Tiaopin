@@ -11,6 +11,7 @@ import nanshen.dao.SkuItemDescriptionDao;
 import nanshen.dao.SkuSourceDao;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Sku.Sku;
+import nanshen.data.Sku.SkuAttri.*;
 import nanshen.data.Sku.SkuItem;
 import nanshen.data.Sku.SkuSource;
 import nanshen.data.SystemUtil.ExecInfo;
@@ -20,6 +21,7 @@ import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
 import nanshen.service.common.ScheduledService;
+import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,24 +61,37 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     @Autowired
     private AnswerService answerService;
 
-    /** skuId到skuItem信息的缓存 */
-    private final LoadingCache<Long, SkuItem> skuItemCache = CacheBuilder.newBuilder()
+    /** skuId到sku信息的缓存 */
+    private final LoadingCache<Long, Sku> skuCache = CacheBuilder.newBuilder()
             .softValues()
             .expireAfterWrite(TimeConstants.HALF_HOUR_IN_SECONDS, TimeUnit.SECONDS)
             .build(
-                    new CacheLoader<Long, SkuItem>() {
+                    new CacheLoader<Long, Sku>() {
                         @Override
-                        public SkuItem load(Long skuItemId) throws Exception {
-                            return null;
+                        public Sku load(Long sid) throws Exception {
+                            return skuDao.get(sid);
                         }
                     });
 
+    /** skuShowId到sku信息的缓存 */
+    private final LoadingCache<Long, Sku> skuShowCache = CacheBuilder.newBuilder()
+            .softValues()
+            .expireAfterWrite(TimeConstants.HALF_HOUR_IN_SECONDS, TimeUnit.SECONDS)
+            .build(
+                    new CacheLoader<Long, Sku>() {
+                        @Override
+                        public Sku load(Long skuShowId) throws Exception {
+                            return skuDao.getByShowId(skuShowId);
+                        }
+                    });
+
+    List<Sku> cachedSkuList = new ArrayList<Sku>();
 
     @Override
     public void update() {
         long startTime = System.currentTimeMillis();
 
-        Date startDate = new Date(startTime - 7 * TimeConstants.DAY_IN_MILLISECONDS);
+        cachedSkuList = skuDao.getLatestSkuList(50);
 
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.println("[SkuService] Update in " + totalTime + "ms");
@@ -140,8 +155,6 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
         return false;
     }
 
-
-
     @Override
     public ExecResult<SkuItem> uploadImage(long itemId, long operatorId, MultipartFile file) throws IOException {
         InputStream is = file.getInputStream();
@@ -174,6 +187,63 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
             complexAnswerList.add(complexAnswer);
         }
         return complexAnswerList;
+    }
+
+    @Override
+    public List<Sku> getBySkuAttributes(List<SkuCategoryOneType> categoryOneTypeList, List<SkuCategoryTwoType> categoryTwoTypeList,
+                                        List<SkuColorType> colorTypeList, List<SkuMaterialType> materialTypeList,
+                                        List<SkuSpecialType> specialTypeList, List<SkuStyleType> styleTypeList,
+                                        List<SkuUserType> userTypeList, Long lowerPriceRange, Long higherPriceRange) {
+        List<Sku> filteredSkuList = new ArrayList<Sku>();
+        for (Sku sku : cachedSkuList) {
+            LogUtils.info("lowerPriceRange: " + lowerPriceRange);
+            LogUtils.info("higherPriceRange: " + higherPriceRange);
+            LogUtils.info("sku price: " + sku.getPrice());
+            LogUtils.info("sku price: " + sku.getCategoryOneType());
+            LogUtils.info("sku price: " + sku.getCategoryTwoType());
+            LogUtils.info("sku price: " + sku.getColorType());
+            LogUtils.info("sku price: " + sku.getMaterialType());
+            LogUtils.info("sku price: " + sku.getSpecialType());
+            LogUtils.info("sku price: " + sku.getStyleType());
+            LogUtils.info("sku price: " + sku.getUserType());
+
+            if (sku.getCategoryOneType() != null && sku.getCategoryOneType() != SkuCategoryOneType.ALL
+                    && categoryOneTypeList != null && !categoryOneTypeList.contains(sku.getCategoryOneType())) {
+                continue;
+            }
+            if (sku.getCategoryTwoType() != null && sku.getCategoryTwoType() != SkuCategoryTwoType.ALL
+                    && categoryTwoTypeList != null && !categoryTwoTypeList.contains(sku.getCategoryTwoType())) {
+                continue;
+            }
+            if (sku.getColorType() != null && sku.getColorType() != SkuColorType.ALL
+                    && colorTypeList != null && !colorTypeList.contains(sku.getColorType())) {
+                continue;
+            }
+            if (sku.getMaterialType() != null && sku.getMaterialType() != SkuMaterialType.ALL
+                    && materialTypeList != null && !materialTypeList.contains(sku.getMaterialType())) {
+                continue;
+            }
+            if (sku.getSpecialType() != null && sku.getSpecialType() != SkuSpecialType.ALL
+                    && specialTypeList != null && !specialTypeList.contains(sku.getSpecialType())) {
+                continue;
+            }
+            if (sku.getStyleType() != null && sku.getStyleType() != SkuStyleType.ALL
+                    && styleTypeList != null && !styleTypeList.contains(sku.getStyleType())) {
+                continue;
+            }
+            if (sku.getUserType() != null && sku.getUserType() != SkuUserType.ALL
+                    && userTypeList != null && !userTypeList.contains(sku.getUserType())) {
+                continue;
+            }
+            if (sku.getPrice() != 0 && lowerPriceRange != null && lowerPriceRange > sku.getPrice()) {
+                continue;
+            }
+            if (sku.getPrice() != 0 && higherPriceRange != null && higherPriceRange < sku.getPrice()) {
+                continue;
+            }
+            filteredSkuList.add(sku);
+        }
+        return filteredSkuList;
     }
 
     private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, SkuItem skuItem) {
