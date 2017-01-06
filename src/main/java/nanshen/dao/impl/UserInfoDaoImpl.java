@@ -3,6 +3,7 @@ package nanshen.dao.impl;
 import nanshen.dao.UserInfoDao;
 import nanshen.dao.common.BaseDao;
 import nanshen.data.User.UserInfo;
+import nanshen.utils.LogUtils;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
@@ -36,6 +37,7 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
         try {
             return dao.insert(info);
         } catch (Exception e) {
+            LogUtils.info(e.getMessage());
             return null;
         }
     }
@@ -90,7 +92,7 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 
     @Override
     public UserInfo getUserInfoByOpenid(String openid) {
-        return dao.fetch(UserInfo.class, Cnd.where("openid", "=", openid));
+        return dao.fetch(UserInfo.class, Cnd.where("openid", "=", "wx|" + openid));
     }
 
 }

@@ -85,26 +85,22 @@ public class AuthorityCtrl extends BaseCtrl {
      * @param model
      * @throws IOException
      */
-//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-//    public void isNotRegister(HttpServletResponse response, ModelMap model,
-//                              @RequestParam(defaultValue = "") String imgUrl,
-//                              @RequestParam(defaultValue = "") String gender,
-//                              @RequestParam(defaultValue = "") String nickName,
-//                              @RequestParam(defaultValue = "") String province,
-//                              @RequestParam(defaultValue = "") String city,
-//                              @RequestParam(defaultValue = "") String country)
-//            throws IOException {
-//        accountService.
-//        if (!execInfo.isSucc()) {
-//            model.put("msg", execInfo.getMsg());
-//            model.put("success", false);
-//        } else {
-//            ExecResult<UserInfo> execResult = accountService.checkIsNotRegistered(phone);
-//            model.put("success", execResult.isSucc());
-//            model.put("msg", execResult.getMsg());
-//        }
-//        responseJson(response, model);
-//    }
+    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    public void isNotRegister(HttpServletResponse response, ModelMap model,
+                              @RequestParam(defaultValue = "") String openid,
+                              @RequestParam(defaultValue = "") String imgUrl,
+                              @RequestParam(defaultValue = "") String gender,
+                              @RequestParam(defaultValue = "") String nickName,
+                              @RequestParam(defaultValue = "") String province,
+                              @RequestParam(defaultValue = "") String city,
+                              @RequestParam(defaultValue = "") String country)
+            throws IOException {
+        ExecResult<UserInfo> userInfoExecResult = accountService.createNewUser("wx|" + openid, "12345678", imgUrl, country,
+                province, city, gender, nickName);
+        model.put("success", userInfoExecResult.isSucc());
+        model.put("value", userInfoExecResult.getValue());
+        responseJson(response, model);
+    }
 
     /**
      * Is phone not registered?

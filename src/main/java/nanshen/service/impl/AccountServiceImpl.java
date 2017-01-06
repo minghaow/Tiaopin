@@ -170,6 +170,16 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     }
 
     @Override
+    public ExecResult<UserInfo> createNewUser(String phone, String password, String imgUrl, String country, String province, String city, String gender, String nickName) {
+        UserInfo userInfo = new UserInfo(phone, EncryptUtils.encodePassword(password), imgUrl, country, province, city, gender, nickName);
+        userInfo = userInfoDao.addNewUser(userInfo);
+        if (userInfo == null) {
+            return ExecResult.fail("用户已注册，请找回密码~");
+        }
+        return ExecResult.succ(userInfo);
+    }
+
+    @Override
     public AdminUserInfo getAdminUserInfoByUserId(Long adminUserId) {
         return adminIdUserInfoMap.get(adminUserId);
     }

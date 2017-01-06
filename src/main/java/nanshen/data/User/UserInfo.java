@@ -33,6 +33,26 @@ public class UserInfo {
     @Column
     private String userDesc = "";
 
+    /** user imgUrl */
+    @Column
+    private String imgUrl = "";
+
+    /** user country */
+    @Column
+    private String country = "";
+
+    /** user province */
+    @Column
+    private String province = "";
+
+    /** user city */
+    @Column
+    private String city = "";
+
+    /** user gender */
+    @Column
+    private String gender = "";
+
     /** hashed password */
     @Column
     @ColDefine(width = 150)
@@ -72,6 +92,21 @@ public class UserInfo {
         this.priority = priority;
         this.username = username;
         this.userType = userType;
+    }
+
+    public UserInfo(String phone, String password, String imgUrl, String country, String province, String city, String gender, String username) {
+        this.phone = phone;
+        this.password = password;
+        this.imgUrl = imgUrl;
+        this.country = country;
+        this.province = province;
+        this.city = city;
+        this.username = username;
+        this.userType = UserType.AMATEUR;
+        this.available = true;
+        this.activated = true;
+        this.email = phone;
+        this.gender = gender;
     }
 
     public UserInfo(String phone, String password) {
@@ -185,5 +220,45 @@ public class UserInfo {
 
     public void setUserDesc(String userDesc) {
         this.userDesc = userDesc;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }
