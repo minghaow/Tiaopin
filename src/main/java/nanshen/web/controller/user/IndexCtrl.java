@@ -5,6 +5,7 @@ import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.SkuDao;
 import nanshen.dao.SkuSourceDao;
 import nanshen.dao.UserInfoDao;
+import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.QuestionType;
 import nanshen.data.SystemUtil.PageInfo;
@@ -77,14 +78,10 @@ public class IndexCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/l/json", method = RequestMethod.GET)
 	public void questionJson(ModelMap model, HttpServletResponse response,
-							 @RequestParam(defaultValue = "", required = true) QuestionType type,
 							 @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
-		List<QuestionType> typeList = Arrays.asList(QuestionType.values());
-		if (type != null) {
-			typeList = Collections.singletonList(type);
-		}
-		List<ComplexQuestion> questionList = questionService.getHotQuestions(typeList, new PageInfo(page));
-		model.addAttribute("qlist", questionList);
+		List<ComplexAnswer> answerList = questionService.getHotAnswers(new PageInfo(page));
+		model.addAttribute("alist", answerList);
+		model.addAttribute("size", answerList.size());
 		responseJson(response, model);
 	}
 

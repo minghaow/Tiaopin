@@ -126,6 +126,18 @@ public class QuestionServiceImpl implements QuestionService {
         return new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(), question, userInfo);
     }
 
+    @Override
+    public List<ComplexAnswer> getHotAnswers(PageInfo pageInfo) {
+        List<Answer> answerList = answerDao.getHot(pageInfo);
+        List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
+        for (Answer answer : answerList) {
+            Question question = questionDao.get(answer.getQuestionId());
+            UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
+            complexAnswerList.add(new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(), question, userInfo));
+        }
+        return complexAnswerList;
+    }
+
     private void fillCleanContentList(Answer answer) {
         if (StringUtils.isNotBlank(answer.getCleanContent())) {
             String cleanContent = answer.getCleanContent();
