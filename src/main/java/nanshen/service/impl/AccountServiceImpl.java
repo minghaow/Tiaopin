@@ -161,6 +161,15 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     }
 
     @Override
+    public ExecResult<UserInfo> checkIsNotRegisteredByWx(String openid) {
+        UserInfo userInfo = userInfoDao.getUserInfoByOpenid(openid);
+        if (userInfo == null) {
+            return ExecResult.fail("该微信号未注册过");
+        }
+        return ExecResult.succ(userInfo);
+    }
+
+    @Override
     public AdminUserInfo getAdminUserInfoByUserId(Long adminUserId) {
         return adminIdUserInfoMap.get(adminUserId);
     }

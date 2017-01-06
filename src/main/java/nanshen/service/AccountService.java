@@ -114,4 +114,6 @@ public interface AccountService {
      * @return boolean
      */
     boolean clearAdminUserInfoCache();
+
+    ExecResult<UserInfo> checkIsNotRegisteredByWx(String openid);
 }

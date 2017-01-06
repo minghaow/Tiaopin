@@ -88,4 +88,9 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
         return 1 == dao.update(UserInfo.class, chain, condition);
     }
 
+    @Override
+    public UserInfo getUserInfoByOpenid(String openid) {
+        return dao.fetch(UserInfo.class, Cnd.where("openid", "=", openid));
+    }
+
 }

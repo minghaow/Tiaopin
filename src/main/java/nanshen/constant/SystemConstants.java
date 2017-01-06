@@ -42,4 +42,8 @@ public class SystemConstants {
     public static final int SHOWID_TOPIC = 4;
     public static final int SHOWID_USER = 5;
 
+    /** weixin */
+    public static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=wxcf2c4aceba18cbd5" +
+            "&secret=f6bba308f87a33c6429baa08eb8b6ed2&js_code=JSCODE&grant_type=authorization_code";
+
 }

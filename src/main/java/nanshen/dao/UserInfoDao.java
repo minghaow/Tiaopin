@@ -87,4 +87,6 @@ public interface UserInfoDao {
      * @return
      */
     boolean setUsername(long userId, String username);
+
+    UserInfo getUserInfoByOpenid(String openid);
 }

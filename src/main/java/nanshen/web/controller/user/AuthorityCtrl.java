@@ -1,11 +1,15 @@
 package nanshen.web.controller.user;
 
+import nanshen.constant.SystemConstants;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.SystemUtil.LoginError;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.User.UserInfo;
+import nanshen.data.Weixin.WeixinSessionResponse;
 import nanshen.service.AccountService;
+import nanshen.utils.HttpUtils;
+import nanshen.utils.JsonUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +75,57 @@ public class AuthorityCtrl extends BaseCtrl {
     public void loginFail(HttpServletResponse response, ModelMap model)
             throws IOException {
         model.put("success", "false");
+        responseJson(response, model);
+    }
+
+    /**
+     * Is phone not registered?
+     *
+     * @param response
+     * @param model
+     * @throws IOException
+     */
+//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+//    public void isNotRegister(HttpServletResponse response, ModelMap model,
+//                              @RequestParam(defaultValue = "") String imgUrl,
+//                              @RequestParam(defaultValue = "") String gender,
+//                              @RequestParam(defaultValue = "") String nickName,
+//                              @RequestParam(defaultValue = "") String province,
+//                              @RequestParam(defaultValue = "") String city,
+//                              @RequestParam(defaultValue = "") String country)
+//            throws IOException {
+//        accountService.
+//        if (!execInfo.isSucc()) {
+//            model.put("msg", execInfo.getMsg());
+//            model.put("success", false);
+//        } else {
+//            ExecResult<UserInfo> execResult = accountService.checkIsNotRegistered(phone);
+//            model.put("success", execResult.isSucc());
+//            model.put("msg", execResult.getMsg());
+//        }
+//        responseJson(response, model);
+//    }
+
+    /**
+     * Is phone not registered?
+     *
+     * @param response
+     * @param model
+     * @throws IOException
+     */
+    @RequestMapping(value = "/wx/code", method = RequestMethod.GET)
+    public void getWxOpenId(HttpServletResponse response, ModelMap model,
+                              @RequestParam(defaultValue = "") String code)
+            throws IOException {
+        String result = HttpUtils.get(SystemConstants.ACCESS_TOKEN_URL.replace("JSCODE", code));
+        WeixinSessionResponse tokenResponse = JsonUtils.fromJson(result, WeixinSessionResponse.class);
+        if (tokenResponse != null) {
+            ExecResult<UserInfo> execResult = accountService.checkIsNotRegisteredByWx(tokenResponse.getOpenid());
+            model.put("openid", tokenResponse.getOpenid());
+            model.put("success", execResult.isSucc());
+        } else {
+            model.put("success", false);
+        }
         responseJson(response, model);
     }
 
