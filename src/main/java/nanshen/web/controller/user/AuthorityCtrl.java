@@ -95,7 +95,7 @@ public class AuthorityCtrl extends BaseCtrl {
                               @RequestParam(defaultValue = "") String city,
                               @RequestParam(defaultValue = "") String country)
             throws IOException {
-        ExecResult<UserInfo> userInfoExecResult = accountService.createNewUser("wx|" + openid, "12345678", imgUrl, country,
+        ExecResult<UserInfo> userInfoExecResult = accountService.createNewUser(openid, "wx|" + openid, "12345678", imgUrl, country,
                 province, city, gender, nickName);
         model.put("success", userInfoExecResult.isSucc());
         model.put("value", userInfoExecResult.getValue());

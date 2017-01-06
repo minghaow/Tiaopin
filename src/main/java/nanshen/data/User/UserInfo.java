@@ -33,6 +33,10 @@ public class UserInfo {
     @Column
     private String userDesc = "";
 
+    /** user openid */
+    @Column
+    private String openid = "";
+
     /** user imgUrl */
     @Column
     private String imgUrl = "";
@@ -94,7 +98,7 @@ public class UserInfo {
         this.userType = userType;
     }
 
-    public UserInfo(String phone, String password, String imgUrl, String country, String province, String city, String gender, String username) {
+    public UserInfo(String openid, String phone, String password, String imgUrl, String country, String province, String city, String gender, String username) {
         this.phone = phone;
         this.password = password;
         this.imgUrl = imgUrl;
@@ -107,6 +111,7 @@ public class UserInfo {
         this.activated = true;
         this.email = phone;
         this.gender = gender;
+        this.openid = openid;
     }
 
     public UserInfo(String phone, String password) {
