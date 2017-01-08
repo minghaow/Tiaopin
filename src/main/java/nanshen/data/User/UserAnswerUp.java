@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author WANG Minghao
  */
-@Table("UserQuestionSub")
+@Table("UserAnswerUp")
 public class UserAnswerUp {
 
     /** ID */
