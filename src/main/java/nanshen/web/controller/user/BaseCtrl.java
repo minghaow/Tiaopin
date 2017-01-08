@@ -7,9 +7,9 @@ import nanshen.data.User.UserInfo;
 import nanshen.service.AccountService;
 import nanshen.service.CartService;
 import nanshen.utils.JsonUtils;
-import nanshen.utils.LogUtils;
 import nanshen.utils.RequestUtils;
 import nanshen.utils.ViewUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
@@ -104,9 +104,13 @@ public abstract class BaseCtrl {
 	 */
 	protected UserInfo getLoginedUser(HttpServletRequest request) {
 		Map<String,String> params = getRequestParams(request);
+		String tpuidString = params.get("tpuid");
+		String uidString = params.get("uid");
+		if (StringUtils.isBlank(tpuidString) || StringUtils.isBlank(uidString)) {
+			return null;
+		}
 		long tpuid = Long.parseLong(params.get("tpuid"));
 		long uid = Long.parseLong(params.get("uid"));
-		LogUtils.info("tpuid " + tpuid);
 		UserInfo userInfo = accountService.getUserInfo(uid);
 		if (userInfo != null && userInfo.getTempLoginId() == tpuid) {
 			return userInfo;
