@@ -1,5 +1,6 @@
 package nanshen.web.controller.user;
 
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.Topic.Topic;
 import nanshen.service.TopicService;
@@ -41,6 +42,15 @@ public class TopicCtrl extends BaseCtrl {
             json.put("success", true);
         }
         json.put("hotTopicList", topicList);
+        responseJson(response, json);
+    }
+
+    @RequestMapping(value = "/sub", method = RequestMethod.GET)
+    public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
+        Map<String, Object> json = new HashMap<String, Object>();
+        ExecInfo execInfo = topicService.subTopic(topicId);
+        json.put("success", execInfo.isSucc());
+        json.put("msg", execInfo.getMsg());
         responseJson(response, json);
     }
 

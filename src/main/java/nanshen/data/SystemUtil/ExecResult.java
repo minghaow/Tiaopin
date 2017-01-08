@@ -39,6 +39,10 @@ public class ExecResult<T> {
         return new ExecResult<T>(false, message, null);
     }
 
+    public static <T> ExecResult<T> fail(String message, T value) {
+        return new ExecResult<T>(false, message, value);
+    }
+
     private ExecResult(boolean succ, String msg, T value) {
         this.succ = succ;
         this.msg = msg;

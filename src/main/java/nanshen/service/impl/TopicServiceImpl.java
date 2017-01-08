@@ -2,6 +2,7 @@ package nanshen.service.impl;
 
 import nanshen.constant.TimeConstants;
 import nanshen.dao.TopicDao;
+import nanshen.dao.UserTopicSubDao;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.Topic.Topic;
 import nanshen.service.TopicService;
@@ -22,6 +23,9 @@ public class TopicServiceImpl extends ScheduledService implements TopicService {
 
     @Autowired
     private TopicDao topicDao;
+
+    @Autowired
+    private UserTopicSubDao userTopicSubDao;
 
     private List<Topic> hotTopicList = new ArrayList<Topic>();
 

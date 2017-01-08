@@ -174,7 +174,7 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
         UserInfo userInfo = new UserInfo(openid, phone, EncryptUtils.encodePassword(password), imgUrl, country, province, city, gender, nickName);
         userInfo = userInfoDao.addNewUser(userInfo);
         if (userInfo == null) {
-            return ExecResult.fail("用户已注册，请找回密码~");
+            return ExecResult.fail("用户已注册，请找回密码~", userInfoDao.getUserInfoByPhone(phone));
         }
         return ExecResult.succ(userInfo);
     }
