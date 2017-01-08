@@ -35,6 +35,9 @@ public class UserTopicSub {
         this.userId = userId;
     }
 
+    public UserTopicSub() {
+    }
+
     public Date getCreateTime() {
         return createTime;
     }

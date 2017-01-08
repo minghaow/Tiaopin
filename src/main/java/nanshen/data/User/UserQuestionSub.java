@@ -35,6 +35,9 @@ public class UserQuestionSub {
         this.userId = userId;
     }
 
+    public UserQuestionSub() {
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
