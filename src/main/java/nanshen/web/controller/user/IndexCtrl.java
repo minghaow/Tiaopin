@@ -10,7 +10,6 @@ import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.QuestionType;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
-import nanshen.service.AnswerService;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,6 @@ public class IndexCtrl extends BaseCtrl {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private AnswerService answerService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView homePage(ModelMap model,

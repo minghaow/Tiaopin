@@ -170,6 +170,14 @@ public class QuestionServiceImpl implements QuestionService {
         return complexQuestionList;
     }
 
+    @Override
+    public ComplexAnswer getComplexAnswerByAidAndQid(long aid, long qid) {
+        Answer answer = answerDao.get(aid);
+        Question question = questionDao.get(qid);
+        UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
+        return new ComplexAnswer(aid, answer, answer.getShowId(), qid, question.getShowId(), question, userInfo, "");
+    }
+
     private void fillCleanContentList(Answer answer) {
         if (StringUtils.isNotBlank(answer.getCleanContent())) {
             String cleanContent = answer.getCleanContent();

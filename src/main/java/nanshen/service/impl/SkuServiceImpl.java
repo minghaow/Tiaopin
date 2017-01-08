@@ -16,7 +16,6 @@ import nanshen.data.Sku.SkuItem;
 import nanshen.data.Sku.SkuSource;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
-import nanshen.service.AnswerService;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
@@ -57,9 +56,6 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Autowired
     private QuestionService questionService;
-
-    @Autowired
-    private AnswerService answerService;
 
     /** skuId到sku信息的缓存 */
     private final LoadingCache<Long, Sku> skuCache = CacheBuilder.newBuilder()
@@ -183,7 +179,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
         List<SkuSource> skuSourceList = skuSourceDao.getBySkuId(sid);
         List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
         for (SkuSource skuSource : skuSourceList) {
-            ComplexAnswer complexAnswer = answerService.getComplexAnswerByAidAndQid(skuSource.getAid(), skuSource.getQid());
+            ComplexAnswer complexAnswer = questionService.getComplexAnswerByAidAndQid(skuSource.getAid(), skuSource.getQid());
             complexAnswerList.add(complexAnswer);
         }
         return complexAnswerList;
