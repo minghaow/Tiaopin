@@ -3,6 +3,7 @@ package nanshen.web.controller.user;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.Topic.Topic;
+import nanshen.data.User.UserInfo;
 import nanshen.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,8 @@ public class TopicCtrl extends BaseCtrl {
     @RequestMapping(value = "/sub", method = RequestMethod.GET)
     public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
-        ExecInfo execInfo = topicService.subTopic(topicId);
+        UserInfo userInfo = getLoginedUser();
+        ExecInfo execInfo = topicService.subTopic(topicId, userInfo);
         json.put("success", execInfo.isSucc());
         json.put("msg", execInfo.getMsg());
         responseJson(response, json);

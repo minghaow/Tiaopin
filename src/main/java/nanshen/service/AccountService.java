@@ -119,4 +119,11 @@ public interface AccountService {
 
     ExecResult<UserInfo> createNewUser(String openid, String phone, String password, String imgUrl, String country, String province, String city, String gender, String nickName);
 
+    /**
+     * subscribe hot people
+     *
+     * @return ExecInfo
+     */
+    ExecInfo subPeople(long uid, UserInfo userInfo);
+
 }

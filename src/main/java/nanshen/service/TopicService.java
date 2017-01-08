@@ -2,6 +2,7 @@ package nanshen.service;
 
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.Topic.Topic;
+import nanshen.data.User.UserInfo;
 
 import java.util.List;
 
@@ -24,6 +25,6 @@ public interface TopicService {
      *
      * @return ExecInfo
      */
-    ExecInfo subTopic(long tid);
+    ExecInfo subTopic(long tid, UserInfo userInfo);
 
 }

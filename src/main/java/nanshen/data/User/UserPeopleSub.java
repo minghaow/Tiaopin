@@ -30,9 +30,7 @@ public class UserPeopleSub {
     @Column
     private Date createTime = new Date();
 
-    public UserPeopleSub(Date createTime, long id, long toUserId, long userId) {
-        this.createTime = createTime;
-        this.id = id;
+    public UserPeopleSub(long toUserId, long userId) {
         this.toUserId = toUserId;
         this.userId = userId;
     }

@@ -4,7 +4,9 @@ import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.Question;
 import nanshen.data.Question.QuestionType;
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
+import nanshen.data.User.UserInfo;
 
 import java.util.List;
 
@@ -28,4 +30,6 @@ public interface QuestionService {
     ComplexAnswer getComplexAnswerByShowId(long aShowId);
 
     List<ComplexAnswer> getHotAnswers(PageInfo pageInfo);
+
+    ExecInfo subQuestion(long qid, UserInfo userInfo);
 }

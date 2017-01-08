@@ -7,6 +7,7 @@ import nanshen.constant.TimeConstants;
 import nanshen.dao.AdminUserInfoDao;
 import nanshen.dao.UserAddressDao;
 import nanshen.dao.UserInfoDao;
+import nanshen.dao.UserPeopleSubDao;
 import nanshen.data.AdminUserInfo;
 import nanshen.data.LookInfo;
 import nanshen.data.Sku.SkuItem;
@@ -14,6 +15,7 @@ import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.User.UserAddress;
 import nanshen.data.User.UserInfo;
+import nanshen.data.User.UserPeopleSub;
 import nanshen.service.AccountService;
 import nanshen.service.common.ScheduledService;
 import nanshen.utils.EncryptUtils;
@@ -44,6 +46,9 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
 
     @Autowired
     private UserAddressDao userAddressDao;
+
+    @Autowired
+    private UserPeopleSubDao userPeopleSubDao;
 
     /** 买手ID到买手信息的缓存 */
     private final LoadingCache<Long, UserInfo> userCache = CacheBuilder.newBuilder()
@@ -177,6 +182,15 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
             return ExecResult.fail("用户已注册，请找回密码~", userInfoDao.getUserInfoByPhone(phone));
         }
         return ExecResult.succ(userInfo);
+    }
+
+    @Override
+    public ExecInfo subPeople(long uid, UserInfo userInfo) {
+        UserPeopleSub peopleSub = userPeopleSubDao.insert(new UserPeopleSub(uid, userInfo.getId()));
+        if (peopleSub == null) {
+            return ExecInfo.fail("关注达人失败，请稍后再试");
+        }
+        return ExecInfo.succ();
     }
 
     @Override

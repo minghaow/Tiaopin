@@ -4,10 +4,13 @@ import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.TopicDao;
 import nanshen.dao.UserInfoDao;
+import nanshen.dao.UserQuestionSubDao;
 import nanshen.data.Question.*;
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
+import nanshen.data.User.UserQuestionSub;
 import nanshen.service.AccountService;
 import nanshen.service.QuestionService;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +36,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionDao questionDao;
+
+    @Autowired
+    private UserQuestionSubDao userQuestionSubDao;
 
     @Autowired
     private AnswerDao answerDao;
@@ -136,6 +142,15 @@ public class QuestionServiceImpl implements QuestionService {
             complexAnswerList.add(new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(), question, userInfo));
         }
         return complexAnswerList;
+    }
+
+    @Override
+    public ExecInfo subQuestion(long qid, UserInfo userInfo) {
+        UserQuestionSub questionSub = userQuestionSubDao.insert(new UserQuestionSub(qid, userInfo.getId()));
+        if (questionSub == null) {
+            return ExecInfo.fail("关注问题失败，请稍后再试");
+        }
+        return ExecInfo.succ();
     }
 
     private void fillCleanContentList(Answer answer) {

@@ -6,6 +6,7 @@ import nanshen.data.Sku.Sku;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.User.UserInfo;
+import nanshen.service.AccountService;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,14 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/q")
-public class QuestionCtrl extends BaseCtrl {
+@RequestMapping("/p")
+public class PeopleCtrl extends BaseCtrl {
 
 	@Autowired
 	private AnswerDao answerDao;
+
+	@Autowired
+	private AccountService accountService;
 
 	@Autowired
 	private QuestionService questionService;
@@ -37,7 +41,7 @@ public class QuestionCtrl extends BaseCtrl {
 	private SkuService skuService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView questionPage(ModelMap model,
+	public ModelAndView peoplePage(ModelMap model,
 									 @RequestParam(defaultValue = "0", required = true) long qid,
 									 @RequestParam(defaultValue = "0", required = false) long aid) throws UnsupportedEncodingException {
 		if (qid <= 0) {
@@ -78,10 +82,10 @@ public class QuestionCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/sub", method = RequestMethod.GET)
-	public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
+	public void peopleSub(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser();
-		ExecInfo execInfo = questionService.subQuestion(qid, userInfo);
+		ExecInfo execInfo = accountService.subPeople(uid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
