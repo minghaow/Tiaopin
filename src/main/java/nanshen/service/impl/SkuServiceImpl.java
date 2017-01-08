@@ -5,10 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import nanshen.constant.SystemConstants;
 import nanshen.constant.TimeConstants;
-import nanshen.dao.SalesInfoDao;
-import nanshen.dao.SkuDao;
-import nanshen.dao.SkuItemDescriptionDao;
-import nanshen.dao.SkuSourceDao;
+import nanshen.dao.*;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Sku.Sku;
 import nanshen.data.Sku.SkuAttri.*;
@@ -16,6 +13,9 @@ import nanshen.data.Sku.SkuItem;
 import nanshen.data.Sku.SkuSource;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
+import nanshen.data.SystemUtil.PageInfo;
+import nanshen.data.User.UserInfo;
+import nanshen.data.User.UserSkuLikeMap;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,6 +51,9 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Autowired
     private SkuItemDescriptionDao skuItemDescriptionDao;
+
+    @Autowired
+    private UserSkuLikeMapDao userSkuLikeMapDao;
 
     @Autowired
     private OssFormalApi ossFormalApi;
@@ -166,7 +170,10 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Override
     public Sku getByShowSid(long sid) {
-        return skuDao.getByShowId(sid);
+        Sku sku = skuDao.getByShowId(sid);
+        long count = userSkuLikeMapDao.countSkuLike(sid);
+        sku.setLikeCnt(count);
+        return sku;
     }
 
     @Override
@@ -240,6 +247,32 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
             filteredSkuList.add(sku);
         }
         return filteredSkuList;
+    }
+
+    @Override
+    public ExecInfo likeBySid(long sid, UserInfo userInfo) {
+        if (userInfo == null) {
+            return ExecInfo.fail("还未登陆或已失效，请重新登陆");
+        }
+        UserSkuLikeMap likeMap = userSkuLikeMapDao.insert(new UserSkuLikeMap(sid, userInfo.getId()));
+        if (likeMap == null) {
+            return ExecInfo.fail("喜欢失败，请稍后再喜欢一边");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
+    public List<Sku> getLikeList(UserInfo userInfo, PageInfo pageInfo) {
+        List<UserSkuLikeMap> likeMapList = userSkuLikeMapDao.getByUid(userInfo.getId(), pageInfo);
+        List<Sku> skuList = new ArrayList<Sku>();
+        for (UserSkuLikeMap likeMap : likeMapList) {
+            try {
+                skuList.add(skuCache.get(likeMap.getSid()));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return skuList;
     }
 
     private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, SkuItem skuItem) {

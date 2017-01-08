@@ -4,7 +4,10 @@ import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Sku.Sku;
 import nanshen.data.Sku.SkuAttri.*;
 import nanshen.data.Sku.SkuItem;
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
+import nanshen.data.SystemUtil.PageInfo;
+import nanshen.data.User.UserInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -87,4 +90,8 @@ public interface SkuService {
                                  List<SkuColorType> colorTypeList, List<SkuMaterialType> materialTypeList,
                                  List<SkuSpecialType> specialTypeList, List<SkuStyleType> styleTypeList,
                                  List<SkuUserType> userTypeList, Long lowerPriceRange, Long higherPriceRange);
+
+    ExecInfo likeBySid(long sid, UserInfo userInfo);
+
+    List<Sku> getLikeList(UserInfo userInfo, PageInfo pageInfo);
 }

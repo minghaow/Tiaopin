@@ -105,6 +105,8 @@ public class Sku {
     /** monthly sales info for sku items */
     private long monthlySalesInfo = 0;
 
+    private long likeCnt = 0;
+
     /** customer review */
     private List<CustomerReview> customerReviewList;
 
@@ -357,6 +359,14 @@ public class Sku {
 
     public void setUserType(SkuUserType userType) {
         this.userType = userType;
+    }
+
+    public long getLikeCnt() {
+        return likeCnt;
+    }
+
+    public void setLikeCnt(long likeCnt) {
+        this.likeCnt = likeCnt;
     }
 
     public long generateShowId(long userId) {

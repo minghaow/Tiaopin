@@ -138,6 +138,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<Answer> answerList = answerDao.getHot(pageInfo);
         List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
         for (Answer answer : answerList) {
+            answer.setContent("");
             Pattern p = Pattern.compile("<img src=\"(.+)\"/>");
             Matcher m = p.matcher(answer.getCleanContent());
             String imgUrl = m.find() ? m.group(1) : "";

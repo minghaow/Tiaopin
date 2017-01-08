@@ -9,6 +9,7 @@ import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,8 +63,11 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
 
     @Override
     public List<Question> get(List<Long> questionIdList) {
-        Condition cnd = Cnd.where("id", "in", questionIdList);
-        return dao.query(Question.class, cnd);
+        if (questionIdList != null && questionIdList.size() > 0) {
+            Condition cnd = Cnd.where("id", "in", questionIdList);
+            return dao.query(Question.class, cnd);
+        }
+        return new ArrayList<Question>();
     }
 
 }
