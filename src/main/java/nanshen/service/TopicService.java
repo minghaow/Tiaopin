@@ -20,7 +20,7 @@ public interface TopicService {
      *
      * @return list of hot topic
      */
-    List<Topic> getHotTopic();
+    List<Topic> getHotTopic(UserInfo userInfo);
 
     /**
      * subscribe hot topic

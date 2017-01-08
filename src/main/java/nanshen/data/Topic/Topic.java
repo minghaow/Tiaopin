@@ -24,6 +24,8 @@ public class Topic {
     @Column
     private boolean isHot;
 
+    private boolean isSubed = false;
+
     @Column
     private String title = "";
 
@@ -89,6 +91,14 @@ public class Topic {
 
     public void setIsHot(boolean isHot) {
         this.isHot = isHot;
+    }
+
+    public boolean isSubed() {
+        return isSubed;
+    }
+
+    public void setIsSubed(boolean isSubed) {
+        this.isSubed = isSubed;
     }
 
     public long generateShowId(long userId) {

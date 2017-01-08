@@ -37,9 +37,10 @@ public class TopicCtrl extends BaseCtrl {
 	}
 
     @RequestMapping(value = "/json", method = RequestMethod.GET)
-    public void skuJson(HttpServletResponse response) throws IOException {
+    public void skuJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
-        List<Topic> topicList = topicService.getHotTopic();
+        UserInfo userInfo = getLoginedUser(request);
+        List<Topic> topicList = topicService.getHotTopic(userInfo);
         if (topicList == null || topicList.size() == 0) {
             json.put("success", false);
             json.put("msg", "错误的商品ID");
@@ -51,8 +52,9 @@ public class TopicCtrl extends BaseCtrl {
     }
 
     @RequestMapping(value = "/l/json", method = RequestMethod.GET)
-    public void topicContentListJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId,
-            @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
+    public void topicContentListJson(HttpServletResponse response,
+                                     @RequestParam(defaultValue = "1", required = true) long topicId,
+                                     @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         List<ComplexQuestion> questionList = topicService.getTopicQuestionList(topicId, new PageInfo(page));
         if (questionList == null || questionList.size() == 0) {
