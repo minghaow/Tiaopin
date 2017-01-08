@@ -81,20 +81,17 @@ public class SkuCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
-	public void skuJson(HttpServletResponse response,
-							   @RequestParam(defaultValue = "0", required = true) long sid) throws IOException {
+	public void skuJson(HttpServletRequest request, HttpServletResponse response,
+							   @RequestParam(defaultValue = "1", required = true) long sid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		if (sid <= 0) {
 			json.put("sku", null);
 			json.put("success", false);
 			json.put("msg", "错误的商品ID");
 		} else {
-			Sku sku = skuService.getBySid(sid);
+			UserInfo userInfo = getLoginedUser(request);
+			Sku sku = skuService.getByShowSid(userInfo, sid);
 			json.put("sku", sku);
-			if (sku != null) {
-				List<ComplexAnswer> answerList = skuService.getAnswersBySid(sku.getId());
-				json.put("answerList", answerList);
-			}
 		}
 		responseJson(response, json);
 	}
