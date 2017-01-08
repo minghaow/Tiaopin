@@ -75,6 +75,10 @@ public class UserInfo {
     @Column
     private boolean activated = false;
 
+    /** tempLoginId */
+    @Column
+    private long tempLoginId = 0;
+
     /** user type */
     @Column
     private UserType userType = UserType.AMATEUR;
@@ -324,4 +328,11 @@ public class UserInfo {
         return authorities.contains(AccessAuthority.ADMIN);
     }
 
+    public long getTempLoginId() {
+        return tempLoginId;
+    }
+
+    public void setTempLoginId(long tempLoginId) {
+        this.tempLoginId = tempLoginId;
+    }
 }

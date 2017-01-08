@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -65,11 +66,12 @@ public class TopicCtrl extends BaseCtrl {
     }
 
     @RequestMapping(value = "/sub", method = RequestMethod.GET)
-    public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
+    public void skuJson(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
-        UserInfo userInfo = getLoginedUser();
+        UserInfo userInfo = getLoginedUser(request);
         if (userInfo != null) {
             LogUtils.info("=================== sublogined user " + userInfo.getUsername() + userInfo.getPhone());
+            LogUtils.info("=================== sublogined user " + userInfo.getTempLoginId());
         }else {
             LogUtils.info("=================== sublogined failed ");
         }

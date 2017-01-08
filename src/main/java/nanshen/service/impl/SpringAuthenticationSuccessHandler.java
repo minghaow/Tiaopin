@@ -7,8 +7,7 @@
 package nanshen.service.impl;
 
 import nanshen.dao.UserInfoDao;
-import nanshen.utils.JsonUtils;
-import nanshen.utils.LogUtils;
+import nanshen.service.AccountService;
 import nanshen.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -32,20 +31,20 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Autowired
     private UserInfoDao userInfoDao;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        recordLogin(request);
-        LogUtils.info("==============");
-        LogUtils.info(JsonUtils.toJson(authentication));
-        LogUtils.info("==============");
-        setDefaultTargetUrl("/auth/success?uid=" + authentication.getName());
+        long tempLoginId = recordLogin(request);
+        setDefaultTargetUrl("/auth/success?uid=" + authentication.getName() + "&tpuid=" + tempLoginId);
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
-    private void recordLogin(HttpServletRequest request) {
+    private long recordLogin(HttpServletRequest request) {
         String username = request.getParameter(PARAM_USERNAME);
-        LogUtils.info("" + userInfoDao.login(username, RequestUtils.getRequestIp(), new Date()));
+        return userInfoDao.login(username, RequestUtils.getRequestIp(), new Date());
     }
 
 }

@@ -76,7 +76,7 @@ public interface UserInfoDao {
      * @param loginTime
      * @return
      */
-    boolean login(String username, String ip, Date loginTime);
+    long login(String username, String ip, Date loginTime);
 
     List<UserInfo> getUserInfo(List<Long> userIds);
 
