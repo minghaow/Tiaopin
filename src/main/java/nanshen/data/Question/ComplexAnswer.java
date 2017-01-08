@@ -23,7 +23,10 @@ public class ComplexAnswer {
 
     private Answer answer = null;
 
-    public ComplexAnswer(long aid, Answer answer, long aShowId, long qid, long qShowId, Question question, UserInfo userInfo) {
+    private String imgUrl = "";
+
+    public ComplexAnswer(long aid, Answer answer, long aShowId, long qid, long qShowId, Question question,
+                         UserInfo userInfo, String imgUrl) {
         this.aid = aid;
         this.answer = answer;
         this.aShowId = aShowId;
@@ -31,6 +34,7 @@ public class ComplexAnswer {
         this.qShowId = qShowId;
         this.question = question;
         this.userInfo = userInfo;
+        this.imgUrl = imgUrl;
     }
 
     public long getAid() {
@@ -87,5 +91,13 @@ public class ComplexAnswer {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

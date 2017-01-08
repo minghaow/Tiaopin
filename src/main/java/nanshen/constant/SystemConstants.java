@@ -23,7 +23,7 @@ public class SystemConstants {
     public static final String CDN_URL = "http://image-cdn.zaitaoyuan.com";
 
     /** default page length for lists */
-    public static final int DEFAULT_PAGE_SIZE = 30;
+    public static final int DEFAULT_PAGE_SIZE = 20;
     public static final int DEFAULT_CACHED_LOOK_SIZE = 100;
     public static final int DEFAULT_CACHED_SKU_SIZE = 3 * DEFAULT_CACHED_LOOK_SIZE;
 

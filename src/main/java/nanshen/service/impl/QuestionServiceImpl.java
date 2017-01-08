@@ -129,7 +129,8 @@ public class QuestionServiceImpl implements QuestionService {
             answer.setUserName(userInfo.getUsername());
             answer.setUserDesc(userInfo.getUserDesc());
         }
-        return new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(), question, userInfo);
+        return new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(),
+                question, userInfo, "");
     }
 
     @Override
@@ -137,9 +138,13 @@ public class QuestionServiceImpl implements QuestionService {
         List<Answer> answerList = answerDao.getHot(pageInfo);
         List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
         for (Answer answer : answerList) {
+            Pattern p = Pattern.compile("<img src=\"(.+)\"/>");
+            Matcher m = p.matcher(answer.getCleanContent());
+            String imgUrl = m.find() ? m.group(1) : "";
             Question question = questionDao.get(answer.getQuestionId());
             UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
-            complexAnswerList.add(new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(), question, userInfo));
+            complexAnswerList.add(new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(),
+                    question.getShowId(), question, userInfo, imgUrl));
         }
         return complexAnswerList;
     }
