@@ -42,19 +42,20 @@ public class AnswerCtrl extends BaseCtrl {
 			model.addAttribute("success", false);
 			model.addAttribute("msg", "错误的aid");
 		}
-		ComplexAnswer complexAnswer  = questionService.getComplexAnswerByShowId(aid);
+		ComplexAnswer complexAnswer  = questionService.getComplexAnswerByShowId(null, aid);
 		model.addAttribute("complexAnswer", complexAnswer);
 		return new ModelAndView("user/answer");
 	}
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
-	public void answerJson(ModelMap model, HttpServletResponse response,
+	public void answerJson(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 									 @RequestParam(defaultValue = "0", required = false) long aid) throws IOException {
 		if (aid <= 0) {
 			model.addAttribute("success", false);
 			model.addAttribute("msg", "错误的aid");
 		}
-		ComplexAnswer complexAnswer  = questionService.getComplexAnswerByShowId(aid);
+		UserInfo userInfo = getLoginedUser(request);
+		ComplexAnswer complexAnswer  = questionService.getComplexAnswerByShowId(userInfo, aid);
 		complexAnswer.getAnswer().setContent("");
 		model.addAttribute("complexAnswer", complexAnswer);
 		responseJson(response, model);

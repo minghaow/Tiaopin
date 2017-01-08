@@ -122,10 +122,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ComplexAnswer getComplexAnswerByShowId(long aShowId) {
+    public ComplexAnswer getComplexAnswerByShowId(UserInfo userInfo, long aShowId) {
         Answer answer = answerDao.getByShowId(aShowId);
         if (answer == null) {
             return null;
+        }
+        if (userInfo != null) {
+            UserAnswerUp up = userAnswerUpDao.get(userInfo.getId(), answer.getId());
+            answer.setUped(up != null);
         }
         fillCleanContentList(answer);
         Question question = questionDao.get(answer.getQuestionId());
@@ -133,13 +137,13 @@ public class QuestionServiceImpl implements QuestionService {
             return null;
         }
         fillQuestionTopicList(question);
-        UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
-        if (userInfo != null) {
-            answer.setUserName(userInfo.getUsername());
-            answer.setUserDesc(userInfo.getUserDesc());
+        UserInfo userInfoT = accountService.getUserInfo(answer.getUserId());
+        if (userInfoT != null) {
+            answer.setUserName(userInfoT.getUsername());
+            answer.setUserDesc(userInfoT.getUserDesc());
         }
         return new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(),
-                question, userInfo, "");
+                question, userInfoT, "");
     }
 
     @Override

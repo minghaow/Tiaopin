@@ -27,7 +27,7 @@ public interface QuestionService {
 
     ComplexQuestion getQuestionAndAnswerByShowId(long qShowId, long aShowId);
 
-    ComplexAnswer getComplexAnswerByShowId(long aShowId);
+    ComplexAnswer getComplexAnswerByShowId(UserInfo userInfo, long aShowId);
 
     List<ComplexAnswer> getHotAnswers(PageInfo pageInfo);
 

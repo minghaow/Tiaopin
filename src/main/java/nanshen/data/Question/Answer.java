@@ -48,6 +48,8 @@ public class Answer {
     @Column
     private String cleanContent;
 
+    private boolean uped = false;
+
     private List<AnswerCleanContent> cleanContentList = new ArrayList<AnswerCleanContent>();
 
     /** total view about the question */
@@ -238,6 +240,14 @@ public class Answer {
 
     public void setReadableTime(String readableTime) {
         this.readableTime = readableTime;
+    }
+
+    public boolean isUped() {
+        return uped;
+    }
+
+    public void setUped(boolean uped) {
+        this.uped = uped;
     }
 
     public long generateShowId(long timeMillis, long userId) {

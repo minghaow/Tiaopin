@@ -16,7 +16,7 @@ public interface UserAnswerUpDao {
 
     List<UserAnswerUp> getByUserId(long uid, PageInfo pageInfo);
 
-    UserAnswerUp get(long uid, long qid);
+    UserAnswerUp get(long uid, long aid);
 
     long count(long qid);
 
