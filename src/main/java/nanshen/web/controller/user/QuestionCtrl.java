@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -79,18 +80,18 @@ public class QuestionCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/sub/l", method = RequestMethod.GET)
-	public void questionJson(ModelMap model, HttpServletResponse response,
+	public void questionJson(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 							 @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
-		UserInfo userInfo = getLoginedUser();
+		UserInfo userInfo = getLoginedUser(request);
 		List<ComplexQuestion> complexQuestionList = questionService.getSubList(userInfo, new PageInfo(page));
 		model.addAttribute("complexQuestionList", complexQuestionList);
 		responseJson(response, model);
 	}
 
 	@RequestMapping(value = "/sub", method = RequestMethod.GET)
-	public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
+	public void skuJson(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
-		UserInfo userInfo = getLoginedUser();
+		UserInfo userInfo = getLoginedUser(request);
 		ExecInfo execInfo = questionService.subByQid(qid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
