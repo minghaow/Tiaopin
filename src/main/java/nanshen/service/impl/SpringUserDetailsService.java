@@ -48,7 +48,8 @@ public class SpringUserDetailsService implements UserDetailsService {
             LogUtils.info("Phone " + username + " not found!");
             throw new UsernameNotFoundException("Phone " + username + " not found!");
         }
-        LogUtils.info("generateUserDetails");
+        LogUtils.info("generateUserDetails : " + userInfo.getPassword());
+        LogUtils.info("generateUserDetails : " + userInfo.getPhone());
         return generateUserDetails(userInfo);
     }
 

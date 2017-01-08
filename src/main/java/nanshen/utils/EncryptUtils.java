@@ -51,6 +51,9 @@ public class EncryptUtils {
             return false;
         }
         String salt = encPass.substring(index + 1);
+        LogUtils.info("=============== is Passsword vaild " + encPass);
+        LogUtils.info("=============== is Passsword vaild " + encodePassword(rawPass, salt));
+        LogUtils.info("=============== is Passsword vaild " + encPass.equals(encodePassword(rawPass, salt)));
         return encPass.equals(encodePassword(rawPass, salt));
     }
 
