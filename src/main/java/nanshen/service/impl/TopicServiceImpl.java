@@ -67,7 +67,7 @@ public class TopicServiceImpl extends ScheduledService implements TopicService {
         List<UserTopicSub> topicSubList = userTopicSubDao.getByUserId(userInfo.getId());
         List<Long> subedTopicIdList = new ArrayList<Long>();
         for (UserTopicSub topicSub : topicSubList) {
-            subedTopicIdList.add(topicSub.getId());
+            subedTopicIdList.add(topicSub.getTid());
         }
         for (Topic topic : hotTopicList) {
             if (subedTopicIdList.contains(topic.getId())) {
