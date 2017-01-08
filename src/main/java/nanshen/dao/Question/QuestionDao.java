@@ -24,4 +24,6 @@ public interface QuestionDao {
 
     List<Question> getHot(List<QuestionType> typeList, PageInfo pageInfo);
 
+    List<Question> get(List<Long> questionIdList);
+
 }

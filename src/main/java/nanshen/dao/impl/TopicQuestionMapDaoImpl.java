@@ -2,6 +2,7 @@ package nanshen.dao.impl;
 
 import nanshen.dao.TopicQuestionMapDao;
 import nanshen.dao.common.BaseDao;
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.TopicQuestionMap;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
@@ -28,9 +29,9 @@ public class TopicQuestionMapDaoImpl extends BaseDao implements TopicQuestionMap
     }
 
     @Override
-    public List<TopicQuestionMap> getByTid(long tid) {
+    public List<TopicQuestionMap> getByTid(long tid, PageInfo pageInfo) {
         Condition cnd = Cnd.where("tid", "=", tid).desc("id");
-        return dao.query(TopicQuestionMap.class, cnd);
+        return dao.query(TopicQuestionMap.class, cnd, genaratePager(pageInfo));
     }
 
 }

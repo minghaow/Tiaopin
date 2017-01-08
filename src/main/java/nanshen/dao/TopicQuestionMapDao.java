@@ -1,5 +1,6 @@
 package nanshen.dao;
 
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.TopicQuestionMap;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface TopicQuestionMapDao {
 
     TopicQuestionMap get(long id);
 
-    List<TopicQuestionMap> getByTid(long tid);
+    List<TopicQuestionMap> getByTid(long tid, PageInfo pageInfo);
 
 }

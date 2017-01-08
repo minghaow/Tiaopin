@@ -32,4 +32,6 @@ public interface QuestionService {
     List<ComplexAnswer> getHotAnswers(PageInfo pageInfo);
 
     ExecInfo subQuestion(long qid, UserInfo userInfo);
+
+    List<ComplexQuestion> getComplexQuestionByIdList(List<Long> questionIdList);
 }

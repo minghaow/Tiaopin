@@ -1,8 +1,9 @@
 package nanshen.data.User;
 
+import nanshen.utils.CollectionExtractor;
 import org.nutz.dao.entity.annotation.*;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * User info data
@@ -86,6 +87,22 @@ public class UserInfo {
     @Column
     private Date loginTime = new Date();
 
+    /** user authority list {@link #authorities} */
+    @Many(target = UserAuthority.class, field = "userId")
+    private List<UserAuthority> authoritiesInDb;
+
+    /** 买手的权限列表 */
+    private Set<AccessAuthority> authorities;
+
+    /** 权限提取器 */
+    private static final CollectionExtractor<AccessAuthority, UserAuthority> authorityExtractor =
+            new CollectionExtractor<AccessAuthority, UserAuthority>() {
+                @Override
+                protected AccessAuthority convert(UserAuthority source) {
+                    return source.getAuthority();
+                }
+            };
+
     public UserInfo(boolean activated, boolean available, String email, long id, String loginIp, Date loginTime,
                     String password, String phone, int priority, String username, UserType userType) {
         this.activated = activated;
@@ -96,6 +113,8 @@ public class UserInfo {
         this.priority = priority;
         this.username = username;
         this.userType = userType;
+        this.authorities = new HashSet<AccessAuthority>();
+        this.authoritiesInDb = new ArrayList<UserAuthority>();
     }
 
     public UserInfo(String openid, String phone, String password, String imgUrl, String country, String province, String city, String gender, String username) {
@@ -112,6 +131,8 @@ public class UserInfo {
         this.email = phone;
         this.gender = gender;
         this.openid = openid;
+        this.authorities = new HashSet<AccessAuthority>();
+        this.authoritiesInDb = new ArrayList<UserAuthority>();
     }
 
     public UserInfo(String phone, String password) {
@@ -122,6 +143,8 @@ public class UserInfo {
         this.phone = phone;
         this.username = phone;
         this.userType = UserType.AMATEUR;
+        this.authorities = new HashSet<AccessAuthority>();
+        this.authoritiesInDb = new ArrayList<UserAuthority>();
     }
 
     /**
@@ -266,4 +289,39 @@ public class UserInfo {
     public void setProvince(String province) {
         this.province = province;
     }
+
+    /**
+     * get all user authority details
+     *
+     * @return
+     */
+    public Set<AccessAuthority> getAuthorities() {
+        return Collections.unmodifiableSet(authorities);
+    }
+
+    /**
+     * get all user authority details
+     *
+     * @return 买手权限数据库结构列表
+     */
+    public List<UserAuthority> getAuthoritiesInDb() {
+        return Collections.unmodifiableList(authoritiesInDb);
+    }
+
+    /**
+     * nutz用于设置权限列表的方法
+     * <p />
+     * <b>注意</b>：nutz使用，其他地方不应该使用
+     *
+     * @param authoritiesInDb 买手权限数据库结构
+     */
+    public void setAuthoritiesInDb(List<UserAuthority> authoritiesInDb) {
+        this.authoritiesInDb = authoritiesInDb;
+        authorities = new HashSet<AccessAuthority>(authorityExtractor.extractList(authoritiesInDb));
+    }
+
+    public boolean hasAdminAuthority() {
+        return authorities.contains(AccessAuthority.ADMIN);
+    }
+
 }

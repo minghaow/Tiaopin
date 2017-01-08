@@ -60,4 +60,10 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
         return dao.query(Question.class, cnd, genaratePager(pageInfo));
     }
 
+    @Override
+    public List<Question> get(List<Long> questionIdList) {
+        Condition cnd = Cnd.where("id", "in", questionIdList);
+        return dao.query(Question.class, cnd);
+    }
+
 }

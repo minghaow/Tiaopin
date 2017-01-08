@@ -59,7 +59,7 @@ public class SpringUserDetailsService implements UserDetailsService {
                 userInfo.getPassword(),
                 userInfo.isAvailable(),
                 true, true, !failureTooMuch(userInfo.getUsername()),
-                null
+                userInfo.getAuthorities()
         );
     }
 

@@ -1,6 +1,8 @@
 package nanshen.service;
 
+import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 
@@ -26,5 +28,12 @@ public interface TopicService {
      * @return ExecInfo
      */
     ExecInfo subTopic(long tid, UserInfo userInfo);
+
+    /**
+     * subscribe hot topic
+     *
+     * @return ExecInfo
+     */
+    List<ComplexQuestion> getTopicQuestionList(long tid, PageInfo pageInfo);
 
 }
