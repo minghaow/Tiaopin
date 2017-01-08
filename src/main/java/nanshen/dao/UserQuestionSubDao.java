@@ -16,6 +16,8 @@ public interface UserQuestionSubDao {
 
     List<UserQuestionSub> getByUserId(long uid, PageInfo pageInfo);
 
+    UserQuestionSub get(long uid, long qid);
+
     long count(long qid);
 
 }

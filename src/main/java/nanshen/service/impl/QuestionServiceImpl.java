@@ -72,22 +72,26 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ComplexQuestion getComplexQuestionByShowId(long qShowId) {
+    public ComplexQuestion getComplexQuestionByShowId(UserInfo userInfo, long qShowId) {
         Question question = questionDao.getByShowId(qShowId);
         if (question == null) {
             return null;
         }
+        if (userInfo != null) {
+            UserQuestionSub sub = userQuestionSubDao.get(userInfo.getId(), question.getId());
+            question.setSubed(sub != null);
+        }
         fillQuestionTopicList(question);
         List<Answer> answerList = answerDao.getByQuestionId(question.getId());
         for (Answer answer : answerList) {
-            UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
-            if (userInfo != null) {
-                answer.setUserName(userInfo.getUsername());
-                answer.setUserDesc(userInfo.getUserDesc());
+            UserInfo userInfoT = accountService.getUserInfo(answer.getUserId());
+            if (userInfoT != null) {
+                answer.setUserName(userInfoT.getUsername());
+                answer.setUserDesc(userInfoT.getUserDesc());
             }
         }
-        UserInfo userInfo = accountService.getUserInfo(question.getUserId());
-        return new ComplexQuestion(question.getId(), question.getShowId(), question, userInfo, answerList);
+        UserInfo userInfoT = accountService.getUserInfo(question.getUserId());
+        return new ComplexQuestion(question.getId(), question.getShowId(), question, userInfoT, answerList);
     }
 
     private void fillQuestionTopicList(Question question) {

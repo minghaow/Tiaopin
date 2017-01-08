@@ -35,6 +35,12 @@ public class UserQuestionSubDaoImpl extends BaseDao implements UserQuestionSubDa
     }
 
     @Override
+    public UserQuestionSub get(long uid, long qid) {
+        Condition cnd = Cnd.where("userId", "=", uid).and("qid", "=", qid);
+        return dao.fetch(UserQuestionSub.class, cnd);
+    }
+
+    @Override
     public long count(long qid) {
         Condition cnd = Cnd.where("qid", "=", qid);
         return dao.count(UserQuestionSub.class, cnd);

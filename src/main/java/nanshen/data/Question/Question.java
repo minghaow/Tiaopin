@@ -68,6 +68,8 @@ public class Question {
     @Column
     private Date updateTime = new Date();
 
+    private boolean subed = false;
+
     public Question() {
     }
 
@@ -182,6 +184,14 @@ public class Question {
 
     public void setTopicList(List<Topic> topicList) {
         this.topicList = topicList;
+    }
+
+    public boolean isSubed() {
+        return subed;
+    }
+
+    public void setSubed(boolean subed) {
+        this.subed = subed;
     }
 
     public long generateShowId(long timeMillis, long userId) {

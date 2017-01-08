@@ -47,7 +47,7 @@ public class QuestionCtrl extends BaseCtrl {
 		}
 		ComplexQuestion complexQuestion;
 		if (aid <= 0 ) {
-			complexQuestion = questionService.getComplexQuestionByShowId(qid);
+			complexQuestion = questionService.getComplexQuestionByShowId(null, qid);
 			Map<Long, List<Sku>> aidSkuListMap = skuService.getMapByQuestionId(complexQuestion.getId());
 			model.addAttribute("answerPage", false);
 			prepareHeaderModel(model, PageType.QUESTION);
@@ -64,14 +64,15 @@ public class QuestionCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
-	public void questionJson(ModelMap model, HttpServletResponse response,
+	public void questionJson(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 									 @RequestParam(defaultValue = "0", required = true) long qid) throws IOException {
 		if (qid <= 0) {
 			model.addAttribute("success", false);
 			model.addAttribute("msg", "错误的qid");
 		}
 		ComplexQuestion complexQuestion;
-		complexQuestion = questionService.getComplexQuestionByShowId(qid);
+		UserInfo userInfo = getLoginedUser(request);
+		complexQuestion = questionService.getComplexQuestionByShowId(userInfo, qid);
 		Map<Long, List<Sku>> aidSkuListMap = skuService.getMapByQuestionId(complexQuestion.getId());
 		model.addAttribute("answerPage", false);
 		model.addAttribute("complexQuestion", complexQuestion);

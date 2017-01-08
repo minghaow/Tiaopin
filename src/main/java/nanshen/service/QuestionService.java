@@ -23,7 +23,7 @@ public interface QuestionService {
 
     Question getQuestion(long questionId);
 
-    ComplexQuestion getComplexQuestionByShowId(long qShowId);
+    ComplexQuestion getComplexQuestionByShowId(UserInfo userInfo, long qShowId);
 
     ComplexQuestion getQuestionAndAnswerByShowId(long qShowId, long aShowId);
 
