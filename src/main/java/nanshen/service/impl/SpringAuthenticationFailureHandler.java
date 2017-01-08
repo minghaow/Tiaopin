@@ -7,6 +7,7 @@
 package nanshen.service.impl;
 
 import nanshen.data.SystemUtil.LoginError;
+import nanshen.utils.JsonUtils;
 import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,19 +38,17 @@ public class SpringAuthenticationFailureHandler implements AuthenticationFailure
             throws IOException, ServletException {
         LoginError loginError = LoginError.PASSWORD_ERROR;
         if (exception instanceof BadCredentialsException) {
-            LogUtils.info("BadCredentialsException");
             increaseFailureCount(request);
             if (failureTooMuch(request)) {
                 loginError = LoginError.PASSWORD_ERROR_TOO_MUCH;
             }
         } else if (exception instanceof DisabledException) {
-            LogUtils.info("DisabledException");
             loginError = LoginError.ACCOUNT_DISABLE;
         } else if (exception instanceof LockedException) {
-            LogUtils.info("LockedException");
             loginError = LoginError.PASSWORD_ERROR_TOO_MUCH;
         }
         LogUtils.info("login fail");
+        LogUtils.info(JsonUtils.toJson(exception));
         response.sendRedirect("/auth/fail");
     }
 
