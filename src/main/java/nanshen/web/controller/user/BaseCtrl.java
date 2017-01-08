@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Controller的基类，定义了Controller使用的基本方法，所有Controller都应该继承该基类
@@ -94,6 +97,22 @@ public abstract class BaseCtrl {
 	}
 
 	/**
+	 * 获取当前登录的用户的信息
+	 *
+	 * @return 用户信息，若未登录返回null
+	 */
+	protected UserInfo getLoginedUser(HttpServletRequest request) {
+		Map<String,String> params =getRequestParams(request);
+		long tpuid = Long.parseLong(params.get("tpuid"));
+		long uid = Long.parseLong(params.get("uid"));
+		UserInfo userInfo = accountService.getUserInfo(uid);
+		if (userInfo != null && userInfo.getTempLoginId() == tpuid) {
+			return userInfo;
+		}
+		return null;
+	}
+
+	/**
 	 * 获取当前登录的用户的购物车信息
 	 *
 	 * @return 用户信息，若未登录返回null
@@ -153,6 +172,24 @@ public abstract class BaseCtrl {
 	protected void responseJsonp(HttpServletResponse response, String jsonp, Object object) throws IOException {
 		response.setContentType("text/javascript;charset=" + SystemConstants.SYS_ENC);
 		response.getWriter().print(JsonUtils.toJsonP(jsonp, object));
+	}
+
+	public Map<String,String> getRequestParams(HttpServletRequest request) {
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			params.put(name, valueStr);
+		}
+		return params;
 	}
 
 	protected void prepareHeaderModel(ModelMap model, PageType pageType) {
