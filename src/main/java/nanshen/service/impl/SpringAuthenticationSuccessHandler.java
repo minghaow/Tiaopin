@@ -38,6 +38,7 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         long tempLoginId = recordLogin(authentication.getName());
+        accountService.clearUserInfoCache(Long.parseLong(authentication.getName()));
         setDefaultTargetUrl("/auth/success?uid=" + authentication.getName() + "&tpuid=" + tempLoginId);
         super.onAuthenticationSuccess(request, response, authentication);
     }

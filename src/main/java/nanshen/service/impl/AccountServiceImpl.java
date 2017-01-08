@@ -166,6 +166,12 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     }
 
     @Override
+    public boolean clearUserInfoCache(long uid) {
+        userCache.invalidate(uid);
+        return true;
+    }
+
+    @Override
     public ExecResult<UserInfo> checkIsNotRegisteredByWx(String openid) {
         UserInfo userInfo = userInfoDao.getUserInfoByOpenid(openid);
         if (userInfo == null) {

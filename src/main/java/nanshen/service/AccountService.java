@@ -115,6 +115,13 @@ public interface AccountService {
      */
     boolean clearAdminUserInfoCache();
 
+    /**
+     * clear uid user info cache
+     *
+     * @return boolean
+     */
+    boolean clearUserInfoCache(long uid);
+
     ExecResult<UserInfo> checkIsNotRegisteredByWx(String openid);
 
     ExecResult<UserInfo> createNewUser(String openid, String phone, String password, String imgUrl, String country, String province, String city, String gender, String nickName);

@@ -7,6 +7,7 @@ import nanshen.data.User.UserInfo;
 import nanshen.service.AccountService;
 import nanshen.service.CartService;
 import nanshen.utils.JsonUtils;
+import nanshen.utils.LogUtils;
 import nanshen.utils.RequestUtils;
 import nanshen.utils.ViewUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,9 +103,10 @@ public abstract class BaseCtrl {
 	 * @return 用户信息，若未登录返回null
 	 */
 	protected UserInfo getLoginedUser(HttpServletRequest request) {
-		Map<String,String> params =getRequestParams(request);
+		Map<String,String> params = getRequestParams(request);
 		long tpuid = Long.parseLong(params.get("tpuid"));
 		long uid = Long.parseLong(params.get("uid"));
+		LogUtils.info("tpuid " + tpuid);
 		UserInfo userInfo = accountService.getUserInfo(uid);
 		if (userInfo != null && userInfo.getTempLoginId() == tpuid) {
 			return userInfo;

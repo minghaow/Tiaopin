@@ -69,13 +69,14 @@ public class TopicCtrl extends BaseCtrl {
     public void skuJson(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         UserInfo userInfo = getLoginedUser(request);
+        ExecInfo execInfo = ExecInfo.fail("用户未登录或已过期，请重新登录");
         if (userInfo != null) {
             LogUtils.info("=================== sublogined user " + userInfo.getUsername() + userInfo.getPhone());
             LogUtils.info("=================== sublogined user " + userInfo.getTempLoginId());
+            execInfo = topicService.subTopic(topicId, userInfo);
         }else {
             LogUtils.info("=================== sublogined failed ");
         }
-        ExecInfo execInfo = topicService.subTopic(topicId, userInfo);
         json.put("success", execInfo.isSucc());
         json.put("msg", execInfo.getMsg());
         responseJson(response, json);
