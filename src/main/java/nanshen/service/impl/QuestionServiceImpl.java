@@ -151,15 +151,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ExecInfo subQuestion(long qid, UserInfo userInfo) {
-        UserQuestionSub questionSub = userQuestionSubDao.insert(new UserQuestionSub(qid, userInfo.getId()));
-        if (questionSub == null) {
-            return ExecInfo.fail("关注问题失败，请稍后再试");
-        }
-        return ExecInfo.succ();
-    }
-
-    @Override
     public List<ComplexQuestion> getComplexQuestionByIdList(List<Long> questionIdList) {
         List<Question> questionList = questionDao.get(questionIdList);
         List<ComplexQuestion>  complexQuestionList = new ArrayList<ComplexQuestion>();
@@ -177,6 +168,28 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = questionDao.get(qid);
         UserInfo userInfo = accountService.getUserInfo(answer.getUserId());
         return new ComplexAnswer(aid, answer, answer.getShowId(), qid, question.getShowId(), question, userInfo, "");
+    }
+
+    @Override
+    public ExecInfo subByQid(long qid, UserInfo userInfo) {
+        if (userInfo == null) {
+            return ExecInfo.fail("还未登陆或已失效，请重新登陆");
+        }
+        UserQuestionSub sub = userQuestionSubDao.insert(new UserQuestionSub(qid, userInfo.getId()));
+        if (sub == null) {
+            return ExecInfo.fail("关注失败，请稍后再关注一遍");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
+    public List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo) {
+        List<UserQuestionSub> subList = userQuestionSubDao.getByUserId(userInfo.getId(), pageInfo);
+        List<Long> qidList = new ArrayList<Long>();
+        for (UserQuestionSub sub : subList) {
+            qidList.add(sub.getQid());
+        }
+        return getComplexQuestionByIdList(qidList);
     }
 
     private void fillCleanContentList(Answer answer) {

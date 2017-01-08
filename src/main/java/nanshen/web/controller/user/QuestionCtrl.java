@@ -4,6 +4,7 @@ import nanshen.dao.Question.AnswerDao;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Sku.Sku;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.User.UserInfo;
 import nanshen.service.QuestionService;
@@ -77,11 +78,20 @@ public class QuestionCtrl extends BaseCtrl {
 		responseJson(response, model);
 	}
 
+	@RequestMapping(value = "/sub/l", method = RequestMethod.GET)
+	public void questionJson(ModelMap model, HttpServletResponse response,
+							 @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
+		UserInfo userInfo = getLoginedUser();
+		List<ComplexQuestion> complexQuestionList = questionService.getSubList(userInfo, new PageInfo(page));
+		model.addAttribute("complexQuestionList", complexQuestionList);
+		responseJson(response, model);
+	}
+
 	@RequestMapping(value = "/sub", method = RequestMethod.GET)
 	public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser();
-		ExecInfo execInfo = questionService.subQuestion(qid, userInfo);
+		ExecInfo execInfo = questionService.subByQid(qid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);

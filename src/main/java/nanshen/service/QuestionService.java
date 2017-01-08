@@ -31,9 +31,11 @@ public interface QuestionService {
 
     List<ComplexAnswer> getHotAnswers(PageInfo pageInfo);
 
-    ExecInfo subQuestion(long qid, UserInfo userInfo);
-
     List<ComplexQuestion> getComplexQuestionByIdList(List<Long> questionIdList);
 
     ComplexAnswer getComplexAnswerByAidAndQid(long aid, long qid);
+
+    ExecInfo subByQid(long qid, UserInfo userInfo);
+
+    List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo);
 }

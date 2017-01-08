@@ -1,5 +1,6 @@
 package nanshen.dao;
 
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.UserQuestionSub;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface UserQuestionSubDao {
 
     UserQuestionSub get(long id);
 
-    List<UserQuestionSub> getByUserId(long uid);
+    List<UserQuestionSub> getByUserId(long uid, PageInfo pageInfo);
+
+    long count(long qid);
 
 }

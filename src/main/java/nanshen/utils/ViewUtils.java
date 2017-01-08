@@ -1,5 +1,7 @@
 package nanshen.utils;
 
+import nanshen.constant.TimeConstants;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -11,6 +13,26 @@ import java.util.Date;
  * @author WANG Minghao
  */
 public class ViewUtils {
+
+    public static String convertDateToFromNowString(Date date) {
+        long now = System.currentTimeMillis();
+        long dateLong = date.getTime();
+        long diff = now - dateLong;
+        if (diff < TimeConstants.HOUR_IN_MILLISECONDS) {
+            return "刚刚";
+        } else if (diff < TimeConstants.DAY_IN_MILLISECONDS) {
+            return "今天";
+        } else if (diff < 31 * TimeConstants.DAY_IN_MILLISECONDS) {
+            long day = diff / TimeConstants.DAY_IN_MILLISECONDS;
+            return day + "天前";
+        } else if (diff < 12 * TimeConstants.MONTH_IN_MILLISECONDS) {
+            long month = diff / TimeConstants.MONTH_IN_MILLISECONDS;
+            return month + "个月前";
+        } else {
+            DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            return format.format(date);
+        }
+    }
 
     public static String convertDateToString(Date date) {
         DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

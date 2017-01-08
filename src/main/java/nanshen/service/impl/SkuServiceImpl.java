@@ -256,7 +256,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
         }
         UserSkuLikeMap likeMap = userSkuLikeMapDao.insert(new UserSkuLikeMap(sid, userInfo.getId()));
         if (likeMap == null) {
-            return ExecInfo.fail("喜欢失败，请稍后再喜欢一边");
+            return ExecInfo.fail("喜欢失败，请稍后再喜欢一遍");
         }
         return ExecInfo.succ();
     }

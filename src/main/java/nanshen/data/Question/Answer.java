@@ -78,6 +78,8 @@ public class Answer {
     @Column
     private Date updateTime = new Date();
 
+    private String readableTime = "";
+
     public Answer() {
     }
 
@@ -228,6 +230,14 @@ public class Answer {
 
     public void setCleanContentList(List<AnswerCleanContent> cleanContentList) {
         this.cleanContentList = cleanContentList;
+    }
+
+    public String getReadableTime() {
+        return ViewUtils.convertDateToFromNowString(createTime);
+    }
+
+    public void setReadableTime(String readableTime) {
+        this.readableTime = readableTime;
     }
 
     public long generateShowId(long timeMillis, long userId) {
