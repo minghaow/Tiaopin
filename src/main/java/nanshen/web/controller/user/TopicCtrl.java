@@ -7,6 +7,7 @@ import nanshen.data.SystemUtil.PageType;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 import nanshen.service.TopicService;
+import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -67,6 +68,11 @@ public class TopicCtrl extends BaseCtrl {
     public void skuJson(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         UserInfo userInfo = getLoginedUser();
+        if (userInfo != null) {
+            LogUtils.info("=================== sublogined user " + userInfo.getUsername() + userInfo.getPhone());
+        }else {
+            LogUtils.info("=================== sublogined failed ");
+        }
         ExecInfo execInfo = topicService.subTopic(topicId, userInfo);
         json.put("success", execInfo.isSucc());
         json.put("msg", execInfo.getMsg());

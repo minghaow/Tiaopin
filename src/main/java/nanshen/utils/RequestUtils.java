@@ -4,7 +4,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.switchuser.SwitchUserGrantedAuthority;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**
@@ -85,24 +88,24 @@ public class RequestUtils {
      * @return IP地址
      */
     public static String getRequestIp() {
-        return "127.0.0.1";
+//        return "127.0.0.1";
         // TODO: finish the ip checker
-//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        String ip = request.getHeader("X-Forwarded-For");
-//        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-//            //多次反向代理后会有多个ip值，第一个ip才是真实ip
-//            int index = ip.indexOf(",");
-//            if(index != -1){
-//                return ip.substring(0,index);
-//            }else{
-//                return ip;
-//            }
-//        }
-//        ip = request.getHeader("X-Real-IP");
-//        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-//            return ip;
-//        }
-//        return request.getRemoteAddr();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String ip = request.getHeader("X-Forwarded-For");
+        if(org.apache.commons.lang.StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+            //多次反向代理后会有多个ip值，第一个ip才是真实ip
+            int index = ip.indexOf(",");
+            if(index != -1){
+                return ip.substring(0,index);
+            }else{
+                return ip;
+            }
+        }
+        ip = request.getHeader("X-Real-IP");
+        if(org.apache.commons.lang.StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+            return ip;
+        }
+        return request.getRemoteAddr();
     }
 
 }

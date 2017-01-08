@@ -3,9 +3,11 @@ package nanshen.web.controller.user;
 import nanshen.data.Dtree.DtreeQuestion;
 import nanshen.data.Dtree.DtreeTrack;
 import nanshen.data.Sku.Sku;
+import nanshen.data.User.UserInfo;
 import nanshen.service.DtreeService;
 import nanshen.service.SkuService;
 import nanshen.utils.JsonUtils;
+import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +48,12 @@ public class DtreeCtrl extends BaseCtrl {
 									 @RequestParam(defaultValue = "1", required = true) long topicId,
 									 @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser();
+		if (userInfo != null) {
+			LogUtils.info("=================== qlogined user " + userInfo.getUsername() + userInfo.getPhone());
+		}else {
+			LogUtils.info("=================== qogined failed ");
+		}
 		DtreeQuestion dtreeQuestion = dtreeService.getNextDtreeQuestion(topicId, qid);
 		json.put("q", dtreeQuestion);
 		responseJson(response, json);
@@ -61,6 +69,12 @@ public class DtreeCtrl extends BaseCtrl {
 	public void questionResult(HttpServletResponse response,
 							   		@RequestParam(defaultValue = "", required = true) String path) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser();
+		if (userInfo != null) {
+			LogUtils.info("=================== rlogined user " + userInfo.getUsername() + userInfo.getPhone());
+		}else {
+			LogUtils.info("=================== rlogined failed ");
+		}
 		path = path.replaceAll("&quot;", "");
 		DtreeTrack[] dtreeTracks = JsonUtils.fromJson(path, DtreeTrack[].class);
 		List<Sku> skuList = dtreeService.getResult(Arrays.asList(dtreeTracks != null ? dtreeTracks : new DtreeTrack[0]));
