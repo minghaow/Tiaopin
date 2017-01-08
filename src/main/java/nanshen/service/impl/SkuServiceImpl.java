@@ -170,7 +170,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Override
     public Sku getByShowSid(UserInfo userInfo, long sid) {
-        Sku sku = skuDao.getByShowId(sid);
+        Sku sku = skuDao.get(sid);
         if (userInfo != null) {
             UserSkuLikeMap userSkuLikeMap = userSkuLikeMapDao.get(userInfo.getId(), sid);
             if (userSkuLikeMap != null) {

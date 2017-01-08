@@ -175,7 +175,8 @@ public class QuestionServiceImpl implements QuestionService {
         if (userInfo == null) {
             return ExecInfo.fail("还未登陆或已失效，请重新登陆");
         }
-        UserQuestionSub sub = userQuestionSubDao.insert(new UserQuestionSub(qid, userInfo.getId()));
+        Question question = questionDao.getByShowId(qid);
+        UserQuestionSub sub = userQuestionSubDao.insert(new UserQuestionSub(question.getId(), userInfo.getId()));
         if (sub == null) {
             return ExecInfo.fail("关注失败，请稍后再关注一遍");
         }
