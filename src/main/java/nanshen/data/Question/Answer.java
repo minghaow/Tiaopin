@@ -35,6 +35,7 @@ public class Answer {
     private long userId = 0;
     private String userName = "";
     private String userDesc = "";
+    private String userImgUrl = "";
 
     /** description */
     @Column
@@ -248,6 +249,14 @@ public class Answer {
 
     public void setUped(boolean uped) {
         this.uped = uped;
+    }
+
+    public String getUserImgUrl() {
+        return userImgUrl;
+    }
+
+    public void setUserImgUrl(String userImgUrl) {
+        this.userImgUrl = userImgUrl;
     }
 
     public long generateShowId(long timeMillis, long userId) {

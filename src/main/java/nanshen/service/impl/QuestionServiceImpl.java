@@ -93,6 +93,7 @@ public class QuestionServiceImpl implements QuestionService {
             if (userInfoT != null) {
                 answer.setUserName(userInfoT.getUsername());
                 answer.setUserDesc(userInfoT.getUserDesc());
+                answer.setUserImgUrl(userInfoT.getImgUrl());
             }
         }
         UserInfo userInfoT = accountService.getUserInfo(question.getUserId());
@@ -141,6 +142,7 @@ public class QuestionServiceImpl implements QuestionService {
         if (userInfoT != null) {
             answer.setUserName(userInfoT.getUsername());
             answer.setUserDesc(userInfoT.getUserDesc());
+            answer.setUserImgUrl(userInfoT.getImgUrl());
         }
         return new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(), question.getShowId(),
                 question, userInfoT, "");
