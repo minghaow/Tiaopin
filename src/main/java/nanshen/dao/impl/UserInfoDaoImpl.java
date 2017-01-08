@@ -66,14 +66,14 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
         Sql sql = Sqls.create("UPDATE UserInfo " +
                 "SET loginCount = loginCount + 1, loginIp = @loginIp, loginTime = @loginTime, tempLoginId = @tempLoginId " +
                 "WHERE id = @uid");
-        long temLoginId = System.currentTimeMillis();
+        long tempLoginId = System.currentTimeMillis();
         sql.params().set("loginIp", ip);
         sql.params().set("loginTime", loginTime);
         sql.params().set("uid", uid);
-        sql.params().set("temLoginId", temLoginId);
+        sql.params().set("tempLoginId", tempLoginId);
         dao.execute(sql);
         if (1 == sql.getUpdateCount()) {
-            return temLoginId;
+            return tempLoginId;
         }
         return 0;
     }
