@@ -38,4 +38,6 @@ public interface QuestionService {
     ExecInfo subByQid(long qid, UserInfo userInfo);
 
     List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo);
+
+    ExecInfo upAnswer(long aid, UserInfo userInfo);
 }

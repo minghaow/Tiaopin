@@ -6,6 +6,8 @@ import nanshen.data.Question.AnswerStatus;
 import nanshen.data.SystemUtil.PageInfo;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.sql.Sql;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -64,6 +66,16 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao {
                 .and("status", "=", AnswerStatus.ONLINE)
                 .desc("upCnt");
         return dao.query(Answer.class, cnd);
+    }
+
+    @Override
+    public boolean up(long aid) {
+        Sql sql = Sqls.create("UPDATE Answer " +
+                "SET upCnt = upCnt + 1 " +
+                "WHERE id = @aid");
+        sql.params().set("aid", aid);
+        dao.execute(sql);
+        return 1 == sql.getUpdateCount();
     }
 
 }

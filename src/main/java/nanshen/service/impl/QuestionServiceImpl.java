@@ -3,12 +3,14 @@ package nanshen.service.impl;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.TopicDao;
+import nanshen.dao.UserAnswerUpDao;
 import nanshen.dao.UserInfoDao;
 import nanshen.dao.UserQuestionSubDao;
 import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.Topic;
+import nanshen.data.User.UserAnswerUp;
 import nanshen.data.User.UserInfo;
 import nanshen.data.User.UserQuestionSub;
 import nanshen.service.AccountService;
@@ -39,6 +41,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private UserQuestionSubDao userQuestionSubDao;
+
+    @Autowired
+    private UserAnswerUpDao userAnswerUpDao;
 
     @Autowired
     private AnswerDao answerDao;
@@ -198,6 +203,17 @@ public class QuestionServiceImpl implements QuestionService {
             qidList.add(sub.getQid());
         }
         return getComplexQuestionByIdList(qidList);
+    }
+
+    @Override
+    public ExecInfo upAnswer(long aid, UserInfo userInfo) {
+        UserAnswerUp userAnswerUp = userAnswerUpDao.insert(new UserAnswerUp(aid, userInfo.getId()));
+        if (userAnswerUp != null) {
+            if (answerDao.up(aid)) {
+                return ExecInfo.succ();
+            }
+        }
+        return ExecInfo.fail("UP失败");
     }
 
     private void fillCleanContentList(Answer answer) {

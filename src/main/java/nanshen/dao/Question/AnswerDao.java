@@ -24,4 +24,6 @@ public interface AnswerDao {
     List<Answer> getHot(PageInfo pageInfo);
 
     List<Answer> getByQuestionId(long questionId);
+
+    boolean up(long aid);
 }
