@@ -45,11 +45,8 @@ public class SpringUserDetailsService implements UserDetailsService {
         UserInfo userInfo = userInfoDao.getUserInfoByPhone(username);
         LogUtils.info("username: " + username );
         if (null == userInfo) {
-            LogUtils.info("Phone " + username + " not found!");
             throw new UsernameNotFoundException("Phone " + username + " not found!");
         }
-        LogUtils.info("generateUserDetails : " + userInfo.getPassword());
-        LogUtils.info("generateUserDetails : " + userInfo.getPhone());
         return generateUserDetails(userInfo);
     }
 

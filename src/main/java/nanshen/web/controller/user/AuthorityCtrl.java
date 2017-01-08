@@ -10,8 +10,11 @@ import nanshen.data.Weixin.WeixinSessionResponse;
 import nanshen.service.AccountService;
 import nanshen.utils.HttpUtils;
 import nanshen.utils.JsonUtils;
+import nanshen.utils.LogUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,8 +63,11 @@ public class AuthorityCtrl extends BaseCtrl {
     @RequestMapping(value = "/success", method = RequestMethod.GET)
     public void loginSuccess(HttpServletResponse response, ModelMap model)
             throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LogUtils.info("==============");
+        LogUtils.info(JsonUtils.toJson(authentication));
+        LogUtils.info("==============");
         model.put("success", "true");
-        prepareHeaderModel(model, PageType.LOGIN_PAGE);
         responseJson(response, model);
     }
 
