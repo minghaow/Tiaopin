@@ -107,6 +107,8 @@ public class Sku {
 
     private long likeCnt = 0;
 
+    private boolean liked = false;
+
     /** customer review */
     private List<CustomerReview> customerReviewList;
 
@@ -367,6 +369,14 @@ public class Sku {
 
     public void setLikeCnt(long likeCnt) {
         this.likeCnt = likeCnt;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
     public long generateShowId(long userId) {

@@ -184,6 +184,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo) {
+        if (userInfo == null) {
+            return new ArrayList<ComplexQuestion>();
+        }
         List<UserQuestionSub> subList = userQuestionSubDao.getByUserId(userInfo.getId(), pageInfo);
         List<Long> qidList = new ArrayList<Long>();
         for (UserQuestionSub sub : subList) {

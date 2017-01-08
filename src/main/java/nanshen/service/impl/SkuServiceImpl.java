@@ -169,8 +169,14 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     }
 
     @Override
-    public Sku getByShowSid(long sid) {
+    public Sku getByShowSid(UserInfo userInfo, long sid) {
         Sku sku = skuDao.getByShowId(sid);
+        if (userInfo != null) {
+            UserSkuLikeMap userSkuLikeMap = userSkuLikeMapDao.get(userInfo.getId(), sid);
+            if (userSkuLikeMap != null) {
+                sku.setLiked(true);
+            }
+        }
         long count = userSkuLikeMapDao.countSkuLike(sid);
         sku.setLikeCnt(count);
         return sku;
@@ -263,6 +269,9 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
 
     @Override
     public List<Sku> getLikeList(UserInfo userInfo, PageInfo pageInfo) {
+        if (userInfo == null) {
+            return new ArrayList<Sku>();
+        }
         List<UserSkuLikeMap> likeMapList = userSkuLikeMapDao.getByUid(userInfo.getId(), pageInfo);
         List<Sku> skuList = new ArrayList<Sku>();
         for (UserSkuLikeMap likeMap : likeMapList) {

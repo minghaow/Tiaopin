@@ -69,7 +69,7 @@ public interface SkuService {
      * @param sid
      * @return
      */
-    Sku getByShowSid(long sid);
+    Sku getByShowSid(UserInfo userInfo, long sid);
     /**
      * Get sku by sku id
      *

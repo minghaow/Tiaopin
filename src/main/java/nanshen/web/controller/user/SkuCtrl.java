@@ -3,6 +3,7 @@ package nanshen.web.controller.user;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Sku.Sku;
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.User.UserInfo;
@@ -38,12 +39,13 @@ public class SkuCtrl extends BaseCtrl {
 	private SkuService skuService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView skuPage(ModelMap model,
+	public ModelAndView skuPage(HttpServletRequest request, ModelMap model,
 								@RequestParam(defaultValue = "0", required = true) long sid) throws UnsupportedEncodingException {
 		if (sid <= 0) {
 			return new ModelAndView("500");
 		}
-		Sku sku = skuService.getByShowSid(sid);
+		UserInfo userInfo = getLoginedUser(request);
+		Sku sku = skuService.getByShowSid(userInfo, sid);
 		List<ComplexAnswer> answerList = skuService.getAnswersBySid(sku.getId());
 		prepareHeaderModel(model, PageType.SKU);
 		model.addAttribute("sku", sku);
@@ -60,14 +62,16 @@ public class SkuCtrl extends BaseCtrl {
 			json.put("success", false);
 			json.put("msg", "错误的商品ID");
 		} else {
-			json.put("success", skuService.likeBySid(sid, userInfo));
+			ExecInfo execInfo = skuService.likeBySid(sid, userInfo);
+			json.put("success", execInfo.isSucc());
+			json.put("msg", execInfo.getMsg());
 		}
 		responseJson(response, json);
 	}
 
 	@RequestMapping(value = "/like/l", method = RequestMethod.GET)
 	public void skuLike(HttpServletRequest request, HttpServletResponse response,
-						@RequestParam(defaultValue = "0", required = true) int page) throws IOException {
+						@RequestParam(defaultValue = "1", required = true) int page) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
 		List<Sku> skuList = skuService.getLikeList(userInfo, new PageInfo(page));
