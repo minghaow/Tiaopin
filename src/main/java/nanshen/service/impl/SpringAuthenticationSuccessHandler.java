@@ -7,6 +7,7 @@
 package nanshen.service.impl;
 
 import nanshen.dao.UserInfoDao;
+import nanshen.utils.JsonUtils;
 import nanshen.utils.LogUtils;
 import nanshen.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,10 @@ public class SpringAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         recordLogin(request);
-        setDefaultTargetUrl("/auth/success");
+        LogUtils.info("==============");
+        LogUtils.info(JsonUtils.toJson(authentication));
+        LogUtils.info("==============");
+        setDefaultTargetUrl("/auth/success?uid=" + authentication.getName());
         super.onAuthenticationSuccess(request, response, authentication);
     }
 

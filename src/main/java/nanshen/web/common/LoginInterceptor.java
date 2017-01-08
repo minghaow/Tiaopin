@@ -39,7 +39,13 @@ public class LoginInterceptor extends BaseController implements HandlerIntercept
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) {}
+                           ModelAndView modelAndView) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LogUtils.info("==============");
+        LogUtils.info(JsonUtils.toJson(authentication));
+        LogUtils.info("==============");
+    }
 
     @Override
     public void afterCompletion(

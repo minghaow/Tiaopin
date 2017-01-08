@@ -7,12 +7,8 @@ import nanshen.data.SystemUtil.PageType;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 import nanshen.service.TopicService;
-import nanshen.utils.JsonUtils;
 import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,14 +73,6 @@ public class TopicCtrl extends BaseCtrl {
         }else {
             LogUtils.info("=================== sublogined failed ");
         }
-
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SecurityContext context = SecurityContextHolder.getContext();
-        LogUtils.info("==============");
-        LogUtils.info(JsonUtils.toJson(authentication));
-        LogUtils.info("==============");
-        LogUtils.info(JsonUtils.toJson(context));
         ExecInfo execInfo = topicService.subTopic(topicId, userInfo);
         json.put("success", execInfo.isSucc());
         json.put("msg", execInfo.getMsg());
