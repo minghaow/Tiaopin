@@ -20,7 +20,6 @@ import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
 import nanshen.service.common.ScheduledService;
-import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -205,43 +204,32 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
                                         List<SkuUserType> userTypeList, Long lowerPriceRange, Long higherPriceRange) {
         List<Sku> filteredSkuList = new ArrayList<Sku>();
         for (Sku sku : cachedSkuList) {
-            LogUtils.info("lowerPriceRange: " + lowerPriceRange);
-            LogUtils.info("higherPriceRange: " + higherPriceRange);
-            LogUtils.info("sku price: " + sku.getPrice());
-            LogUtils.info("sku price: " + sku.getCategoryOneType());
-            LogUtils.info("sku price: " + sku.getCategoryTwoType());
-            LogUtils.info("sku price: " + sku.getColorType());
-            LogUtils.info("sku price: " + sku.getMaterialType());
-            LogUtils.info("sku price: " + sku.getSpecialType());
-            LogUtils.info("sku price: " + sku.getStyleType());
-            LogUtils.info("sku price: " + sku.getUserType());
-
-            if (sku.getCategoryOneType() != null && sku.getCategoryOneType() != SkuCategoryOneType.ALL
-                    && categoryOneTypeList != null && !categoryOneTypeList.contains(sku.getCategoryOneType())) {
+            if (sku.getCategoryOneType() != null && sku.getCategoryOneType() != SkuCategoryOneType.ALL && categoryOneTypeList != null
+                    && categoryOneTypeList.size() != 0 && !categoryOneTypeList.contains(SkuCategoryOneType.ALL) && !categoryOneTypeList.contains(sku.getCategoryOneType())) {
                 continue;
             }
-            if (sku.getCategoryTwoType() != null && sku.getCategoryTwoType() != SkuCategoryTwoType.ALL
-                    && categoryTwoTypeList != null && !categoryTwoTypeList.contains(sku.getCategoryTwoType())) {
+            if (sku.getCategoryTwoType() != null && sku.getCategoryTwoType() != SkuCategoryTwoType.ALL && categoryTwoTypeList != null
+                    && categoryTwoTypeList.size() != 0 && !categoryTwoTypeList.contains(SkuCategoryTwoType.ALL) && !categoryTwoTypeList.contains(sku.getCategoryTwoType())) {
                 continue;
             }
-            if (sku.getColorType() != null && sku.getColorType() != SkuColorType.ALL
-                    && colorTypeList != null && !colorTypeList.contains(sku.getColorType())) {
+            if (sku.getColorType() != null && sku.getColorType() != SkuColorType.ALL && colorTypeList != null
+                    && colorTypeList.size() != 0 && !colorTypeList.contains(SkuColorType.ALL) && !colorTypeList.contains(sku.getColorType())) {
                 continue;
             }
-            if (sku.getMaterialType() != null && sku.getMaterialType() != SkuMaterialType.ALL
-                    && materialTypeList != null && !materialTypeList.contains(sku.getMaterialType())) {
+            if (sku.getMaterialType() != null && sku.getMaterialType() != SkuMaterialType.ALL && materialTypeList != null
+                    && materialTypeList.size() != 0 && !materialTypeList.contains(SkuMaterialType.ALL) && !materialTypeList.contains(sku.getMaterialType())) {
                 continue;
             }
-            if (sku.getSpecialType() != null && sku.getSpecialType() != SkuSpecialType.ALL
-                    && specialTypeList != null && !specialTypeList.contains(sku.getSpecialType())) {
+            if (sku.getSpecialType() != null && sku.getSpecialType() != SkuSpecialType.ALL && specialTypeList != null
+                    && specialTypeList.size() != 0 && !specialTypeList.contains(SkuSpecialType.ALL) && !specialTypeList.contains(sku.getSpecialType())) {
                 continue;
             }
-            if (sku.getStyleType() != null && sku.getStyleType() != SkuStyleType.ALL
-                    && styleTypeList != null && !styleTypeList.contains(sku.getStyleType())) {
+            if (sku.getStyleType() != null && sku.getStyleType() != SkuStyleType.ALL && styleTypeList != null
+                    && styleTypeList.size() != 0 && !styleTypeList.contains(SkuStyleType.ALL) && !styleTypeList.contains(sku.getStyleType())) {
                 continue;
             }
-            if (sku.getUserType() != null && sku.getUserType() != SkuUserType.ALL
-                    && userTypeList != null && !userTypeList.contains(sku.getUserType())) {
+            if (sku.getUserType() != null && sku.getUserType() != SkuUserType.ALL && userTypeList != null
+                    && userTypeList.size() != 0 && !userTypeList.contains(SkuUserType.ALL) && !userTypeList.contains(sku.getUserType())) {
                 continue;
             }
             if (sku.getPrice() != 0 && lowerPriceRange != null && lowerPriceRange > sku.getPrice()) {

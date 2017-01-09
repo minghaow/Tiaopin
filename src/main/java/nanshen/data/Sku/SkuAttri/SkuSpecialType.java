@@ -19,6 +19,8 @@ public enum SkuSpecialType {
 
     STYLISH("有格调"),
 
+    NEW_YEAR("新年礼"),
+
     UNKNOWN("未知种类");
 
     private String desc;
