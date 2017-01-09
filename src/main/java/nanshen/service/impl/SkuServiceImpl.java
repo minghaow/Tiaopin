@@ -20,6 +20,7 @@ import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.service.api.oss.OssFormalApi;
 import nanshen.service.common.ScheduledService;
+import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -90,7 +91,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     public void update() {
         long startTime = System.currentTimeMillis();
 
-        cachedSkuList = skuDao.getLatestSkuList(50);
+        cachedSkuList = skuDao.getLatestSkuList(100);
 
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.println("[SkuService] Update in " + totalTime + "ms");
@@ -238,6 +239,7 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
             if (sku.getPrice() != 0 && higherPriceRange != null && higherPriceRange < sku.getPrice()) {
                 continue;
             }
+            LogUtils.info("passed");
             filteredSkuList.add(sku);
         }
         return filteredSkuList;
