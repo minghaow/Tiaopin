@@ -69,6 +69,23 @@ public class AuthorityCtrl extends BaseCtrl {
     }
 
     /**
+     * Login successfully
+     *
+     * @param response
+     * @throws java.io.IOException
+     */
+    @RequestMapping(value = "/success", method = RequestMethod.POST)
+    public void loginSuccessPOST(HttpServletResponse response, ModelMap model,
+                             @RequestParam(defaultValue = "") String uid,
+                             @RequestParam(defaultValue = "") long tpuid)
+            throws IOException {
+        model.put("success", "true");
+        model.put("uid", uid);
+        model.put("tpuid", tpuid);
+        responseJson(response, model);
+    }
+
+    /**
      * Login failed
      *
      * @param response
