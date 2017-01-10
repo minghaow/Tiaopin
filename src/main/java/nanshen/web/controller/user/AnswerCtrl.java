@@ -8,6 +8,8 @@ import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.User.UserInfo;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
+import nanshen.utils.JsonUtils;
+import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -109,7 +111,8 @@ public class AnswerCtrl extends BaseCtrl {
 							@RequestParam(defaultValue = "1", required = true) long aid,
 							@RequestParam(defaultValue = "0.jpg", required = true) String name)
 			throws IOException {
-		MultipartFile file = request.getFile("Filedata");
+		MultipartFile file = request.getFile(name);
+		LogUtils.info(JsonUtils.toJson(request.getFileMap()));
 		ExecInfo execInfo = questionService.uploadImage(aid, name, file);
         model.addAttribute("success", execInfo.isSucc());
         model.addAttribute("message", execInfo.getMsg());
