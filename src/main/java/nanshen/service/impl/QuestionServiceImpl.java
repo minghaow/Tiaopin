@@ -264,7 +264,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public ExecInfo submitAnswer(long aShowId, String content, UserInfo userInfo) {
         Answer answer = answerDao.getByShowId(aShowId);
-        if (answer == null || userInfo == null || answer.getUserId() == userInfo.getId()) {
+        if (answer == null || userInfo == null || answer.getUserId() != userInfo.getId()) {
             return ExecInfo.fail("错误的身份信息");
         }
         answer.setContent(content);
