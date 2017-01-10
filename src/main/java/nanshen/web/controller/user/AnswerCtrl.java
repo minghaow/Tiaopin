@@ -84,7 +84,7 @@ public class AnswerCtrl extends BaseCtrl {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public void uploadImage(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model,
+	public void uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 							@RequestParam(defaultValue = "1", required = true) long qid)
 			throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
