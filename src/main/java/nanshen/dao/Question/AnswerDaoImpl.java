@@ -78,4 +78,11 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao {
         return 1 == sql.getUpdateCount();
     }
 
+    @Override
+    public Answer getByQuestionIdAndUid(long qid, long uid) {
+        Condition cnd = Cnd.where("questionId", "=", qid)
+                .and("userId", "=", uid);
+        return dao.fetch(Answer.class, cnd);
+    }
+
 }

@@ -1,5 +1,6 @@
 package nanshen.service.impl;
 
+import nanshen.constant.SystemConstants;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.TopicDao;
@@ -8,6 +9,7 @@ import nanshen.dao.UserInfoDao;
 import nanshen.dao.UserQuestionSubDao;
 import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserAnswerUp;
@@ -15,10 +17,16 @@ import nanshen.data.User.UserInfo;
 import nanshen.data.User.UserQuestionSub;
 import nanshen.service.AccountService;
 import nanshen.service.QuestionService;
+import nanshen.service.api.oss.OssFormalApi;
+import nanshen.utils.LogUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +58,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private TopicDao topicDao;
+
+    @Autowired
+    private OssFormalApi ossFormalApi;
 
     @Autowired
     private AccountService accountService;
@@ -220,6 +231,50 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
         return ExecInfo.fail("UP失败");
+    }
+
+    @Override
+    public ExecResult<Answer> createAnswer(long qShowId, UserInfo userInfo) {
+        if (userInfo == null) {
+            return ExecResult.fail("登录后才可以写答案哦");
+        }
+        Question question = getQuestionByShowId(qShowId);
+        Answer answer = answerDao.getByQuestionIdAndUid(question.getId(), userInfo.getId());
+        if (answer == null) {
+            answer = answerDao.insert(new Answer(question.getId(), "", "", AnswerStatus.DRAFT, userInfo.getId()));
+        }
+        return ExecResult.succ(answer);
+    }
+
+    private Question getQuestionByShowId(long qShowId) {
+        return questionDao.getByShowId(qShowId);
+    }
+
+    @Override
+    public ExecInfo uploadImage(long aShowId, String name, MultipartFile file) throws IOException {
+        InputStream is = file.getInputStream();
+        Answer answer = answerDao.getByShowId(aShowId);
+        if (answer == null) {
+            return ExecInfo.fail("上传错误，不存在的答案ID");
+        }
+        return uploadImageToOss(file, is, aShowId, name);
+    }
+
+    private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, long aShowId, String name) {
+        String imgKey = getImgKey(file, aShowId, name);
+        ExecInfo execInfo = ExecInfo.fail("上传云服务失败");
+        try {
+            execInfo = ossFormalApi.putObject(SystemConstants.BUCKET_NAME, imgKey, is, file.getSize());
+        } catch (FileNotFoundException e) {
+            System.out.println("上传图片文件未找到");
+        }
+        return execInfo;
+    }
+
+    private String getImgKey(MultipartFile file, long aShowId, String name) {
+        String imgKey = "images/answer/" + aShowId + "/" + name;
+        LogUtils.info("imgKey : " + imgKey);
+        return imgKey;
     }
 
     private void fillCleanContentList(Answer answer) {

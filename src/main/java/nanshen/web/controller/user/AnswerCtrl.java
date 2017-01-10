@@ -1,8 +1,10 @@
 package nanshen.web.controller.user;
 
 import nanshen.dao.Question.AnswerDao;
+import nanshen.data.Question.Answer;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.User.UserInfo;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
@@ -12,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +74,46 @@ public class AnswerCtrl extends BaseCtrl {
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
+	}
+
+	/**
+	 * 上传单品配图功能
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public void uploadImage(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model,
+							@RequestParam(defaultValue = "1", required = true) long qid)
+			throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		ExecResult<Answer> execResult = questionService.createAnswer(qid, userInfo);
+        model.addAttribute("success", execResult.isSucc());
+        model.addAttribute("message", execResult.getMsg());
+		if (execResult.isSucc()) {
+			model.addAttribute("aShowId", execResult.getValue().getShowId());
+		}
+		responseJson(response, model);
+	}
+
+	/**
+	 * 上传答案配图功能
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
+	public void uploadImage(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model,
+							@RequestParam(defaultValue = "1", required = true) long aid,
+							@RequestParam(defaultValue = "0.jpg", required = true) String name)
+			throws IOException {
+		MultipartFile file = request.getFile("Filedata");
+		ExecInfo execInfo = questionService.uploadImage(aid, name, file);
+        model.addAttribute("success", execInfo.isSucc());
+        model.addAttribute("message", execInfo.getMsg());
+		responseJson(response, model);
 	}
 
 }

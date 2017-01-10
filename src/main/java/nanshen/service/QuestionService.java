@@ -1,13 +1,13 @@
 package nanshen.service;
 
-import nanshen.data.Question.ComplexAnswer;
-import nanshen.data.Question.ComplexQuestion;
-import nanshen.data.Question.Question;
-import nanshen.data.Question.QuestionType;
+import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.UserInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,4 +40,8 @@ public interface QuestionService {
     List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo);
 
     ExecInfo upAnswer(long aid, UserInfo userInfo);
+
+    ExecResult<Answer> createAnswer(long qid, UserInfo userInfo);
+
+    ExecInfo uploadImage(long aid, String name, MultipartFile file) throws IOException;
 }

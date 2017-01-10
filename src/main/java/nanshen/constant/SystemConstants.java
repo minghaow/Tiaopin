@@ -17,10 +17,10 @@ public class SystemConstants {
     public static final String SYS_ENC = "utf-8";
 
     /** base domain */
-    public static final String BASE_URL = "http://www.zaitaoyuan.com";
-    public static final String SHORT_BASE_URL = "http://zaitaoyuan.com";
-    public static final String IMAGE_URL = "http://image.zaitaoyuan.com";
-    public static final String CDN_URL = "http://image-cdn.zaitaoyuan.com";
+    public static final String BASE_URL = "http://www.itiaopin.com";
+    public static final String SHORT_BASE_URL = "http://itiaopin.com";
+    public static final String IMAGE_URL = "http://static.itiaopin.com";
+    public static final String CDN_URL = "http://static.itiaopin.com";
 
     /** default page length for lists */
     public static final int DEFAULT_PAGE_SIZE = 20;
@@ -28,8 +28,8 @@ public class SystemConstants {
     public static final int DEFAULT_CACHED_SKU_SIZE = 3 * DEFAULT_CACHED_LOOK_SIZE;
 
     /** OSS related */
-    public static String OSS_BASE_HTTP = "http://image-cdn.zaitaoyuan.com";
-    public static String BUCKET_NAME = "taoyuan";
+    public static String OSS_BASE_HTTP = "http://static.itiaopin.com";
+    public static String BUCKET_NAME = "tiaopin";
 
     /** hello Message */
     public static String HELLO_MSG_MORNING = "早上好";

@@ -26,4 +26,6 @@ public interface AnswerDao {
     List<Answer> getByQuestionId(long questionId);
 
     boolean up(long aid);
+
+    Answer getByQuestionIdAndUid(long qid, long uid);
 }
