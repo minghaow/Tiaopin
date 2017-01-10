@@ -44,4 +44,6 @@ public interface QuestionService {
     ExecResult<Answer> createAnswer(long qid, UserInfo userInfo);
 
     ExecInfo uploadImage(long aid, String name, MultipartFile file) throws IOException;
+
+    ExecInfo submitAnswer(long aid, String content, UserInfo userInfo);
 }

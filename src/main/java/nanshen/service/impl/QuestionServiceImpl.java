@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -258,6 +259,21 @@ public class QuestionServiceImpl implements QuestionService {
             return ExecInfo.fail("上传错误，不存在的答案ID");
         }
         return uploadImageToOss(file, is, aShowId, name);
+    }
+
+    @Override
+    public ExecInfo submitAnswer(long aShowId, String content, UserInfo userInfo) {
+        Answer answer = answerDao.getByShowId(aShowId);
+        if (answer == null || userInfo == null || answer.getUserId() == userInfo.getId()) {
+            return ExecInfo.fail("错误的身份信息");
+        }
+        answer.setContent(content);
+        answer.setCleanContent(content);
+        answer.setUpdateTime(new Date());
+        if (!answerDao.update(answer)) {
+            return ExecInfo.fail("更新失败");
+        }
+        return ExecInfo.succ();
     }
 
     private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, long aShowId, String name) {

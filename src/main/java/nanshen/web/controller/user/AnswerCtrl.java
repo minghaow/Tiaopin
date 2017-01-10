@@ -119,4 +119,23 @@ public class AnswerCtrl extends BaseCtrl {
 		responseJson(response, model);
 	}
 
+	/**
+	 * 上传单品配图功能
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/submit", method = RequestMethod.GET)
+	public void uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+							@RequestParam(defaultValue = "0", required = true) long aid,
+							@RequestParam(defaultValue = "", required = true) String content)
+			throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		ExecInfo execInfo = questionService.submitAnswer(aid, content, userInfo);
+		model.addAttribute("success", execInfo.isSucc());
+		model.addAttribute("message", execInfo.getMsg());
+		responseJson(response, model);
+	}
+
 }
