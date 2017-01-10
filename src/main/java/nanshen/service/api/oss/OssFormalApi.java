@@ -15,7 +15,7 @@ public interface OssFormalApi {
 
     String accessKeyId = "WE75bQnberCYgnN8";
     String accessKeySecret = "yls5Yk5aFOSirBJHT0Y5pbnW6J2ik4";
-    String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+    String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
 
     ExecInfo putObject(String bucketName, String key, String filePath) throws FileNotFoundException;
 
