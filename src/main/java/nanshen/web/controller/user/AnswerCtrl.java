@@ -126,7 +126,7 @@ public class AnswerCtrl extends BaseCtrl {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/submit", method = RequestMethod.GET)
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public void uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 							@RequestParam(defaultValue = "0", required = true) long aid,
 							@RequestParam(defaultValue = "", required = true) String content)
