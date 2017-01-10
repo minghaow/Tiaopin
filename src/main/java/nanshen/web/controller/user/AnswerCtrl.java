@@ -10,6 +10,7 @@ import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import nanshen.utils.JsonUtils;
 import nanshen.utils.LogUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -132,6 +133,7 @@ public class AnswerCtrl extends BaseCtrl {
 							@RequestParam(defaultValue = "", required = true) String content)
 			throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
+		content = StringEscapeUtils.unescapeHtml(content);
 		ExecInfo execInfo = questionService.submitAnswer(aid, content, userInfo);
 		model.addAttribute("success", execInfo.isSucc());
 		model.addAttribute("message", execInfo.getMsg());

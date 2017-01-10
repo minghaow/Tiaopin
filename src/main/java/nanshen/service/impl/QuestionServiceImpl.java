@@ -268,12 +268,24 @@ public class QuestionServiceImpl implements QuestionService {
             return ExecInfo.fail("错误的身份信息");
         }
         answer.setContent(content);
-        answer.setCleanContent(content);
+        answer.setStatus(AnswerStatus.ONLINE);
         answer.setUpdateTime(new Date());
+        answer.setCleanContent(content);
+        setDescription(content, answer);
         if (!answerDao.update(answer)) {
             return ExecInfo.fail("更新失败");
         }
         return ExecInfo.succ();
+    }
+
+    private void setDescription(String content, Answer answer) {
+        Pattern p = Pattern.compile("<img src=\"(.+)\"/>");
+        Matcher m = p.matcher(content);
+        content = m.replaceAll("");
+        content = content.replaceAll("\t", "");
+        content = content.replaceAll("\n", "");
+        content = content.replaceAll("&quot;", "");
+        answer.setDescription(content.substring(0, content.length() < 100 ? content.length() : 100));
     }
 
     private ExecInfo uploadImageToOss(MultipartFile file, InputStream is, long aShowId, String name) {
