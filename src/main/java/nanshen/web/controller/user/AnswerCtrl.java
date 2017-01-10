@@ -96,6 +96,7 @@ public class AnswerCtrl extends BaseCtrl {
         model.addAttribute("message", execResult.getMsg());
 		if (execResult.isSucc()) {
 			model.addAttribute("aShowId", execResult.getValue().getShowId());
+			model.addAttribute("content", execResult.getValue().getCleanContent());
 		}
 		responseJson(response, model);
 	}
