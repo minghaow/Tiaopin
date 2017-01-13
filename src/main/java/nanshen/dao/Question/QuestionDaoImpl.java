@@ -64,7 +64,7 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
     @Override
     public List<Question> get(List<Long> questionIdList) {
         if (questionIdList != null && questionIdList.size() > 0) {
-            Condition cnd = Cnd.where("id", "in", questionIdList);
+            Condition cnd = Cnd.where("id", "in", questionIdList).desc("subCnt");
             return dao.query(Question.class, cnd);
         }
         return new ArrayList<Question>();
