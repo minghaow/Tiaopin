@@ -261,6 +261,14 @@ public class QuestionServiceImpl implements QuestionService {
         Answer answer = answerDao.getByQuestionIdAndUid(question.getId(), userInfo.getId());
         if (answer == null) {
             answer = answerDao.insert(new Answer(question.getId(), "", "", AnswerStatus.DRAFT, userInfo.getId()));
+        } else {
+            Pattern p = Pattern.compile("<img src=\"(.+)\"/>",Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(answer.getCleanContent());
+            long imgCnt = 0;
+            while(m.find()){
+                imgCnt ++;
+            }
+            answer.setImgCnt(imgCnt);
         }
         return ExecResult.succ(answer);
     }

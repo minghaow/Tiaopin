@@ -51,6 +51,8 @@ public class Answer {
 
     private boolean uped = false;
 
+    private long imgCnt = 0;
+
     private List<AnswerCleanContent> cleanContentList = new ArrayList<AnswerCleanContent>();
 
     /** total view about the question */
@@ -257,6 +259,14 @@ public class Answer {
 
     public void setUserImgUrl(String userImgUrl) {
         this.userImgUrl = userImgUrl;
+    }
+
+    public long getImgCnt() {
+        return imgCnt;
+    }
+
+    public void setImgCnt(long imgCnt) {
+        this.imgCnt = imgCnt;
     }
 
     public long generateShowId(long timeMillis, long userId) {

@@ -108,6 +108,7 @@ public class AnswerCtrl extends BaseCtrl {
 		if (execResult.isSucc()) {
 			model.addAttribute("aShowId", execResult.getValue().getShowId());
 			model.addAttribute("content", execResult.getValue().getCleanContent());
+			model.addAttribute("imgCnt", execResult.getValue().getImgCnt());
 		}
 		responseJson(response, model);
 	}
