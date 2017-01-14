@@ -48,8 +48,9 @@ public class UserAnswerUpDaoImpl extends BaseDao implements UserAnswerUpDao {
     }
 
     @Override
-    public ExecInfo remove(long aid) {
-        if (dao.delete(UserAnswerUp.class, aid) == 1) {
+    public ExecInfo remove(long aid, long uid) {
+        Condition cnd = Cnd.where("aid", "=", aid).and("userId", "=", uid);
+        if (dao.clear(UserAnswerUp.class, cnd) > 0) {
             return ExecInfo.succ();
         }
         return ExecInfo.fail("UP取消失败");

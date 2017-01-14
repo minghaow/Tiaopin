@@ -21,5 +21,5 @@ public interface UserAnswerUpDao {
 
     long count(long qid);
 
-    ExecInfo remove(long aid);
+    ExecInfo remove(long aid, long uid);
 }
