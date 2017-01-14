@@ -133,4 +133,6 @@ public interface AccountService {
      */
     ExecInfo subPeople(long uid, UserInfo userInfo);
 
+    ExecInfo subCancelPeople(long uid, UserInfo userInfo);
+
 }

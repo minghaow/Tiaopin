@@ -79,6 +79,16 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao {
     }
 
     @Override
+    public boolean upCancel(long aid) {
+        Sql sql = Sqls.create("UPDATE Answer " +
+                "SET upCnt = upCnt - 1 " +
+                "WHERE id = @aid");
+        sql.params().set("aid", aid);
+        dao.execute(sql);
+        return 1 == sql.getUpdateCount();
+    }
+
+    @Override
     public Answer getByQuestionIdAndUid(long qid, long uid) {
         Condition cnd = Cnd.where("questionId", "=", qid)
                 .and("userId", "=", uid);

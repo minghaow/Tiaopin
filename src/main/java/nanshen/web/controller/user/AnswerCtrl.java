@@ -69,11 +69,22 @@ public class AnswerCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/up", method = RequestMethod.GET)
-	public void skuJson(HttpServletRequest request, HttpServletResponse response,
+	public void up(HttpServletRequest request, HttpServletResponse response,
 						@RequestParam(defaultValue = "1", required = true) long aid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
 		ExecInfo execInfo = questionService.upAnswer(aid, userInfo);
+		json.put("success", execInfo.isSucc());
+		json.put("msg", execInfo.getMsg());
+		responseJson(response, json);
+	}
+
+	@RequestMapping(value = "/up/cancel", method = RequestMethod.GET)
+	public void upCancel(HttpServletRequest request, HttpServletResponse response,
+						@RequestParam(defaultValue = "1", required = true) long aid) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser(request);
+		ExecInfo execInfo = questionService.upCancelAnswer(aid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);

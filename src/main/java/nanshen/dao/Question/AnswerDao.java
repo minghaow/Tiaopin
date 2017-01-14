@@ -27,5 +27,7 @@ public interface AnswerDao {
 
     boolean up(long aid);
 
+    boolean upCancel(long aid);
+
     Answer getByQuestionIdAndUid(long qid, long uid);
 }

@@ -1,5 +1,6 @@
 package nanshen.dao;
 
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.UserAnswerUp;
 
@@ -20,4 +21,5 @@ public interface UserAnswerUpDao {
 
     long count(long qid);
 
+    ExecInfo remove(long aid);
 }

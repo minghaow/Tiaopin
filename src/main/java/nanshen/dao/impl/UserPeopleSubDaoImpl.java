@@ -33,4 +33,10 @@ public class UserPeopleSubDaoImpl extends BaseDao implements UserPeopleSubDao {
         return dao.query(UserPeopleSub.class, cnd);
     }
 
+    @Override
+    public boolean remove(long uid, long toUid) {
+        Condition cnd = Cnd.where("userId", "=", uid).and("toUserId", "=", toUid);
+        return dao.clear(UserPeopleSub.class, cnd) > 0;
+    }
+
 }

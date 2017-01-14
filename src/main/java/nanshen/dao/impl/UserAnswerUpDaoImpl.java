@@ -2,6 +2,7 @@ package nanshen.dao.impl;
 
 import nanshen.dao.UserAnswerUpDao;
 import nanshen.dao.common.BaseDao;
+import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.UserAnswerUp;
 import org.nutz.dao.Cnd;
@@ -44,6 +45,14 @@ public class UserAnswerUpDaoImpl extends BaseDao implements UserAnswerUpDao {
     public long count(long aid) {
         Condition cnd = Cnd.where("aid", "=", aid);
         return dao.count(UserAnswerUp.class, cnd);
+    }
+
+    @Override
+    public ExecInfo remove(long aid) {
+        if (dao.delete(UserAnswerUp.class, aid) == 1) {
+            return ExecInfo.succ();
+        }
+        return ExecInfo.fail("UP取消失败");
     }
 
 }

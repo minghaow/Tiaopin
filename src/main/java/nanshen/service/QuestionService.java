@@ -37,9 +37,13 @@ public interface QuestionService {
 
     ExecInfo subByQid(long qid, UserInfo userInfo);
 
+    ExecInfo subCancelByQid(long qid, UserInfo userInfo);
+
     List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo);
 
     ExecInfo upAnswer(long aid, UserInfo userInfo);
+
+    ExecInfo upCancelAnswer(long aid, UserInfo userInfo);
 
     ExecResult<Answer> createAnswer(long qid, UserInfo userInfo);
 

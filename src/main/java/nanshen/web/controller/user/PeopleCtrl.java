@@ -93,4 +93,14 @@ public class PeopleCtrl extends BaseCtrl {
 		responseJson(response, json);
 	}
 
+	@RequestMapping(value = "/sub/cancel", method = RequestMethod.GET)
+	public void peopleSubCancel(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser();
+		ExecInfo execInfo = accountService.subCancelPeople(uid, userInfo);
+		json.put("success", execInfo.isSucc());
+		json.put("msg", execInfo.getMsg());
+		responseJson(response, json);
+	}
+
 }

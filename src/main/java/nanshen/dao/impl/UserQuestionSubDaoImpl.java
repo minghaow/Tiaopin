@@ -46,4 +46,10 @@ public class UserQuestionSubDaoImpl extends BaseDao implements UserQuestionSubDa
         return dao.count(UserQuestionSub.class, cnd);
     }
 
+    @Override
+    public boolean remove(long qid, long uid) {
+        Condition cnd = Cnd.where("qid", "=", qid).and("userId", "=", uid);
+        return dao.clear(UserQuestionSub.class, cnd) > 0;
+    }
+
 }

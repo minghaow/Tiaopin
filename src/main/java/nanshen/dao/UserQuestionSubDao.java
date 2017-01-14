@@ -20,4 +20,5 @@ public interface UserQuestionSubDao {
 
     long count(long qid);
 
+    boolean remove(long qid, long uid);
 }

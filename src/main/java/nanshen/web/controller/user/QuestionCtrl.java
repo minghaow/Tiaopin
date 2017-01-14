@@ -99,4 +99,14 @@ public class QuestionCtrl extends BaseCtrl {
 		responseJson(response, json);
 	}
 
+	@RequestMapping(value = "/sub/cancel", method = RequestMethod.GET)
+	public void subCancel(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long qid) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser(request);
+		ExecInfo execInfo = questionService.subCancelByQid(qid, userInfo);
+		json.put("success", execInfo.isSucc());
+		json.put("msg", execInfo.getMsg());
+		responseJson(response, json);
+	}
+
 }

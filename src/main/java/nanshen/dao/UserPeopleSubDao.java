@@ -15,4 +15,5 @@ public interface UserPeopleSubDao {
 
     List<UserPeopleSub> getByUserId(long uid);
 
+    boolean remove(long uid, long toUid);
 }

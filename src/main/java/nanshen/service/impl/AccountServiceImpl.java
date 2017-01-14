@@ -200,6 +200,14 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     }
 
     @Override
+    public ExecInfo subCancelPeople(long uid, UserInfo userInfo) {
+        if (userPeopleSubDao.remove(uid, userInfo.getId())) {
+            return ExecInfo.fail("关注达人失败，请稍后再试");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
     public AdminUserInfo getAdminUserInfoByUserId(Long adminUserId) {
         return adminIdUserInfoMap.get(adminUserId);
     }

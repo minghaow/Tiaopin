@@ -5,7 +5,6 @@ import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.TopicDao;
 import nanshen.dao.UserAnswerUpDao;
-import nanshen.dao.UserInfoDao;
 import nanshen.dao.UserQuestionSubDao;
 import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
@@ -41,9 +40,6 @@ import java.util.regex.Pattern;
  */
 @Service
 public class QuestionServiceImpl implements QuestionService {
-
-    @Autowired
-    private UserInfoDao userInfoDao;
 
     @Autowired
     private QuestionDao questionDao;
@@ -211,6 +207,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public ExecInfo subCancelByQid(long qid, UserInfo userInfo) {
+        if (userInfo == null) {
+            return ExecInfo.fail("还未登陆或已失效，请重新登陆");
+        }
+        Question question = questionDao.getByShowId(qid);
+        if (!userQuestionSubDao.remove(question.getId(), userInfo.getId())) {
+            return ExecInfo.fail("关注取消失败，请稍后再取消");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
     public List<ComplexQuestion> getSubList(UserInfo userInfo, PageInfo pageInfo) {
         if (userInfo == null) {
             return new ArrayList<ComplexQuestion>();
@@ -232,6 +240,17 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
         return ExecInfo.fail("UP失败");
+    }
+
+    @Override
+    public ExecInfo upCancelAnswer(long aid, UserInfo userInfo) {
+        UserAnswerUp userAnswerUp = userAnswerUpDao.get(aid);
+        if (userAnswerUp != null) {
+            if (answerDao.upCancel(aid)) {
+                return userAnswerUpDao.remove(aid);
+            }
+        }
+        return ExecInfo.fail("UP取消失败");
     }
 
     @Override
