@@ -56,6 +56,7 @@ public class TopicCtrl extends BaseCtrl {
                                      @RequestParam(defaultValue = "1", required = true) int page) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         List<ComplexQuestion> questionList = topicService.getTopicQuestionList(topicId, new PageInfo(page));
+        Topic topic = topicService.getTopic(topicId);
         if (questionList == null || questionList.size() == 0) {
             json.put("success", false);
             json.put("msg", "错误的商品ID");
@@ -63,6 +64,7 @@ public class TopicCtrl extends BaseCtrl {
             json.put("success", true);
         }
         json.put("questionList", questionList);
+        json.put("topic", topic);
         responseJson(response, json);
     }
 

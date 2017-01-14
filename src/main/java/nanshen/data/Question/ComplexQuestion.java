@@ -1,5 +1,6 @@
 package nanshen.data.Question;
 
+import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class ComplexQuestion {
     private UserInfo userInfo = null;
 
     private List<Answer> answerList = new ArrayList<Answer>();
+
+    private Topic topic = null;
 
     public List<Answer> getAnswerList() {
         return answerList;
@@ -68,5 +71,13 @@ public class ComplexQuestion {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }

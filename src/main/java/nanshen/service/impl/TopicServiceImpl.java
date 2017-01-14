@@ -104,4 +104,9 @@ public class TopicServiceImpl extends ScheduledService implements TopicService {
         return questionService.getComplexQuestionByIdList(questionIdList);
     }
 
+    @Override
+    public Topic getTopic(long topicId) {
+        return topicDao.get(topicId);
+    }
+
 }

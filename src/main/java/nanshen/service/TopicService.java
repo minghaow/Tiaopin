@@ -37,4 +37,6 @@ public interface TopicService {
      * @return ExecInfo
      */
     List<ComplexQuestion> getTopicQuestionList(long tid, PageInfo pageInfo);
+
+    Topic getTopic(long topicId);
 }
