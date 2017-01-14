@@ -179,6 +179,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<ComplexQuestion>  complexQuestionList = new ArrayList<ComplexQuestion>();
         for (Question question : questionList) {
             UserInfo userInfo = accountService.getUserInfo(question.getUserId());
+            fillQuestionTopicList(question);
             complexQuestionList.add(new ComplexQuestion(question.getId(), question.getShowId(), question, userInfo,
                     new ArrayList<Answer>()));
         }
