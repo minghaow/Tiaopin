@@ -244,10 +244,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public ExecInfo upCancelAnswer(long aid, UserInfo userInfo) {
-        UserAnswerUp userAnswerUp = userAnswerUpDao.get(aid);
-        if (userAnswerUp != null) {
+        if (userAnswerUpDao.remove(aid).isSucc()) {
             if (answerDao.upCancel(aid)) {
-                return userAnswerUpDao.remove(aid);
+                return ExecInfo.succ();
             }
         }
         return ExecInfo.fail("UP取消失败");
