@@ -93,5 +93,7 @@ public interface SkuService {
 
     ExecInfo likeBySid(long sid, UserInfo userInfo);
 
+    ExecInfo likeCancelBySid(long sid, UserInfo userInfo);
+
     List<Sku> getLikeList(UserInfo userInfo, PageInfo pageInfo);
 }

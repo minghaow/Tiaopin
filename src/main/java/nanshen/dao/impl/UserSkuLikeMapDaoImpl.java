@@ -41,4 +41,10 @@ public class UserSkuLikeMapDaoImpl extends BaseDao implements UserSkuLikeMapDao 
         return dao.count(UserSkuLikeMap.class, cnd);
     }
 
+    @Override
+    public boolean remove(long sid, long uid) {
+        Condition cnd = Cnd.where("sid", "=", sid).and("uid", "=", uid);
+        return dao.clear(UserSkuLikeMap.class, cnd) > 0;
+    }
+
 }

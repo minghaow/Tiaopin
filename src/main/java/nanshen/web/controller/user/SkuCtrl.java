@@ -69,6 +69,22 @@ public class SkuCtrl extends BaseCtrl {
 		responseJson(response, json);
 	}
 
+	@RequestMapping(value = "/like/cancel", method = RequestMethod.GET)
+	public void skuLikeCancel(HttpServletRequest request, HttpServletResponse response,
+						@RequestParam(defaultValue = "0", required = true) long sid) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		UserInfo userInfo = getLoginedUser(request);
+		if (sid <= 0) {
+			json.put("success", false);
+			json.put("msg", "错误的商品ID");
+		} else {
+			ExecInfo execInfo = skuService.likeCancelBySid(sid, userInfo);
+			json.put("success", execInfo.isSucc());
+			json.put("msg", execInfo.getMsg());
+		}
+		responseJson(response, json);
+	}
+
 	@RequestMapping(value = "/like/l", method = RequestMethod.GET)
 	public void skuLike(HttpServletRequest request, HttpServletResponse response,
 						@RequestParam(defaultValue = "1", required = true) int page) throws IOException {

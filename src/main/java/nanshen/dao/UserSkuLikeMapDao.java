@@ -17,4 +17,6 @@ public interface UserSkuLikeMapDao {
     List<UserSkuLikeMap> getByUid(long uid, PageInfo pageInfo);
 
     long countSkuLike(long sid);
+
+    boolean remove(long sid, long uid);
 }

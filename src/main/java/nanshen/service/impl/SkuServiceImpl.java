@@ -258,6 +258,17 @@ public class SkuServiceImpl extends ScheduledService implements SkuService {
     }
 
     @Override
+    public ExecInfo likeCancelBySid(long sid, UserInfo userInfo) {
+        if (userInfo == null) {
+            return ExecInfo.fail("还未登陆或已失效，请重新登陆");
+        }
+        if (!userSkuLikeMapDao.remove(sid, userInfo.getId())) {
+            return ExecInfo.fail("取消失败，请稍后再试");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
     public List<Sku> getLikeList(UserInfo userInfo, PageInfo pageInfo) {
         if (userInfo == null) {
             return new ArrayList<Sku>();
