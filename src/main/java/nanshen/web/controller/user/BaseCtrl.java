@@ -112,7 +112,10 @@ public abstract class BaseCtrl {
 		long tpuid = Long.parseLong(params.get("tpuid"));
 		long uid = Long.parseLong(params.get("uid"));
 		UserInfo userInfo = accountService.getUserInfo(uid);
-		if (userInfo != null && userInfo.getTempLoginId() == tpuid) {
+//		if (userInfo != null && userInfo.getTempLoginId() == tpuid) {
+//			return userInfo;
+//		}
+		if (userInfo != null) {
 			return userInfo;
 		}
 		return null;
