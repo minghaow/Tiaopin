@@ -29,11 +29,12 @@ public interface TopicService {
      */
     ExecInfo subTopic(long tid, UserInfo userInfo);
 
+    ExecInfo subCancelTopic(long topicId, UserInfo userInfo);
+
     /**
      * subscribe hot topic
      *
      * @return ExecInfo
      */
     List<ComplexQuestion> getTopicQuestionList(long tid, PageInfo pageInfo);
-
 }

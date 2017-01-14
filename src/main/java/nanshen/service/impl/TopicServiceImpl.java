@@ -89,6 +89,14 @@ public class TopicServiceImpl extends ScheduledService implements TopicService {
     }
 
     @Override
+    public ExecInfo subCancelTopic(long tid, UserInfo userInfo) {
+        if (!userTopicSubDao.remove(tid, userInfo.getId())) {
+            return ExecInfo.fail("取消关注失败，请稍后再试");
+        }
+        return ExecInfo.succ();
+    }
+
+    @Override
     public List<ComplexQuestion> getTopicQuestionList(long tid, PageInfo pageInfo) {
         List<TopicQuestionMap> topicQuestionMapList = topicQuestionMapDao.getByTid(tid, pageInfo);
         List<Long> questionIdList = new ArrayList<Long>();

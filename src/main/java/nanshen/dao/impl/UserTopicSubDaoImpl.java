@@ -33,4 +33,10 @@ public class UserTopicSubDaoImpl extends BaseDao implements UserTopicSubDao {
         return dao.query(UserTopicSub.class, cnd);
     }
 
+    @Override
+    public boolean remove(long tid, long uid) {
+        Condition cnd = Cnd.where("userId", "=", uid).and("tid", "=", tid);
+        return dao.clear(UserTopicSub.class, cnd) > 0;
+    }
+
 }

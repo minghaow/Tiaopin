@@ -15,4 +15,5 @@ public interface UserTopicSubDao {
 
     List<UserTopicSub> getByUserId(long uid);
 
+    boolean remove(long tid, long uid);
 }

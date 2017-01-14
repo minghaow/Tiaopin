@@ -7,7 +7,6 @@ import nanshen.data.SystemUtil.PageType;
 import nanshen.data.Topic.Topic;
 import nanshen.data.User.UserInfo;
 import nanshen.service.TopicService;
-import nanshen.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -73,15 +72,25 @@ public class TopicCtrl extends BaseCtrl {
         UserInfo userInfo = getLoginedUser(request);
         ExecInfo execInfo = ExecInfo.fail("用户未登录或已过期，请重新登录");
         if (userInfo != null) {
-            LogUtils.info("=================== sublogined user " + userInfo.getUsername() + userInfo.getPhone());
-            LogUtils.info("=================== sublogined user " + userInfo.getTempLoginId());
             execInfo = topicService.subTopic(topicId, userInfo);
-        }else {
-            LogUtils.info("=================== sublogined failed ");
         }
         json.put("success", execInfo.isSucc());
         json.put("msg", execInfo.getMsg());
         responseJson(response, json);
     }
+
+    @RequestMapping(value = "/sub/cancel", method = RequestMethod.GET)
+    public void subCancel(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long topicId) throws IOException {
+        Map<String, Object> json = new HashMap<String, Object>();
+        UserInfo userInfo = getLoginedUser(request);
+        ExecInfo execInfo = ExecInfo.fail("用户未登录或已过期，请重新登录");
+        if (userInfo != null) {
+            execInfo = topicService.subCancelTopic(topicId, userInfo);
+        }
+        json.put("success", execInfo.isSucc());
+        json.put("msg", execInfo.getMsg());
+        responseJson(response, json);
+    }
+
 
 }
