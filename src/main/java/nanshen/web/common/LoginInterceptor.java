@@ -1,10 +1,6 @@
 package nanshen.web.common;
 
 import nanshen.data.AdminUserInfo;
-import nanshen.utils.JsonUtils;
-import nanshen.utils.LogUtils;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,20 +36,10 @@ public class LoginInterceptor extends BaseController implements HandlerIntercept
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LogUtils.info("==============");
-        LogUtils.info(JsonUtils.toJson(authentication));
-        LogUtils.info("==============");
     }
 
     @Override
     public void afterCompletion(
             HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LogUtils.info("==============");
-        LogUtils.info(JsonUtils.toJson(authentication));
-        LogUtils.info("==============");
     }
 }

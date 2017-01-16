@@ -1,4 +1,5 @@
 #* @vtlvariable name="questionList" type="java.util.List<nanshen.data.Question.ComplexQuestion>" *#
+#* @vtlvariable name="answerList" type="java.util.List<nanshen.data.Question.ComplexAnswer>" *#
 #* @vtlvariable name="skuInfoList" type="java.util.List<nanshen.data.Sku.SkuItem>" *#
 #* @velocityproperties path="/WEB-INF/velocity" *#
 #* @vtlvariable name="pageType" type="nanshen.data.SystemUtil.PageType" *#
@@ -99,90 +100,67 @@
 </div>
 
 <section class="home-list">
+##
+##    <div class="home-list-item">
+##        <div class="list-item-share">
+##            <i class="fi-share"></i>
+##        </div>
+##        <div class="list-item-user">
+##            <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
+##            <span class="item-user-name">挑品精选</span>
+##        </div>
+##        <div class="list-item-title">
+##            <span class="item-type-tag">专题</span>
+##            白色餐具的纯美
+##        </div>
+##        <div class="list-item-img">
+##            <img src="http://image-cdn.zaitaoyuan.com/images/slider/slider8.jpg@!list-banner-s" alt="钻石系列餐具套装">
+##        </div>
+##        <div class="list-item-preview">
+##            当你结束一天辛勤劳累的工作回到家中，是想要面对一个干净整洁温馨的房间，还是布满灰尘堆满了脏衣服臭袜子的一片狼藉呢？
+##        </div>
+##        <div class="list-item-sub">
+##            <span class="item-view-cnt">320浏览</span>
+##            &nbsp ∙ &nbsp
+##            <span class="item-up-cnt">62赞同</span>
+##        </div>
+##    </div>
 
-    #foreach ($id in [0..0])
+    #set ($length = $answerList.size() - 1)
+    #foreach ($id in [0..$length])
         <div class="home-list-item">
             <div class="list-item-share">
                 <i class="fi-share"></i>
             </div>
             <div class="list-item-user">
-                <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
-                <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
-                #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
-                <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>
+                <img src="$!{answerList.get($id).userInfo.imgUrl}" alt=""/>
+                <span class="item-user-name">$!{answerList.get($id).userInfo.username}</span>
+                #if ("$!{answerList.get($id).userInfo.userDesc}" != "")
+                    <span class="item-user-desc">，$!{answerList.get($id).userInfo.userDesc}</span>
                 #end
             </div>
             <div class="list-item-title">
-                <a href="/q?qid=$!{questionList.get($id).showId}">
+                <a href="/q?qid=$!{answerList.get($id).qShowId}">
                     <span class="item-type-tag">问答</span>
-                    $!{questionList.get($id).question.title}
+                    $!{answerList.get($id).question.title}
                 </a>
             </div>
+
+            #if ("${answerList.get($id).imgUrl}" != "")
+            <div class="list-item-img">
+                <img src="$answerList.get($id).imgUrl" alt="钻石系列餐具套装">
+            </div>
+            #end
+
             <div class="list-item-preview">
-                <a href="/q?qid=$!{questionList.get($id).showId}">
-                    $!{questionList.get($id).question.description}
+                <a href="/a?aid=$!{answerList.get($id).aShowId}">
+                    $!{answerList.get($id).question.description}
                 </a>
             </div>
             <div class="list-item-sub">
-                <span class="item-view-cnt">$!{questionList.get($id).question.viewCnt}浏览</span>
+                <span class="item-up-cnt">$!{answerList.get($id).answer.upCnt} 赞同</span>
                 &nbsp ∙ &nbsp
-                <span class="item-up-cnt">$!{questionList.get($id).question.subCnt}赞同</span>
-            </div>
-        </div>
-    #end
-
-    <div class="home-list-item">
-        <div class="list-item-share">
-            <i class="fi-share"></i>
-        </div>
-        <div class="list-item-user">
-            <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
-            <span class="item-user-name">挑品精选</span>
-        </div>
-        <div class="list-item-title">
-            <span class="item-type-tag">专题</span>
-            白色餐具的纯美
-        </div>
-        <div class="list-item-img">
-            <img src="http://image-cdn.zaitaoyuan.com/images/slider/slider8.jpg@!list-banner-s" alt="钻石系列餐具套装">
-        </div>
-        <div class="list-item-preview">
-            当你结束一天辛勤劳累的工作回到家中，是想要面对一个干净整洁温馨的房间，还是布满灰尘堆满了脏衣服臭袜子的一片狼藉呢？
-        </div>
-        <div class="list-item-sub">
-            <span class="item-view-cnt">320浏览</span>
-            &nbsp ∙ &nbsp
-            <span class="item-up-cnt">62赞同</span>
-        </div>
-    </div>
-
-    #foreach ($id in [1..3])
-        <div class="home-list-item">
-            <div class="list-item-share">
-                <i class="fi-share"></i>
-            </div>
-            <div class="list-item-user">
-                <img src="${imageUrlPrefix}/images/logo/4.jpg" alt=""/>
-                <span class="item-user-name">$!{questionList.get($id).userInfo.username}</span>
-                #if ("$!{questionList.get($id).userInfo.userDesc}" != "")
-                    <span class="item-user-desc">，$!{questionList.get($id).userInfo.userDesc}</span>
-                #end
-            </div>
-            <div class="list-item-title">
-                <a href="/q?qid=$!{questionList.get($id).showId}">
-                    <span class="item-type-tag">问答</span>
-                    $!{questionList.get($id).question.title}
-                </a>
-            </div>
-            <div class="list-item-preview">
-                <a href="/q?qid=$!{questionList.get($id).showId}">
-                    $!{questionList.get($id).question.description}
-                </a>
-            </div>
-            <div class="list-item-sub">
-                <span class="item-view-cnt">$!{questionList.get($id).question.viewCnt}浏览</span>
-                &nbsp ∙ &nbsp
-                <span class="item-up-cnt">$!{questionList.get($id).question.subCnt}赞同</span>
+                <span class="item-up-cnt">举报该回答</span>
             </div>
         </div>
     #end

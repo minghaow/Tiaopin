@@ -72,9 +72,15 @@
         color: #999;
     }
     .list-item-img {
-        border: 1px solid #ccc;
         padding: .1rem;
         margin: .2rem 0;
+        height: 10rem;
+        overflow: hidden;
+        position: relative;
+    }
+    .list-item-img img {
+        width: 100%;
+        position: absolute;
     }
     .home-list-item a {
         color: inherit;
@@ -138,9 +144,16 @@
         color: #999;
     }
     .list-item-img {
-        border: 1px solid #ccc;
         padding: .1rem;
         margin: .2rem 0;
+        height: 10rem;
+        overflow: hidden;
+        position: relative;
+    }
+    .list-item-img img {
+        width: 100%;
+        top: -50%;
+        position: absolute;
     }
     .home-list-item a {
         color: inherit;

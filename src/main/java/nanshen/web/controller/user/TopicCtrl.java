@@ -29,11 +29,23 @@ public class TopicCtrl extends BaseCtrl {
     @Autowired
     private TopicService topicService;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView topicList(ModelMap model, @RequestParam(defaultValue = "1", required = true) int lookId) {
-		prepareHeaderModel(model, PageType.TOPIC);
-		return new ModelAndView("user/topicList");
-	}
+//	@RequestMapping(value = "", method = RequestMethod.GET)
+//	public ModelAndView topic(ModelMap model, @RequestParam(defaultValue = "1", required = true) int lookId) {
+//		prepareHeaderModel(model, PageType.TOPIC);
+//		return new ModelAndView("user/topicList");
+//	}
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView topicList(HttpServletRequest request, ModelMap model,
+                                  @RequestParam(defaultValue = "1", required = true) long tid,
+                                  @RequestParam(defaultValue = "1", required = true) int page) {
+        prepareHeaderModel(model, PageType.TOPIC);
+        List<ComplexQuestion> questionList = topicService.getTopicQuestionList(tid, new PageInfo(page));
+        Topic topic = topicService.getTopic(tid);
+        model.put("questionList", questionList);
+        model.put("topic", topic);
+        return new ModelAndView("user/topicList");
+    }
 
     @RequestMapping(value = "/json", method = RequestMethod.GET)
     public void skuJson(HttpServletRequest request, HttpServletResponse response) throws IOException {

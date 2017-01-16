@@ -6,7 +6,6 @@ import nanshen.dao.SkuDao;
 import nanshen.dao.SkuSourceDao;
 import nanshen.dao.UserInfoDao;
 import nanshen.data.Question.ComplexAnswer;
-import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Question.QuestionType;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -53,7 +51,6 @@ public class IndexCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView homePage(ModelMap model,
-								 @RequestParam(defaultValue = "", required = true) QuestionType type,
 								 @RequestParam(defaultValue = "1", required = true) int page) {
 		List<QuestionType> typeList = Arrays.asList(QuestionType.values());
 //		questionDao.insert(new Question("如何选购扫地机器人？", "当你结束一天辛勤劳累的工作回到家中，是想要面对一个干净整洁温馨的房间，还是布满灰尘堆满了脏衣服臭袜子的一片狼藉呢？",
@@ -62,13 +59,9 @@ public class IndexCtrl extends BaseCtrl {
 //		answerDao.insert(new Answer(1, "", AnswerStatus.ONLINE, 1));
 //		Sku sku = skuDao.insert(new Sku("小米扫地机器人", "米家智能家居新款上市", 1999, "智能家居", "https://detail.tmall.com/item.htm?spm=a230r.1.14.6.5fSC72&id=538932602256&cm_id=140105335569ed55e27b&abbucket=4&skuId=3220665053591"));
 //		skuSourceDao.insert(new SkuSource(30, 1, sku.getId()));
-		if (type != null) {
-			typeList = Collections.singletonList(type);
-		}
-		List<ComplexQuestion> questionList = questionService.getHotQuestions(typeList, new PageInfo(page));
-//		List<ComplexQuestion> questionList = answerService.getHotAnswers(typeList, new PageInfo(page));
+		List<ComplexAnswer> answerList = questionService.getHotAnswers(new PageInfo(page));
 		prepareHeaderModel(model, PageType.ITEM_LIST);
-		model.addAttribute("questionList", questionList);
+		model.addAttribute("answerList", answerList);
 		return new ModelAndView("user/list");
 	}
 

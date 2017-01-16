@@ -1,4 +1,5 @@
 #* @vtlvariable name="aidSkuListMap" type="java.util.Map<java.lang.Long, java.util.List<nanshen.data.Sku.Sku>>" *#
+#* @vtlvariable name="answerList" type="java.util.List<nanshen.data.Question.ComplexAnswer>" *#
 #* @vtlvariable name="URLDecoder" type="java.net.URLDecoder" *#
 #* @vtlvariable name="StringEscapeUtils" type="org.apache.commons.lang.StringEscapeUtils" *#
 #* @vtlvariable name="complexQuestion" type="nanshen.data.Question.ComplexQuestion" *#
@@ -17,6 +18,11 @@
     <div class="q-title">
         $!{complexQuestion.question.title}
     </div>
+    <div class="q-topic">
+        #foreach ($topic in $complexQuestion.question.topicList)
+            <a href="/t?tid=$topic.id">#$topic.title</a>
+        #end
+    </div>
     <div class="q-description">
         $!{complexQuestion.question.description}
     </div>
@@ -30,70 +36,73 @@
 
 <section class="a-list">
 
-    #foreach ($answer in $!{complexQuestion.answerList})
-    #set ($skuList = $!{aidSkuListMap.get($answer.getId())})
-    #foreach ($sku in $skuList)
-        <div class="sku-info hide" id="sku-info-$sku.id" data-title="$sku.title"
-                data-subtitle="$sku.subTitle" data-url="$sku.url" data-price="$sku.price" data-showid="$sku.showId">
-        </div>
-    #end
-
+    #set ($answerList = $complexQuestion.answerList)
+    #set ($length = $answerList.size() - 1)
+    #foreach ($id in [0..$length])
     <div class="a-list-item">
-        <div class="list-item-share">
-            <i class="fi-share"></i>
-        </div>
-        <div class="list-item-user" id="list-item-user-$velocityCount" data-answer-id="$velocityCount">
-            <img src="${imageUrlPrefix}/images/logo/3.jpg" alt=""/>
-            <span class="item-user-name">$!{answer.userName}</span>
-            #if ("$!{answer.userDesc}" != "")
-            <span class="item-user-desc">，$!{answer.userDesc}</span>
-            #end
-        </div>
-        <div class="list-item-content">
-##            #set ($skuList = $!{aidSkuListMap.get($answer.getId())})
-##            #foreach ($sku in $skuList)
-##                <div class="sku" id="sku-$sku.id" data-id="$sku.id">
-##                    <a href="$sku.url">
-##                        <div class="sku-img">
-##                            <img src="http://image-cdn.zaitaoyuan.com/images/tiaopin/answer/30/5.png">
-##                        </div>
-##                        <div class="sku-detail">
-##                            <div class="sku-title">$sku.title</div>
-##                            <div class="sku-subtitle">$sku.subTitle</div>
-##                            <div class="sku-price">￥$sku.price</div>
-##                        </div>
-##                        <div class="sku-function">
-##                            <i class="fa fa-heart-o" aria-hidden="true"></i> 12
-##                        </div>
-##                    </a>
-##                </div>
-##            #end
-            $!{answer.content}
-        </div>
+            <div class="home-list-item">
+                <div class="list-item-share">
+                    <i class="fi-share"></i>
+                </div>
+                <div class="list-item-user">
+                    <img src="$!{answerList.get($id).userImgUrl}" alt=""/>
+                    <span class="item-user-name">$!{answerList.get($id).userName}</span>
+                    #if ("$!{answerList.get($id).userDesc}" != "")
+                        <span class="item-user-desc">，$!{answerList.get($id).userDesc}</span>
+                    #end
+                </div>
+
+                <div class="list-item-preview">
+                    <a href="/a?aid=$!{answerList.get($id).showId}">
+                        $!{answerList.get($id).description}
+                    </a>
+                </div>
+            </div>
+##        <div class="list-item-content">
+####            #set ($skuList = $!{aidSkuListMap.get($answer.getId())})
+####            #foreach ($sku in $skuList)
+####                <div class="sku" id="sku-$sku.id" data-id="$sku.id">
+####                    <a href="$sku.url">
+####                        <div class="sku-img">
+####                            <img src="http://image-cdn.zaitaoyuan.com/images/tiaopin/answer/30/5.png">
+####                        </div>
+####                        <div class="sku-detail">
+####                            <div class="sku-title">$sku.title</div>
+####                            <div class="sku-subtitle">$sku.subTitle</div>
+####                            <div class="sku-price">￥$sku.price</div>
+####                        </div>
+####                        <div class="sku-function">
+####                            <i class="fa fa-heart-o" aria-hidden="true"></i> 12
+####                        </div>
+####                    </a>
+####                </div>
+####            #end
+##            $!{answerList.get($id).cleanContent}
+##        </div>
         <div class="a-function">
-            <span class="a-info">最后编辑于$!{answer.showUpdateTime}</span>
+            <span class="a-info">最后编辑于$!{answerList.get($id).readableTime}</span>
             &nbsp ∙ &nbsp
-            <span class="a-comment unsupported-section"><i class="fa fa-commenting-o" aria-hidden="true"></i> $!{answer.commentCnt}评论</span>
+            <span class="a-comment unsupported-section"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> $!{answerList.get($id).upCnt}赞同</span>
             &nbsp ∙ &nbsp
             <span class="a-thanks unsupported-section">举报</span>
         </div>
     </div>
     #end
 
-    <div class="navbot">
-        <div class="answer-up">
-            <i class="fa fa-sort-asc" aria-hidden="true"> </i>
-        </div>
-        <div class="answer-down">
-            <i class="fa fa-sort-desc" aria-hidden="true"> </i>
-        </div>
-        <div class="wrap-up">
-            收起
-        </div>
-        <div class="check-skus">
-            查看商品
-        </div>
-    </div>
+##    <div class="navbot">
+##        <div class="answer-up">
+##            <i class="fa fa-sort-asc" aria-hidden="true"> </i>
+##        </div>
+##        <div class="answer-down">
+##            <i class="fa fa-sort-desc" aria-hidden="true"> </i>
+##        </div>
+##        <div class="wrap-up">
+##            收起
+##        </div>
+##        <div class="check-skus">
+##            查看商品
+##        </div>
+##    </div>
 
 </section>
 <!-- end of this page contents -->

@@ -1,3 +1,4 @@
+#* @vtlvariable name="questionList" type="java.util.List<nanshen.data.Question.ComplexQuestion>" *#
 #parse("user/header.vm")
 <link rel="stylesheet" href="/css/user/topic.css"/>
 <!-- end of header -->
@@ -8,223 +9,42 @@
 </div>
 
 <!-- page contents -->
-<div class="page-content margin-top-small" id="topic-page-content">
-
-    <div class="row">
-        <div class="large-11 small-12 large-centered small-centered columns">
-            <nav aria-label="You are here:" role="navigation">
-                <ul class="breadcrumbs">
-                    <li><a href="/" class="brandColorText">首页</a></li>
-                    <li><a href="/topic" class="brandColorText">专题列表页</a></li>
-                    <li>
-                        <span class="show-for-sr">餐具: </span> 红酒专题
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
-        <div class="large-10 columns large-centered">
-            <img src="$!{imageUrlPrefix}/images/topic/0/0.jpg"></img>
-        </div>
-
-        <div class="large-12 columns" style="background-color:#ffffff;">
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> 几百块的葡萄酒，你却在用一次性杯子喝。
-                    </h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">
-                        这几款高脚杯，让你把一百的红酒喝出一千的味道。前几天去朋友家吃饭，朋友开了瓶不错的红酒，但却没有红酒杯。结果竟然用纸杯给我们喝酒。500块的红酒瞬间喝成了50块的感觉。
-                        今天就来推荐几款红酒杯。
-                    </p>
-                    <p style="color:#aaa;">
-                        说葡萄酒杯，先帮你区分一下市面上的玻璃杯和水晶杯吧。玻璃杯就是普通的玻璃制作的杯子。普通一点的采用拼接的工艺，玻璃透明度也不高，售价几块到十几块。好一点的玻璃杯会采用一体成型的工艺，玻璃材料可能也经过钢化处理。售价一般在十几元到二三十元不等。
-                        比玻璃杯好一点的就是水晶杯了。但是水晶杯并不是水晶做的杯子，水晶杯指的是用水晶玻璃做的杯子。水晶玻璃是在普通玻璃中加入含量较高的铅，使得杯子的通透度得到极大的提升，清澈度接近玻璃，所以叫做水晶杯。
-                    </p>
-                    <p style="color:#aaa;">
-                        现在人们越来越重视餐具安全，因此传统的水晶杯中的铅收到了环保人士的质疑，所以现在比较好的水晶杯品牌都逐渐用钡、锆、锌、钛等元素代替铅生产更健康的无铅水晶。
-                    </p>
-                    <p style="color:#aaa;">
-                        我们如果去买红酒杯，一般会看到一排的高脚杯，估计你又开始眼花了。我在这里还是先普及一下这一串红酒杯是做什么的。
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-8 small-12 large-offset-1 columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/1.jpg" style="margin-bottom:20px;"></img>
-                </div>
-                <div class="large-2 small-12 columns end">
-                    <p style="font-size:12px;color:#bbb;border-top:1px solid #bbb;padding-top:10px;">
-                        一般来说最大的两个一个是波尔多杯，一个是勃艮第杯。单看杯身：杯身较高，杯口较窄的是波尔多杯。杯身较矮，肚子大而圆的是勃艮第杯。除去最突出的两个杯子剩下最大的一个杯子就是红酒杯了，一般这种杯子都是中规中矩，但是基本能盛装各种类型的红酒。再下面一个比红酒杯矮一点，肚子瘦一点的就是白葡萄酒杯。剩下一个杯身细长，就是香槟杯了，标准的香槟杯杯底会有一个尖的凹点，当装入香槟时，气泡好像是从这个点冒出来的一样。</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">
-                        最后给大家推荐几款高脚杯。
-                    </p>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> 诗杯客乐 雅典娜
-                    </h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">诗杯客乐：SPIEGELAU创立于1521年，与德国巴伐利亚森林里的诗杯客乐小镇同名。是世界上最古老的，也是最著名的水晶酒具生产商之一。</p>
-                    <p style="color:#aaa;">先来说说诗杯客乐的高端系列：雅典娜，这个系列的酒杯都是人工吹制的无铅水晶杯，造型优美。</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/2.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="font-size:12px;color:#bbb;border-top:1px solid #bbb;padding-top:10px;">
-                        诗杯客乐的高端系列：雅典娜
-                    </p>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> 诗杯客乐 文艺复兴
-                    </h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">诗杯客乐旗下还有一个我自己非常喜欢的系列。文艺复兴系列酒杯是酒具行业中唯一一款利用激光在水晶杯上雕花的产品，诗杯客乐顶级的制造工艺在这款杯型上体现得淋漓尽致，非常值得收藏而且能体现个人品味。</p>
-                    <p style="color:#aaa;"><a href="/item?itemId=14">点击购买此商品</a></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/3.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="font-size:12px;color:#bbb;border-top:1px solid #bbb;padding-top:10px;">
-                        诗杯客乐的高端系列：文艺复兴
-                    </p>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> Chef&Sommelier 绽放系列
-                    </h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">Chef&Sommelier   是100%为餐厅与红酒专业人士量身定制。全新采用的Kwarx材质制成的酒杯，是完全透明的，可以让你领略葡萄酒的无穷魅力。绽放系列向上收口的造型，令香气释放更集中。</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/4.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="font-size:12px;color:#bbb;border-top:1px solid #bbb;padding-top:10px;">
-                        Chef&Sommelier 绽放系列
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">下图中，可以看到在《奔跑吧，兄弟中》，原SHE成员Eva手拿此杯，酒杯中虽然只是水，但是依然可以感觉到其晶莹剔透的感觉。</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/7.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> CRISTAL DARQUES 情迷钻石系列
-                    </h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">CRISTAL DARQUES  情迷钻石系列，不用过多描述，国宴专用，习近平、彭丽媛专享。</p>
-                    <p style="color:#aaa;"><a href="/item?itemId=9">点击购买此商品</a></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-6 small-12 columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/5.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-                <div class="large-6 small-12 columns">
-                    <img src="$!{imageUrlPrefix}/images/topic/0/6.jpg"
-                         style="margin-bottom:20px;"></img>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="font-size:12px;color:#bbb;border-top:1px solid #bbb;padding-top:10px;">
-                        CRISTAL DARQUES 情迷钻石系列
-                    </p>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:40px;">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <h5 style="color:#777;">
-                        <span style="background-color:#A7866A;color:#A7866A;">1</span> 总结回顾
-                    </h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-10 small-12 large-centered small-centered columns">
-                    <p style="color:#aaa;">
-                        今天介绍了几款酒杯，都是提升逼格的利器，乃是请客送礼必备之良品。大家是否get到？赶快联系我们购买吧。
-                    </p>
-                </div>
-            </div>
-        </div>
+<div class="page-content" id="topic-page-content">
+    <div class="topic-img-wrapper">
+        <img src="$topic.imgUrl" alt=""/>
     </div>
+
+    #foreach ($question in $questionList)
+        <div class="a-list-item">
+            <div class="home-list-item">
+                <div class="list-item-share">
+                    <i class="fi-share"></i>
+                </div>
+                <div class="list-item-user">
+                    <img src="$!{question.userInfo.imgUrl}" alt=""/>
+                    <span class="item-user-name">$!{question.userInfo.username}</span>
+                    #if ("$!{question.userInfo.userDesc}" != "")
+                        <span class="item-user-desc">，$!{question.userInfo.userDesc}</span>
+                    #end
+                </div>
+
+                <div class="list-item-title">
+                    $question.question.title
+                </div>
+
+                <div class="list-item-preview">
+                    <a href="/a?aid=$!{question.showId}">
+                        $!{question.question.description}
+                    </a>
+                </div>
+            </div>
+            <div class="a-function">
+                <span class="a-comment unsupported-section"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> $!{question.question.subCnt}关注</span>
+                &nbsp ∙ &nbsp
+                <span class="a-thanks unsupported-section">举报</span>
+            </div>
+        </div>
+    #end
 
 </div>
 <!-- end of this page contents -->
