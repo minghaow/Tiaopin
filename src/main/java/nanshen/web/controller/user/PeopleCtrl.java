@@ -84,9 +84,10 @@ public class PeopleCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/sub", method = RequestMethod.GET)
-	public void peopleSub(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
+	public void peopleSub(HttpServletRequest request, HttpServletResponse response,
+						  @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
-		UserInfo userInfo = getLoginedUser();
+		UserInfo userInfo = getLoginedUser(request);
 		ExecInfo execInfo = accountService.subPeople(uid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
@@ -94,9 +95,10 @@ public class PeopleCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/sub/cancel", method = RequestMethod.GET)
-	public void peopleSubCancel(HttpServletResponse response, @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
+	public void peopleSubCancel(HttpServletRequest request, HttpServletResponse response,
+								@RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
-		UserInfo userInfo = getLoginedUser();
+		UserInfo userInfo = getLoginedUser(request);
 		ExecInfo execInfo = accountService.subCancelPeople(uid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());

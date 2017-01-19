@@ -35,7 +35,7 @@ public class TopicDaoImpl extends BaseDao implements TopicDao {
 
     @Override
     public List<Topic> getHotTopicList() {
-        Condition cnd = Cnd.where("isHot", "=", true);
+        Condition cnd = Cnd.where("isHot", "=", true).desc("hotIndex");
         return dao.query(Topic.class, cnd);
     }
 }

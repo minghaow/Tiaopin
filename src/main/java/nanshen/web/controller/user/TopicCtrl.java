@@ -48,7 +48,7 @@ public class TopicCtrl extends BaseCtrl {
     }
 
     @RequestMapping(value = "/json", method = RequestMethod.GET)
-    public void skuJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void topicJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         UserInfo userInfo = getLoginedUser(request);
         List<Topic> topicList = topicService.getHotTopic(userInfo);

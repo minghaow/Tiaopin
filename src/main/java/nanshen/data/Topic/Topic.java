@@ -35,6 +35,9 @@ public class Topic {
     @Column
     private String bannerImgUrl = "";
 
+    @Column
+    private long hotIndex = 0;
+
     public Topic() {
     }
 
@@ -99,6 +102,14 @@ public class Topic {
 
     public void setIsSubed(boolean isSubed) {
         this.isSubed = isSubed;
+    }
+
+    public long getHotIndex() {
+        return hotIndex;
+    }
+
+    public void setHotIndex(long hotIndex) {
+        this.hotIndex = hotIndex;
     }
 
     public long generateShowId(long userId) {
