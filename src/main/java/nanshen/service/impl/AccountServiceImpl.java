@@ -18,6 +18,7 @@ import nanshen.data.User.UserInfo;
 import nanshen.data.User.UserMessage;
 import nanshen.data.User.UserMessageType;
 import nanshen.service.AccountService;
+import nanshen.service.PeopleService;
 import nanshen.service.common.ScheduledService;
 import nanshen.utils.EncryptUtils;
 import nanshen.utils.LogUtils;
@@ -50,6 +51,9 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
 
     @Autowired
     private UserMessageDao userMessageDao;
+
+    @Autowired
+    private PeopleService peopleService;
 
     /** 买手ID到买手信息的缓存 */
     private final LoadingCache<Long, UserInfo> userCache = CacheBuilder.newBuilder()
@@ -199,6 +203,7 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
         userInfo.setUserDesc(desc);
         if (userInfoDao.updateBuyer(userInfo)) {
             userCache.invalidate(userInfo.getId());
+            peopleService.invalidateUserCache(userInfo.getId());
             return ExecInfo.succ();
         }
         return ExecInfo.fail("更新失败，请联系客服");
