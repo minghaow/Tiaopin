@@ -4,9 +4,12 @@ import nanshen.dao.Question.AnswerDao;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.Sku.Sku;
 import nanshen.data.SystemUtil.ExecInfo;
+import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
+import nanshen.data.User.ComplexUserInfo;
 import nanshen.data.User.UserInfo;
 import nanshen.service.AccountService;
+import nanshen.service.PeopleService;
 import nanshen.service.QuestionService;
 import nanshen.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class PeopleCtrl extends BaseCtrl {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private PeopleService peopleService;
 
 	@Autowired
 	private QuestionService questionService;
@@ -67,19 +73,21 @@ public class PeopleCtrl extends BaseCtrl {
 	}
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
-	public void questionJson(HttpServletRequest request, ModelMap model, HttpServletResponse response,
-									 @RequestParam(defaultValue = "0", required = true) long qid) throws IOException {
-		if (qid <= 0) {
-			model.addAttribute("success", false);
-			model.addAttribute("msg", "错误的qid");
-		}
-		ComplexQuestion complexQuestion;
+	public void peoplePage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+						   	@RequestParam(defaultValue = "0", required = true) long uid,
+						   	@RequestParam(defaultValue = "0", required = true) int page) throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
-		complexQuestion = questionService.getComplexQuestionByShowId(userInfo, qid);
-		Map<Long, List<Sku>> aidSkuListMap = skuService.getMapByQuestionId(complexQuestion.getId());
-		model.addAttribute("answerPage", false);
-		model.addAttribute("complexQuestion", complexQuestion);
-		model.addAttribute("aidSkuListMap", aidSkuListMap);
+		ComplexUserInfo complexUserInfo = peopleService.getUserInfo(userInfo, uid, new PageInfo(page));
+		model.addAttribute("complexUserInfo", complexUserInfo);
+		responseJson(response, model);
+	}
+
+	@RequestMapping(value = "/l/json", method = RequestMethod.GET)
+	public void subListPage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+									 @RequestParam(defaultValue = "0", required = true) int page) throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		List<UserInfo> userInfoList = peopleService.getSubList(userInfo, new PageInfo(page));
+		model.addAttribute("userInfoList", userInfoList);
 		responseJson(response, model);
 	}
 

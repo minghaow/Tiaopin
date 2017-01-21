@@ -30,4 +30,6 @@ public interface AnswerDao {
     boolean upCancel(long aid);
 
     Answer getByQuestionIdAndUid(long qid, long uid);
+
+    List<Answer> getByUid(long uid, PageInfo pageInfo);
 }

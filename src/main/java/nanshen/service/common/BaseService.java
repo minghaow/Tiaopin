@@ -1,6 +1,6 @@
 package nanshen.service.common;
 
-import nanshen.dao.OrderLogDao;
+import nanshen.dao.Order.OrderLogDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

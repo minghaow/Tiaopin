@@ -98,6 +98,8 @@ public class UserInfo {
     /** 买手的权限列表 */
     private Set<AccessAuthority> authorities;
 
+    private boolean isSubed = false;
+
     /** 权限提取器 */
     private static final CollectionExtractor<AccessAuthority, UserAuthority> authorityExtractor =
             new CollectionExtractor<AccessAuthority, UserAuthority>() {
@@ -334,5 +336,13 @@ public class UserInfo {
 
     public void setTempLoginId(long tempLoginId) {
         this.tempLoginId = tempLoginId;
+    }
+
+    public boolean isSubed() {
+        return isSubed;
+    }
+
+    public void setIsSubed(boolean isSubed) {
+        this.isSubed = isSubed;
     }
 }

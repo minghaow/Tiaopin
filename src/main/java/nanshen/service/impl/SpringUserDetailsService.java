@@ -1,6 +1,6 @@
 package nanshen.service.impl;
 
-import nanshen.dao.UserInfoDao;
+import nanshen.dao.User.UserInfoDao;
 import nanshen.data.User.UserInfo;
 import nanshen.utils.LogUtils;
 import nanshen.utils.RequestUtils;

@@ -26,13 +26,18 @@ public class UserAnswerUp {
     @Column
     private long aid;
 
+    /** user nick name */
+    @Column
+    private long toUserId;
+
     /** create time */
     @Column
     private Date createTime = new Date();
 
-    public UserAnswerUp(long aid, long userId) {
+    public UserAnswerUp(long aid, long userId, long toUserId) {
         this.aid = aid;
         this.userId = userId;
+        this.toUserId = toUserId;
     }
 
     public UserAnswerUp() {
@@ -68,5 +73,13 @@ public class UserAnswerUp {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(long toUserId) {
+        this.toUserId = toUserId;
     }
 }

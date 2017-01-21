@@ -2,9 +2,9 @@ package nanshen.web.controller.user;
 
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
-import nanshen.dao.SkuDao;
-import nanshen.dao.SkuSourceDao;
-import nanshen.dao.UserInfoDao;
+import nanshen.dao.Sku.SkuDao;
+import nanshen.dao.Sku.SkuSourceDao;
+import nanshen.dao.User.UserInfoDao;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.Question.QuestionType;
 import nanshen.data.SystemUtil.PageInfo;

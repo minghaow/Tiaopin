@@ -6,7 +6,7 @@
  */
 package nanshen.service.impl;
 
-import nanshen.dao.UserInfoDao;
+import nanshen.dao.User.UserInfoDao;
 import nanshen.service.AccountService;
 import nanshen.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;

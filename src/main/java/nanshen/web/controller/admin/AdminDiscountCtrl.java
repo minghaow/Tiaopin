@@ -1,7 +1,7 @@
 package nanshen.web.controller.admin;
 
 import nanshen.dao.AdminUserInfoDao;
-import nanshen.dao.DiscountDao;
+import nanshen.dao.Order.DiscountDao;
 import nanshen.dao.StyleTagDao;
 import nanshen.data.AdminUserInfo;
 import nanshen.data.Discount.Discount;

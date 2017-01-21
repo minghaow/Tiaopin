@@ -3,9 +3,9 @@ package nanshen.service.impl;
 import nanshen.constant.SystemConstants;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
-import nanshen.dao.TopicDao;
-import nanshen.dao.UserAnswerUpDao;
-import nanshen.dao.UserQuestionSubDao;
+import nanshen.dao.Topic.TopicDao;
+import nanshen.dao.User.UserAnswerUpDao;
+import nanshen.dao.User.UserQuestionSubDao;
 import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
@@ -305,6 +305,22 @@ public class QuestionServiceImpl implements QuestionService {
             return ExecInfo.fail("更新失败");
         }
         return ExecInfo.succ();
+    }
+
+    @Override
+    public List<ComplexAnswer> getAnswersByUid(long uid, PageInfo pageInfo) {
+        List<Answer> answerList = answerDao.getByUid(uid, pageInfo);
+        List<ComplexAnswer> complexAnswerList = new ArrayList<ComplexAnswer>();
+        for (Answer answer : answerList) {
+            answer.setContent("");
+            Pattern p = Pattern.compile("<img src=\"(.+)\"/>");
+            Matcher m = p.matcher(answer.getCleanContent());
+            String imgUrl = m.find() ? m.group(1) : "";
+            Question question = questionDao.get(answer.getQuestionId());
+            complexAnswerList.add(new ComplexAnswer(answer.getId(), answer, answer.getShowId(), question.getId(),
+                    question.getShowId(), question, null, imgUrl));
+        }
+        return complexAnswerList;
     }
 
     private void setDescription(String content, Answer answer) {

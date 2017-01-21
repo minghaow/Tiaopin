@@ -6,8 +6,8 @@
  */
 package nanshen.service.impl;
 
-import nanshen.dao.OrderDao;
-import nanshen.dao.UserAddressDao;
+import nanshen.dao.Order.OrderDao;
+import nanshen.dao.User.UserAddressDao;
 import nanshen.data.Order.Order;
 import nanshen.data.Order.OrderOperation;
 import nanshen.data.Region;

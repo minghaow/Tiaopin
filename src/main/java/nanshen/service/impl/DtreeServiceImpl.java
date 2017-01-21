@@ -4,7 +4,7 @@ import nanshen.dao.Dtree.DtreeOptionDao;
 import nanshen.dao.Dtree.DtreeQuestionDao;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
-import nanshen.dao.UserInfoDao;
+import nanshen.dao.User.UserInfoDao;
 import nanshen.data.Dtree.DtreeOption;
 import nanshen.data.Dtree.DtreeQuestion;
 import nanshen.data.Dtree.DtreeQuestionType;

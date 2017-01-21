@@ -1,9 +1,9 @@
 package nanshen.service.impl;
 
 import nanshen.constant.TimeConstants;
-import nanshen.dao.TopicDao;
-import nanshen.dao.TopicQuestionMapDao;
-import nanshen.dao.UserTopicSubDao;
+import nanshen.dao.Topic.TopicDao;
+import nanshen.dao.Topic.TopicQuestionMapDao;
+import nanshen.dao.User.UserTopicSubDao;
 import nanshen.data.Question.ComplexQuestion;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;

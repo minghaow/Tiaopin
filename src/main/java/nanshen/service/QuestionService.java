@@ -50,4 +50,7 @@ public interface QuestionService {
     ExecInfo uploadImage(long aid, String name, MultipartFile file) throws IOException;
 
     ExecInfo submitAnswer(long aid, String content, UserInfo userInfo);
+
+    List<ComplexAnswer> getAnswersByUid(long uid, PageInfo pageInfo);
+
 }
