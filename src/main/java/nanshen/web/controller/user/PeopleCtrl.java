@@ -75,10 +75,10 @@ public class PeopleCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
 	public void peoplePage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
-						   	@RequestParam(defaultValue = "0", required = true) long uid,
+						   	@RequestParam(defaultValue = "0", required = true) long userId,
 						   	@RequestParam(defaultValue = "0", required = true) int page) throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
-		ComplexUserInfo complexUserInfo = peopleService.getUserInfo(userInfo, uid, new PageInfo(page));
+		ComplexUserInfo complexUserInfo = peopleService.getUserInfo(userInfo, userId, new PageInfo(page));
 		model.addAttribute("complexUserInfo", complexUserInfo);
 		responseJson(response, model);
 	}
@@ -94,10 +94,10 @@ public class PeopleCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/sub", method = RequestMethod.GET)
 	public void peopleSub(HttpServletRequest request, HttpServletResponse response,
-						  @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
+						  @RequestParam(defaultValue = "1", required = true) long userId) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
-		ExecInfo execInfo = peopleService.subPeople(uid, userInfo);
+		ExecInfo execInfo = peopleService.subPeople(userId, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
@@ -105,10 +105,10 @@ public class PeopleCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/sub/cancel", method = RequestMethod.GET)
 	public void peopleSubCancel(HttpServletRequest request, HttpServletResponse response,
-								@RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
+								@RequestParam(defaultValue = "1", required = true) long userId) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
-		ExecInfo execInfo = peopleService.subCancelPeople(uid, userInfo);
+		ExecInfo execInfo = peopleService.subCancelPeople(userId, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
