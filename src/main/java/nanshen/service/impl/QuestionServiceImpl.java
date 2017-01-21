@@ -106,6 +106,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question getQuestionByAid(long aid) {
+        Answer answer = getAnswer(aid);
+        if (answer != null) {
+            return getQuestion(answer.getQuestionId());
+        }
+        return null;
+    }
+
+    @Override
     public ComplexQuestion getComplexQuestionByShowId(UserInfo userInfo, long qShowId) {
         Question question = questionDao.getByShowId(qShowId);
         if (question == null) {

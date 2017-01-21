@@ -8,6 +8,7 @@ import nanshen.dao.User.UserInfoDao;
 import nanshen.dao.User.UserMessageDao;
 import nanshen.dao.User.UserPeopleSubDao;
 import nanshen.data.Question.ComplexAnswer;
+import nanshen.data.Question.Question;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.*;
@@ -118,7 +119,24 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
 
     @Override
     public List<UserMessage> getMsgList(UserInfo userInfo, PageInfo pageInfo) {
-        return userMessageDao.getByUserId(userInfo.getId(), pageInfo);
+        List<UserMessage> msgList = userMessageDao.getByUserId(userInfo.getId(), pageInfo);
+        for (UserMessage msg : msgList) {
+            if (msg.getType() == UserMessageType.ANSWER_UP) {
+                Question question = questionService.getQuestionByAid(msg.getAid());
+                msg.setFirstString(question.getTitle());
+            } else if (msg.getType() == UserMessageType.USER_SUB) {
+                UserInfo subUserInfo = getUserInfo(msg.getSubUid());
+                if (subUserInfo != null) {
+                    msg.setFirstString(subUserInfo.getUsername());
+                } else {
+                    msg.setFirstString("已删除的用户");
+                }
+            } else if (msg.getType() == UserMessageType.ANSWER_REPORT) {
+                Question question = questionService.getQuestionByAid(msg.getAid());
+                msg.setFirstString(question.getTitle());
+            }
+        }
+        return msgList;
     }
 
     private UserInfo getUserInfo(long uid) {

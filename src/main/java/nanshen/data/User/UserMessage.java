@@ -39,6 +39,10 @@ public class UserMessage {
     @Column
     private Date createTime = new Date();
 
+    private String firstString = "";
+
+    private String secondString = "";
+
     public UserMessage(long aid, long answerUpUid, UserMessageType type, long userId, String content, long subUid) {
         this.aid = aid;
         this.answerUpUid = answerUpUid;
@@ -113,5 +117,21 @@ public class UserMessage {
 
     public void setSubUid(long subUid) {
         this.subUid = subUid;
+    }
+
+    public String getFirstString() {
+        return firstString;
+    }
+
+    public void setFirstString(String firstString) {
+        this.firstString = firstString;
+    }
+
+    public String getSecondString() {
+        return secondString;
+    }
+
+    public void setSecondString(String secondString) {
+        this.secondString = secondString;
     }
 }

@@ -190,7 +190,7 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
         }
         userMessageDao.insert(new UserMessage(0, 0, UserMessageType.TEXT, userInfo.getId(), "嗨，" + nickName + "！欢迎加" +
                 "入挑品购物问答大家庭！挑品作为中立的购物问答社区，在这里你可以分享你的购物经验和行业见解，晒你买到好物，吐槽你踩的深坑。" +
-                "其实发什么内容都行哈哈。", 0));
+                "快去分享吧！", 0));
         return ExecResult.succ(userInfo);
     }
 
