@@ -102,6 +102,8 @@ public class UserInfo {
 
     private long subCnt = 0;
 
+    private long answerCnt = 0;
+
     /** 权限提取器 */
     private static final CollectionExtractor<AccessAuthority, UserAuthority> authorityExtractor =
             new CollectionExtractor<AccessAuthority, UserAuthority>() {
@@ -354,5 +356,13 @@ public class UserInfo {
 
     public void setSubCnt(long subCnt) {
         this.subCnt = subCnt;
+    }
+
+    public long getAnswerCnt() {
+        return answerCnt;
+    }
+
+    public void setAnswerCnt(long answerCnt) {
+        this.answerCnt = answerCnt;
     }
 }

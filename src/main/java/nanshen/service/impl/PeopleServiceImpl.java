@@ -105,6 +105,8 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
             return null;
         }
         List<ComplexAnswer> complexAnswerList = questionService.getAnswersByUid(uid, pageInfo);
+        long answerCnt = questionService.getAnswerCntByUid(uid);
+        toUserInfo.setAnswerCnt(answerCnt);
         if (userInfo != null) {
             UserPeopleSub userPeopleSub = userPeopleSubDao.getByUserIdAndToUserId(userInfo.getId(), uid);
             long cnt = userPeopleSubDao.getSubCount(uid);

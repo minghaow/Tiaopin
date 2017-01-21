@@ -102,4 +102,10 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao {
         return dao.query(Answer.class, cnd, genaratePager(pageInfo));
     }
 
+    @Override
+    public long getCountByUid(long uid) {
+        Condition cnd = Cnd.where("userId", "=", uid);
+        return dao.count(Answer.class, cnd);
+    }
+
 }

@@ -53,4 +53,5 @@ public interface QuestionService {
 
     List<ComplexAnswer> getAnswersByUid(long uid, PageInfo pageInfo);
 
+    long getAnswerCntByUid(long uid);
 }

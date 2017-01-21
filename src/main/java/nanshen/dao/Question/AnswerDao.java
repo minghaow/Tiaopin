@@ -32,4 +32,6 @@ public interface AnswerDao {
     Answer getByQuestionIdAndUid(long qid, long uid);
 
     List<Answer> getByUid(long uid, PageInfo pageInfo);
+
+    long getCountByUid(long uid);
 }

@@ -348,6 +348,11 @@ public class QuestionServiceImpl implements QuestionService {
         return complexAnswerList;
     }
 
+    @Override
+    public long getAnswerCntByUid(long uid) {
+        return answerDao.getCountByUid(uid);
+    }
+
     private void setDescription(String content, Answer answer) {
         Pattern p = Pattern.compile("<img src=\"(.+)\"/>");
         Matcher m = p.matcher(content);
