@@ -146,6 +146,12 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
         return msgList;
     }
 
+    @Override
+    public boolean invalidateUserCache(long uid) {
+        userCache.invalidate(uid);
+        return true;
+    }
+
     private UserInfo getUserInfo(long uid) {
         try {
             return userCache.get(uid);

@@ -29,4 +29,6 @@ public interface PeopleService {
     ComplexUserInfo getUserInfo(UserInfo userInfo, long uid, PageInfo pageInfo);
 
     List<UserMessage> getMsgList(UserInfo userInfo, PageInfo pageInfo);
+
+    boolean invalidateUserCache(long uid);
 }

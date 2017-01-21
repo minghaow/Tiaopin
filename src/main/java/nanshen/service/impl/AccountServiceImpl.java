@@ -195,6 +195,16 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     }
 
     @Override
+    public ExecInfo setUserDesc(UserInfo userInfo, String desc) {
+        userInfo.setUserDesc(desc);
+        if (userInfoDao.updateBuyer(userInfo)) {
+            userCache.invalidate(userInfo.getId());
+            return ExecInfo.succ();
+        }
+        return ExecInfo.fail("更新失败，请联系客服");
+    }
+
+    @Override
     public AdminUserInfo getAdminUserInfoByUserId(Long adminUserId) {
         return adminIdUserInfoMap.get(adminUserId);
     }

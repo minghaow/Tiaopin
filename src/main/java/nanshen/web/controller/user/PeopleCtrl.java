@@ -75,6 +75,16 @@ public class PeopleCtrl extends BaseCtrl {
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
 	public void peoplePage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+						   @RequestParam(defaultValue = "", required = true) String desc) throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		ExecInfo execInfo = accountService.setUserDesc(userInfo, desc);
+		model.addAttribute("success", execInfo.isSucc());
+		model.addAttribute("msg", execInfo.getMsg());
+		responseJson(response, model);
+	}
+
+	@RequestMapping(value = "/json", method = RequestMethod.GET)
+	public void peoplePage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 						   	@RequestParam(defaultValue = "0", required = true) long userId,
 						   	@RequestParam(defaultValue = "0", required = true) int page) throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
