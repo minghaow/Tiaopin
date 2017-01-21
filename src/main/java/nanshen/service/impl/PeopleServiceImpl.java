@@ -77,7 +77,7 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
     @Override
     public ExecInfo subCancelPeople(long uid, UserInfo userInfo) {
         if (userPeopleSubDao.remove(userInfo.getId(), uid)) {
-            return ExecInfo.fail("关注达人失败，请稍后再试");
+            return ExecInfo.fail("取消关注达人失败，请稍后再试");
         }
         return ExecInfo.succ();
     }
