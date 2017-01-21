@@ -124,6 +124,12 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
             if (msg.getType() == UserMessageType.ANSWER_UP) {
                 Question question = questionService.getQuestionByAid(msg.getAid());
                 msg.setFirstString(question.getTitle());
+                UserInfo subUserInfo = getUserInfo(msg.getAnswerUpUid());
+                if (subUserInfo != null) {
+                    msg.setSecondString(subUserInfo.getUsername());
+                } else {
+                    msg.setSecondString("已删除的用户");
+                }
             } else if (msg.getType() == UserMessageType.USER_SUB) {
                 UserInfo subUserInfo = getUserInfo(msg.getSubUid());
                 if (subUserInfo != null) {
