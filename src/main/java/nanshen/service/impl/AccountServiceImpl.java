@@ -189,7 +189,7 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
             return ExecResult.fail("用户已注册，请找回密码~", userInfoDao.getUserInfoByPhone(phone));
         }
         userMessageDao.insert(new UserMessage(0, 0, UserMessageType.TEXT, userInfo.getId(), "嗨，" + nickName + "！欢迎加" +
-                "入挑品购物问答大家庭！挑品作为中立的购物问答社区，在这里你可以分享你的购物经验和行业见解，晒你买到好物，吐槽你踩的深坑。" +
+                "入挑品购物问答大家庭！挑品作为中立的购物问答社区，在这里你可以分享你的购物经验和行业见解，晒你买到的好物，吐槽你踩的深坑。" +
                 "快去分享吧！", 0));
         return ExecResult.succ(userInfo);
     }
