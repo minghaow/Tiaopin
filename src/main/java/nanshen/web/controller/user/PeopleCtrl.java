@@ -83,6 +83,15 @@ public class PeopleCtrl extends BaseCtrl {
 		responseJson(response, model);
 	}
 
+	@RequestMapping(value = "/msg/json", method = RequestMethod.GET)
+	public void peopleMsgPage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+						   @RequestParam(defaultValue = "0", required = true) int page) throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		List<UserMessage> userMessageList = peopleService.getMsgList(userInfo, new PageInfo(page));
+		model.addAttribute("messageList", userMessageList);
+		responseJson(response, model);
+	}
+
 	@RequestMapping(value = "/sub/l/json", method = RequestMethod.GET)
 	public void subListPage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 									 @RequestParam(defaultValue = "0", required = true) int page) throws IOException {
