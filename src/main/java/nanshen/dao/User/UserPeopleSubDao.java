@@ -18,4 +18,6 @@ public interface UserPeopleSubDao {
     UserPeopleSub getByUserIdAndToUserId(long uid, long toUid);
 
     boolean remove(long uid, long toUid);
+
+    long getSubCount(long uid);
 }

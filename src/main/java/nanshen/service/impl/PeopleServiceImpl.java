@@ -107,7 +107,9 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
         List<ComplexAnswer> complexAnswerList = questionService.getAnswersByUid(uid, pageInfo);
         if (userInfo != null) {
             UserPeopleSub userPeopleSub = userPeopleSubDao.getByUserIdAndToUserId(userInfo.getId(), uid);
+            long cnt = userPeopleSubDao.getSubCount(uid);
             toUserInfo.setIsSubed(userPeopleSub != null);
+            toUserInfo.setSubCnt(cnt);
         }
         return new ComplexUserInfo(complexAnswerList, toUserInfo);
     }

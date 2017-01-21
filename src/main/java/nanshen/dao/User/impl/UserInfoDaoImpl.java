@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 买手信息数据库操作实现
  *
- * @author KONG Xiangxin
+ * @author WANG Minghao
  */
 @Repository
 public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {

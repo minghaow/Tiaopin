@@ -48,4 +48,10 @@ public class UserPeopleSubDaoImpl extends BaseDao implements UserPeopleSubDao {
         return dao.clear(UserPeopleSub.class, cnd) > 0;
     }
 
+    @Override
+    public long getSubCount(long uid) {
+        Condition cnd = Cnd.where("toUserId", "=", uid);
+        return dao.count(UserPeopleSub.class, cnd);
+    }
+
 }

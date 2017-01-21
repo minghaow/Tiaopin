@@ -100,6 +100,8 @@ public class UserInfo {
 
     private boolean isSubed = false;
 
+    private long subCnt = 0;
+
     /** 权限提取器 */
     private static final CollectionExtractor<AccessAuthority, UserAuthority> authorityExtractor =
             new CollectionExtractor<AccessAuthority, UserAuthority>() {
@@ -344,5 +346,13 @@ public class UserInfo {
 
     public void setIsSubed(boolean isSubed) {
         this.isSubed = isSubed;
+    }
+
+    public long getSubCnt() {
+        return subCnt;
+    }
+
+    public void setSubCnt(long subCnt) {
+        this.subCnt = subCnt;
     }
 }
