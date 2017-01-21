@@ -27,21 +27,25 @@ public class UserMessage {
     private long answerUpUid = 0;
 
     @Column
-    private long aid;
+    private long aid = 0;
 
     @Column
-    private String content;
+    private long subUid = 0;
+
+    @Column
+    private String content = "";
 
     /** create time */
     @Column
     private Date createTime = new Date();
 
-    public UserMessage(long aid, long answerUpUid, UserMessageType type, long userId, String content) {
+    public UserMessage(long aid, long answerUpUid, UserMessageType type, long userId, String content, long subUid) {
         this.aid = aid;
         this.answerUpUid = answerUpUid;
         this.type = type;
         this.userId = userId;
         this.content = content;
+        this.subUid = subUid;
     }
 
     public UserMessage() {
@@ -101,5 +105,13 @@ public class UserMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public long getSubUid() {
+        return subUid;
+    }
+
+    public void setSubUid(long subUid) {
+        this.subUid = subUid;
     }
 }

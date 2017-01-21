@@ -4,6 +4,7 @@ import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.User.ComplexUserInfo;
 import nanshen.data.User.UserInfo;
+import nanshen.data.User.UserMessage;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface PeopleService {
     List<UserInfo> getSubList(UserInfo userInfo, PageInfo pageInfo);
 
     ComplexUserInfo getUserInfo(UserInfo userInfo, long uid, PageInfo pageInfo);
+
+    List<UserMessage> getMsgList(UserInfo userInfo, PageInfo pageInfo);
 }

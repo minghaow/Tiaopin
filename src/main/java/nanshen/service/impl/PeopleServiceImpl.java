@@ -5,13 +5,12 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import nanshen.constant.TimeConstants;
 import nanshen.dao.User.UserInfoDao;
+import nanshen.dao.User.UserMessageDao;
 import nanshen.dao.User.UserPeopleSubDao;
 import nanshen.data.Question.ComplexAnswer;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.PageInfo;
-import nanshen.data.User.ComplexUserInfo;
-import nanshen.data.User.UserInfo;
-import nanshen.data.User.UserPeopleSub;
+import nanshen.data.User.*;
 import nanshen.service.PeopleService;
 import nanshen.service.QuestionService;
 import nanshen.service.common.ScheduledService;
@@ -40,6 +39,9 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
     private UserInfoDao userInfoDao;
 
     @Autowired
+    private UserMessageDao userMessageDao;
+
+    @Autowired
     private QuestionService questionService;
 
     /** 买手ID到买手信息的缓存 */
@@ -66,6 +68,7 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
     public ExecInfo subPeople(long uid, UserInfo userInfo) {
         UserPeopleSub peopleSub = userPeopleSubDao.insert(new UserPeopleSub(uid, userInfo.getId()));
         if (peopleSub == null) {
+            userMessageDao.insert(new UserMessage(0, 0, UserMessageType.USER_SUB, userInfo.getId(), "", uid));
             return ExecInfo.fail("关注达人失败，请稍后再试");
         }
         return ExecInfo.succ();
@@ -107,6 +110,11 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
             toUserInfo.setIsSubed(userPeopleSub != null);
         }
         return new ComplexUserInfo(complexAnswerList, toUserInfo);
+    }
+
+    @Override
+    public List<UserMessage> getMsgList(UserInfo userInfo, PageInfo pageInfo) {
+        return userMessageDao.getByUserId(userInfo.getId(), pageInfo);
     }
 
     private UserInfo getUserInfo(long uid) {

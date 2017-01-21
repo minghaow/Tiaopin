@@ -1,19 +1,22 @@
 package nanshen.service.impl;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import nanshen.constant.SystemConstants;
+import nanshen.constant.TimeConstants;
 import nanshen.dao.Question.AnswerDao;
 import nanshen.dao.Question.QuestionDao;
 import nanshen.dao.Topic.TopicDao;
 import nanshen.dao.User.UserAnswerUpDao;
+import nanshen.dao.User.UserMessageDao;
 import nanshen.dao.User.UserQuestionSubDao;
 import nanshen.data.Question.*;
 import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.Topic.Topic;
-import nanshen.data.User.UserAnswerUp;
-import nanshen.data.User.UserInfo;
-import nanshen.data.User.UserQuestionSub;
+import nanshen.data.User.*;
 import nanshen.service.AccountService;
 import nanshen.service.QuestionService;
 import nanshen.service.api.oss.OssFormalApi;
@@ -30,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,10 +62,26 @@ public class QuestionServiceImpl implements QuestionService {
     private TopicDao topicDao;
 
     @Autowired
+    private UserMessageDao userMessageDao;
+
+    @Autowired
     private OssFormalApi ossFormalApi;
 
     @Autowired
     private AccountService accountService;
+
+    /** 回答的缓存 */
+    private final LoadingCache<Long, Answer> answerCache = CacheBuilder.newBuilder()
+            .softValues()
+            .maximumSize(200)
+            .expireAfterWrite(TimeConstants.HALF_HOUR_IN_SECONDS, TimeUnit.SECONDS)
+            .build(
+                    new CacheLoader<Long, Answer>() {
+                        @Override
+                        public Answer load(Long id) throws Exception {
+                            return answerDao.get(id);
+                        }
+                    });
 
     @Override
     public List<ComplexQuestion> getHotQuestions(List<QuestionType> typeList, PageInfo pageInfo) {
@@ -234,10 +255,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public ExecInfo upAnswer(long aid, UserInfo userInfo) {
-        UserAnswerUp userAnswerUp = userAnswerUpDao.insert(new UserAnswerUp(aid, userInfo.getId()));
-        if (userAnswerUp != null) {
-            if (answerDao.up(aid)) {
-                return ExecInfo.succ();
+        Answer answer = getAnswer(aid);
+        if (answer != null) {
+            UserAnswerUp userAnswerUp = userAnswerUpDao.insert(new UserAnswerUp(aid, userInfo.getId(), answer.getId()));
+            if (userAnswerUp != null) {
+                if (answerDao.up(aid)) {
+                    userMessageDao.insert(new UserMessage(aid, userInfo.getId(), UserMessageType.ANSWER_UP, answer.getUserId(), "", 0));
+                    return ExecInfo.succ();
+                }
             }
         }
         return ExecInfo.fail("UP失败");
@@ -369,6 +394,15 @@ public class QuestionServiceImpl implements QuestionService {
             answerCleanContents.add(new AnswerCleanContent("", cleanContentArray[cleanContentArray.length - 1]));
             answer.setCleanContentList(answerCleanContents);
         }
+    }
+
+    private Answer getAnswer(long aid) {
+        try {
+            return answerCache.get(aid);
+        } catch (ExecutionException e) {
+            LogUtils.info("[QuesitonSergviceImpl] getAnswer cannot find the answer by aid.");
+        }
+        return null;
     }
 
 }

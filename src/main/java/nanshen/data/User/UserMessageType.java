@@ -15,6 +15,8 @@ public enum UserMessageType {
 
     ANSWER_REPORT("回答举报"),
 
+    USER_SUB("用户关注"),
+
     TEXT("普通信息"),
 
     UNKNOWN("未知");

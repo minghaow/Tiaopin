@@ -8,6 +8,7 @@ import nanshen.data.SystemUtil.PageInfo;
 import nanshen.data.SystemUtil.PageType;
 import nanshen.data.User.ComplexUserInfo;
 import nanshen.data.User.UserInfo;
+import nanshen.data.User.UserMessage;
 import nanshen.service.AccountService;
 import nanshen.service.PeopleService;
 import nanshen.service.QuestionService;
@@ -96,7 +97,7 @@ public class PeopleCtrl extends BaseCtrl {
 						  @RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
-		ExecInfo execInfo = accountService.subPeople(uid, userInfo);
+		ExecInfo execInfo = peopleService.subPeople(uid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
@@ -107,10 +108,19 @@ public class PeopleCtrl extends BaseCtrl {
 								@RequestParam(defaultValue = "1", required = true) long uid) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		UserInfo userInfo = getLoginedUser(request);
-		ExecInfo execInfo = accountService.subCancelPeople(uid, userInfo);
+		ExecInfo execInfo = peopleService.subCancelPeople(uid, userInfo);
 		json.put("success", execInfo.isSucc());
 		json.put("msg", execInfo.getMsg());
 		responseJson(response, json);
+	}
+
+	@RequestMapping(value = "/msg", method = RequestMethod.GET)
+	public void msgPage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+							@RequestParam(defaultValue = "0", required = true) int page) throws IOException {
+		UserInfo userInfo = getLoginedUser(request);
+		List<UserMessage> userMessageList = peopleService.getMsgList(userInfo, new PageInfo(page));
+		model.addAttribute("userMessageList", userMessageList);
+		responseJson(response, model);
 	}
 
 }

@@ -7,7 +7,7 @@ import nanshen.constant.TimeConstants;
 import nanshen.dao.AdminUserInfoDao;
 import nanshen.dao.User.UserAddressDao;
 import nanshen.dao.User.UserInfoDao;
-import nanshen.dao.User.UserPeopleSubDao;
+import nanshen.dao.User.UserMessageDao;
 import nanshen.data.AdminUserInfo;
 import nanshen.data.LookInfo;
 import nanshen.data.Sku.SkuItem;
@@ -15,7 +15,8 @@ import nanshen.data.SystemUtil.ExecInfo;
 import nanshen.data.SystemUtil.ExecResult;
 import nanshen.data.User.UserAddress;
 import nanshen.data.User.UserInfo;
-import nanshen.data.User.UserPeopleSub;
+import nanshen.data.User.UserMessage;
+import nanshen.data.User.UserMessageType;
 import nanshen.service.AccountService;
 import nanshen.service.common.ScheduledService;
 import nanshen.utils.EncryptUtils;
@@ -48,7 +49,7 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
     private UserAddressDao userAddressDao;
 
     @Autowired
-    private UserPeopleSubDao userPeopleSubDao;
+    private UserMessageDao userMessageDao;
 
     /** 买手ID到买手信息的缓存 */
     private final LoadingCache<Long, UserInfo> userCache = CacheBuilder.newBuilder()
@@ -187,24 +188,10 @@ public class AccountServiceImpl extends ScheduledService implements AccountServi
         if (userInfo == null) {
             return ExecResult.fail("用户已注册，请找回密码~", userInfoDao.getUserInfoByPhone(phone));
         }
+        userMessageDao.insert(new UserMessage(0, 0, UserMessageType.TEXT, userInfo.getId(), "嗨，" + nickName + "！欢迎加" +
+                "入挑品购物问答大家庭！挑品作为中立的购物问答社区，在这里你可以分享你的购物经验和行业见解，晒你买到好物，吐槽你踩的深坑。" +
+                "其实发什么内容都行哈哈。", 0));
         return ExecResult.succ(userInfo);
-    }
-
-    @Override
-    public ExecInfo subPeople(long uid, UserInfo userInfo) {
-        UserPeopleSub peopleSub = userPeopleSubDao.insert(new UserPeopleSub(uid, userInfo.getId()));
-        if (peopleSub == null) {
-            return ExecInfo.fail("关注达人失败，请稍后再试");
-        }
-        return ExecInfo.succ();
-    }
-
-    @Override
-    public ExecInfo subCancelPeople(long uid, UserInfo userInfo) {
-        if (userPeopleSubDao.remove(uid, userInfo.getId())) {
-            return ExecInfo.fail("关注达人失败，请稍后再试");
-        }
-        return ExecInfo.succ();
     }
 
     @Override
