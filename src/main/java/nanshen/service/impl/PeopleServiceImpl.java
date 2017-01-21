@@ -124,6 +124,7 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
             if (msg.getType() == UserMessageType.ANSWER_UP) {
                 Question question = questionService.getQuestionByAid(msg.getAid());
                 msg.setFirstString(question.getTitle());
+                msg.setqShowId(question.getShowId());
                 UserInfo subUserInfo = getUserInfo(msg.getAnswerUpUid());
                 if (subUserInfo != null) {
                     msg.setSecondString(subUserInfo.getUsername());

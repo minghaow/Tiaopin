@@ -39,6 +39,8 @@ public class UserMessage {
     @Column
     private Date createTime = new Date();
 
+    private long qShowId = 0;
+
     private String firstString = "";
 
     private String secondString = "";
@@ -133,5 +135,13 @@ public class UserMessage {
 
     public void setSecondString(String secondString) {
         this.secondString = secondString;
+    }
+
+    public long getqShowId() {
+        return qShowId;
+    }
+
+    public void setqShowId(long qShowId) {
+        this.qShowId = qShowId;
     }
 }
