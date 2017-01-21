@@ -71,7 +71,7 @@ public class PeopleServiceImpl extends ScheduledService  implements PeopleServic
         if (peopleSub == null) {
             return ExecInfo.fail("关注达人失败，请稍后再试");
         }
-        userMessageDao.insert(new UserMessage(0, 0, UserMessageType.USER_SUB, userInfo.getId(), "", uid));
+        userMessageDao.insert(new UserMessage(0, 0, UserMessageType.USER_SUB, uid, "", userInfo.getId()));
         return ExecInfo.succ();
     }
 
