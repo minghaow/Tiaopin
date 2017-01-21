@@ -83,7 +83,7 @@ public class PeopleCtrl extends BaseCtrl {
 		responseJson(response, model);
 	}
 
-	@RequestMapping(value = "/l/json", method = RequestMethod.GET)
+	@RequestMapping(value = "/sub/l/json", method = RequestMethod.GET)
 	public void subListPage(HttpServletRequest request, ModelMap model, HttpServletResponse response,
 									 @RequestParam(defaultValue = "0", required = true) int page) throws IOException {
 		UserInfo userInfo = getLoginedUser(request);
